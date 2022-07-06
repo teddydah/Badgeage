@@ -78,7 +78,7 @@ class Printer
         return $this->port;
     }
 
-    public function setPort(int $port): self
+    public function setPort(int $port = 9100): self
     {
         $this->port = $port;
 
