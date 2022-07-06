@@ -27,6 +27,12 @@ class Status
      */
     private $nom;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Badgeage::class, inversedBy="status")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $badgeage;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +58,18 @@ class Status
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getBadgeage(): ?Badgeage
+    {
+        return $this->badgeage;
+    }
+
+    public function setBadgeage(?Badgeage $badgeage): self
+    {
+        $this->badgeage = $badgeage;
 
         return $this;
     }

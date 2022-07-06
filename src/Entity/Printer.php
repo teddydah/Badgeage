@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PrinterRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,6 +33,16 @@ class Printer
      * @ORM\Column(type="integer")
      */
     private $port;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Ilot::class, mappedBy="printer")
+     */
+    private $ilots;
+
+    public function __construct()
+    {
+        $this->ilots = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -69,6 +81,36 @@ class Printer
     public function setPort(int $port): self
     {
         $this->port = $port;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Ilot>
+     */
+    public function getIlots(): Collection
+    {
+        return $this->ilots;
+    }
+
+    public function addIlot(Ilot $ilot): self
+    {
+        if (!$this->ilots->contains($ilot)) {
+            $this->ilots[] = $ilot;
+            $ilot->setPrinter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIlot(Ilot $ilot): self
+    {
+        if ($this->ilots->removeElement($ilot)) {
+            // set the owning side to null (unless already changed)
+            if ($ilot->getPrinter() === $this) {
+                $ilot->setPrinter(null);
+            }
+        }
 
         return $this;
     }

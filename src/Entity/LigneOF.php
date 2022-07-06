@@ -42,6 +42,18 @@ class LigneOF
      */
     private $isBlocked;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Article::class, inversedBy="ligneOFs")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $article;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=OrdreFab::class, inversedBy="ligneOFs")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $ordreFab;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -103,6 +115,30 @@ class LigneOF
     public function setIsBlocked(bool $isBlocked): self
     {
         $this->isBlocked = $isBlocked;
+
+        return $this;
+    }
+
+    public function getArticle(): ?Article
+    {
+        return $this->article;
+    }
+
+    public function setArticle(?Article $article): self
+    {
+        $this->article = $article;
+
+        return $this;
+    }
+
+    public function getOrdreFab(): ?OrdreFab
+    {
+        return $this->ordreFab;
+    }
+
+    public function setOrdreFab(?OrdreFab $ordreFab): self
+    {
+        $this->ordreFab = $ordreFab;
 
         return $this;
     }

@@ -22,6 +22,18 @@ class Symbole
      */
     private $nom;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Fichier::class, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $fichier;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Article::class, inversedBy="symbole")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $article;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -35,6 +47,30 @@ class Symbole
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getFichier(): ?Fichier
+    {
+        return $this->fichier;
+    }
+
+    public function setFichier(Fichier $fichier): self
+    {
+        $this->fichier = $fichier;
+
+        return $this;
+    }
+
+    public function getArticle(): ?Article
+    {
+        return $this->article;
+    }
+
+    public function setArticle(?Article $article): self
+    {
+        $this->article = $article;
 
         return $this;
     }

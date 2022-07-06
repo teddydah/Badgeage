@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\IlotRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +38,22 @@ class Ilot
      * @ORM\Column(type="string", length=10)
      */
     private $codeImprimante;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Printer::class, inversedBy="ilots")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $printer;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Badgeage::class, mappedBy="ilot")
+     */
+    private $badgeages;
+
+    public function __construct()
+    {
+        $this->badgeages = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -86,6 +104,48 @@ class Ilot
     public function setCodeImprimante(string $codeImprimante): self
     {
         $this->codeImprimante = $codeImprimante;
+
+        return $this;
+    }
+
+    public function getPrinter(): ?Printer
+    {
+        return $this->printer;
+    }
+
+    public function setPrinter(?Printer $printer): self
+    {
+        $this->printer = $printer;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Badgeage>
+     */
+    public function getBadgeages(): Collection
+    {
+        return $this->badgeages;
+    }
+
+    public function addBadgeage(Badgeage $badgeage): self
+    {
+        if (!$this->badgeages->contains($badgeage)) {
+            $this->badgeages[] = $badgeage;
+            $badgeage->setIlot($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBadgeage(Badgeage $badgeage): self
+    {
+        if ($this->badgeages->removeElement($badgeage)) {
+            // set the owning side to null (unless already changed)
+            if ($badgeage->getIlot() === $this) {
+                $badgeage->setIlot(null);
+            }
+        }
 
         return $this;
     }
