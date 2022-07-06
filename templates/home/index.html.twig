@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}{% endblock %}
+
+{% block body %}
+    <section class="home">
+        <ul>
+            {% for ilot in ilots %}
+                <li>
+                    <a href="#" title="">{{ ilot.nomIRL }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
+{% endblock %}

@@ -1,0 +1,102 @@
+@import "~bootstrap/dist/css/bootstrap.min.css";
+
+/* VARS
+   ========================================================================== */
+
+$color1: #000;
+$color2: #fff;
+$color3: #e6e6e6;
+$self-signal: #fdd15e;
+
+/* TOOLS
+   ========================================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  background-color: $color3;
+  font-family: 'Cairo', sans-serif;
+  font-size: 2rem;
+}
+
+/* UTILITIES
+   ========================================================================== */
+
+h1 {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 2rem;
+  padding: 1em;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: $color1;
+}
+
+/* HEADER
+   ========================================================================== */
+
+header {
+  div {
+    background-color: $color1;
+    border: 2px solid $self-signal;
+    border-radius: 0.5em;
+
+    h1 {
+      a,
+      {
+        color: $color2;
+
+        &:hover {
+          color: $color2;
+        }
+      }
+    }
+  }
+}
+
+/* NAV
+   ========================================================================== */
+
+nav {
+  span {
+    background-color: $color2;
+    color: $color2;
+  }
+}
+
+/* MAIN
+   ========================================================================== */
+
+.home {
+  li {
+    background-color: $self-signal;
+    border: 2px solid $color1;
+    border-radius: 0.5em;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: bold;
+    margin: 0.5em 0;
+
+    a {
+      display: block;
+      padding: 1em;
+
+      &:hover {
+        color: $color1;
+      }
+    }
+  }
+}
