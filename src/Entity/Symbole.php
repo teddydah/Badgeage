@@ -24,7 +24,7 @@ class Symbole
 
     /**
      * @ORM\OneToOne(targetEntity=Fichier::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $fichier;
 

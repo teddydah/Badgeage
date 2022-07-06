@@ -30,12 +30,13 @@ class Article
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=500)
+     * @ORM\Column(type="string", length=500, nullable=true)
      */
     private $infoSupplementaire;
 
     /**
-     * @ORM\OneToMany(targetEntity=Symbole::class, mappedBy="article")
+     * @ORM\OneToMany(targetEntity=Symbole::class, mappedBy="article", nullable=true)
+     * @ORM\Column(nullable=true)
      */
     private $symbole;
 
