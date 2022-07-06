@@ -42,6 +42,7 @@ class Printer
     public function __construct()
     {
         $this->ilots = new ArrayCollection();
+        $this->port = 9100;
     }
 
     public function getId(): ?int
@@ -78,7 +79,7 @@ class Printer
         return $this->port;
     }
 
-    public function setPort(int $port = 9100): self
+    public function setPort(int $port): self
     {
         $this->port = $port;
 
