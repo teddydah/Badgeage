@@ -8,16 +8,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/", name="home_")
+ * @Route("/", name="main_")
  */
-class HomeController extends AbstractController
+class MainController extends AbstractController
 {
     /**
-     * @Route(name="index")
+     * @Route(name="home")
      */
-    public function index(IlotRepository $ilotRepository): Response
+    public function home(IlotRepository $ilotRepository): Response
     {
-        return $this->render('home/index.html.twig', [
+        return $this->render('main/home.html.twig', [
+            // todo
             'ilots' => $ilotRepository->findAll()
         ]);
     }
