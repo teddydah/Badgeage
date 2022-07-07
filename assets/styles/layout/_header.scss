@@ -1,0 +1,23 @@
+header {
+  div {
+    background-color: $color1;
+    border: 2px solid $self-signal;
+    border-radius: 0.5em;
+
+    h1 {
+      a,
+      {
+        color: $color2;
+
+        &:hover {
+          color: $color2;
+        }
+      }
+    }
+
+    &.container {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}

@@ -1,12 +1,17 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
 
-/* VARS
-   ========================================================================== */
+@import
+  "abstracts/variables";
 
-$color1: #000;
-$color2: #fff;
-$color3: #e6e6e6;
-$self-signal: #fdd15e;
+@import
+  "base/normalize",
+  "base/tools",
+  "base/utilities";
+
+@import
+  "layout/header",
+  "layout/header",
+  "layout/header";
 
 /* TOOLS
    ========================================================================== */
@@ -43,38 +48,6 @@ ul {
 a {
   text-decoration: none;
   color: $color1;
-}
-
-/* HEADER
-   ========================================================================== */
-
-header {
-  div {
-    background-color: $color1;
-    border: 2px solid $self-signal;
-    border-radius: 0.5em;
-
-    h1 {
-      a,
-      {
-        color: $color2;
-
-        &:hover {
-          color: $color2;
-        }
-      }
-    }
-  }
-}
-
-/* NAV
-   ========================================================================== */
-
-nav {
-  span {
-    background-color: $color2;
-    color: $color2;
-  }
 }
 
 /* MAIN
