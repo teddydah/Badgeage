@@ -1,0 +1,94 @@
+.boutons {
+  background-color: $self-signal;
+  border: 2px solid $color1;
+  border-radius: 0.5em;
+  width: 100%;
+  margin: 0.5em 0;
+
+  div {
+    padding: 0.5em;
+
+    a {
+      background-color: $color1;
+      border: 2px solid $color2;
+      border-radius: 0.5em;
+      font-size: 1.6rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      text-align: center;
+      color: $color2;
+      padding: 1em 0.5em;
+    }
+  }
+
+  div {
+    &.item-1,
+    &.item-2,
+    &.item-3 {
+      display: flex;
+      align-items: center;
+
+      a {
+        width: 100%;
+
+        &.prev,
+        &.print {
+          margin-right: 0.25em;
+        }
+
+        &.home,
+        &.photo {
+          margin-left: 0.25em;
+        }
+      }
+    }
+
+    &.item-1 {
+      a {
+        &.prev {
+          &::before {
+            @include font-awesome(bold, "\f060");
+            margin-right: 0.5em;
+          }
+        }
+
+        &.home {
+          &::before {
+            @include font-awesome(bold, "\f015");
+            margin-right: 0.5em;
+          }
+        }
+      }
+    }
+
+    &.item-2 {
+      padding: 0 0.5em;
+
+      a {
+        &.print {
+          &::before {
+            @include font-awesome(bold, "\f02f");
+            margin-right: 0.5em;
+          }
+        }
+
+        &.photo {
+          &::before {
+            @include font-awesome(bold, "\f030");
+            margin-right: 0.5em;
+          }
+        }
+      }
+    }
+
+    &.item-3 {;
+
+      a {
+        &::before {
+          @include font-awesome(bold, "\2b");
+          margin-right: 0.5em;
+        }
+      }
+    }
+  }
+}

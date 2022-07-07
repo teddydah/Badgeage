@@ -1,53 +1,19 @@
 @import
-  "~bootstrap/dist/css/bootstrap.min.css";
+  "abstracts/variables",
+  "abstracts/mixins";
 
-@import "abstracts/variables",
-"abstracts/mixins";
+@import
+  "base/normalize",
+  "base/tools",
+  "base/utilities";
 
-@import "base/normalize",
-"base/tools",
-"base/utilities";
+@import
+  "components/buttons";
 
-@import "layout/header",
-"layout/navigation",
-"layout/footer";
-
-/* TOOLS
-   ========================================================================== */
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  font-size: 62.5%;
-}
-
-body {
-  background-color: $color3;
-  font-family: 'Cairo', sans-serif;
-  font-size: 2rem;
-}
-
-/* UTILITIES
-   ========================================================================== */
-
-h1 {
-  text-transform: uppercase;
-  font-weight: bold;
-  font-size: 2rem;
-  padding: 1em;
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-}
-
-a {
-  text-decoration: none;
-  color: $color1;
-}
+@import
+  "layout/header",
+  "layout/navigation",
+  "layout/footer";
 
 /* MAIN
    ========================================================================== */

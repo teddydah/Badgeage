@@ -13,12 +13,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class MainController extends AbstractController
 {
     /**
-     * @Route(name="home")
+     * @Route(name="home", methods={"GET"})
      */
     public function home(IlotRepository $ilotRepository): Response
     {
         return $this->render('main/home.html.twig', [
-            // todo
             'ilots' => $ilotRepository->findAll()
         ]);
     }

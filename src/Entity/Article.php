@@ -35,7 +35,7 @@ class Article
     private $infoSupplementaire;
 
     /**
-     * @ORM\OneToMany(targetEntity=Symbole::class, mappedBy="article", nullable=true)
+     * @ORM\OneToMany(targetEntity=Symbole::class, mappedBy="article")
      * @ORM\Column(nullable=true)
      */
     private $symbole;
