@@ -1,0 +1,17 @@
+nav {
+  button {
+    &.navbar-toggler {
+      border: none;
+      padding: 0;
+    }
+
+    i {
+      color: $color2;
+      font-size: 2rem;
+      border: 2px solid $self-signal;
+      border-radius: 0.35em;
+      margin: 0 1em;
+      padding: 0.5em 0.6em;
+    }
+  }
+}

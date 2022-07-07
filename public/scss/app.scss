@@ -1,17 +1,16 @@
-@import "~bootstrap/dist/css/bootstrap.min.css";
-
 @import
-  "abstracts/variables";
+  "~bootstrap/dist/css/bootstrap.min.css";
 
-@import
-  "base/normalize",
-  "base/tools",
-  "base/utilities";
+@import "abstracts/variables",
+"abstracts/mixins";
 
-@import
-  "layout/header",
-  "layout/header",
-  "layout/header";
+@import "base/normalize",
+"base/tools",
+"base/utilities";
+
+@import "layout/header",
+"layout/navigation",
+"layout/footer";
 
 /* TOOLS
    ========================================================================== */

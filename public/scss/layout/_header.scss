@@ -1,12 +1,14 @@
 header {
   div {
-    background-color: $color1;
-    border: 2px solid $self-signal;
-    border-radius: 0.5em;
+    &.container {
+      background-color: $color1;
+      border: 2px solid $self-signal;
+      border-radius: 0.5em;
+      padding: 0;
+    }
 
     h1 {
-      a,
-      {
+      a {
         color: $color2;
 
         &:hover {

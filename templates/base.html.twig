@@ -2,13 +2,18 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Badgeuse Self Signal{% endblock %}</title>
     {% block stylesheets %}
+        {# Font Awesome #}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+              integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+              crossorigin="anonymous" referrerpolicy="no-referrer"/>
         {# Google Font #}
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-        {{ encore_entry_link_tags('app') }}
+        <link rel="stylesheet" href="{{ asset('app.css') }}">
     {% endblock %}
 
     {% block javascripts %}
@@ -17,9 +22,10 @@
 </head>
 <body>
 <header>
-    <div class="container">
+    <div>
         <h1>
-            <a href="{{ path('home_index') }}" title="Badgeuse Self Signal">{% block titre %}Badgeuse Self Signal{% endblock %}</a>
+            <a href="{{ path('main_home') }}"
+               title="Badgeuse Self Signal">{% block titre %}Badgeuse Self Signal{% endblock %}</a>
         </h1>
         {% include('_nav.html.twig') %}
     </div>
@@ -29,5 +35,8 @@
         {% block body %}{% endblock %}
     </div>
 </main>
+<footer>
+    <p>&copy; {{ 'now' | date('Y') }} - Groupe Self Signal</p>
+</footer>
 </body>
 </html>

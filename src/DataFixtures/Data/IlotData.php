@@ -42,7 +42,7 @@ class IlotData
         ],
         [
             'nom_ax' => 50,
-            'nom_irl' => 'Fraisage PERMANENTE',
+            'nom_irl' => 'Fraisage PERMANENT',
             'nom_url' => 'MobUrb',
             'code_imprimante' => 'MOB',
             'printer' => 'Fraisage'
