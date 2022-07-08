@@ -39,7 +39,8 @@ class IlotRepository extends ServiceEntityRepository
         }
     }
 
-    public function findByNomIRL() {
+    public function findByNomIRL()
+    {
         $queryBuilder = $this->createQueryBuilder('i');
         $queryBuilder->select('i.nomIRL');
         $query = $queryBuilder->getQuery();
