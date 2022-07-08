@@ -28,7 +28,7 @@
 </head>
 <body>
 <header>
-    <div>
+    <div class="container">
         <h1>
             <a {% if ilot is not defined %} href="{{ path('main_home') }}"{% endif %} title="Badgeuse Self Signal">
                 {% if ilot is defined %}
@@ -47,7 +47,9 @@
     </div>
 </main>
 <footer>
-    <p>&copy; {{ 'now' | date('Y') }} - Groupe Self Signal</p>
+    <div class="container">
+        <p>&copy; {{ 'now' | date('Y') }} - Groupe Self Signal</p>
+    </div>
 </footer>
 </body>
 </html>
