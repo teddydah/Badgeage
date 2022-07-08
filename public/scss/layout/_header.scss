@@ -1,11 +1,12 @@
 header {
+  background-color: $color1;
+  border-bottom: 4px solid $self-signal;
+
   div {
-    background-color: $color1;
-    border: 2px solid $self-signal;
-    border-radius: 0.5em;
-    padding: 0;
-    display: flex;
-    justify-content: space-between;
+    &.container {
+      display: flex;
+      justify-content: space-between;
+    }
   }
 
   h1 {
