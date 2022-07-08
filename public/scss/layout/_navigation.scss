@@ -6,6 +6,10 @@ nav {
       &.navbar-toggler {
         border: none;
         padding: 0;
+
+        &:focus {
+          box-shadow: none;
+        }
       }
 
       i {
