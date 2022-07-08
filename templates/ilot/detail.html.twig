@@ -2,14 +2,15 @@
 
 {% block body %}
     <section class="ilot">
-        <div>
-            <form>
-
-            </form>
+        <div class="form">
+            {{ form_start(form) }}
+            <label>Badgeage OF {{ ilot.nomIRL }}</label>
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
         </div>
         <div class="boutons">
             <div class="item-1">
-                <a class="prev bouton" id="btn_retour_idx" onclick="history.go(-1)" target="_self" role="button"
+                <a class="prev bouton" id="btn_retour_idx" onclick="history.back()" target="_self" role="button"
                    title="Page précédente">Précédent</a>
                 <a class="home bouton" href="{{ path('main_home') }}" title="Page d'accueil">Accueil</a>
             </div>

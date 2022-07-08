@@ -7,7 +7,7 @@
         <ul>
             {% for ilot in ilots %}
                 <li>
-                    <a href="{{ path('ilot_detail', { 'nomAX' : ilot.nomAX }) }}" title="Nom d'ilot">{{ ilot.nomIRL }}</a>
+                    <a href="{{ path('ilot_detail', { 'nomURL' : ilot.nomURL }) }}" title="Nom d'ilot">{{ ilot.nomIRL }}</a>
                 </li>
             {% endfor %}
         </ul>
