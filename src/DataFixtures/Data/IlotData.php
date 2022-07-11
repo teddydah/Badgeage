@@ -8,14 +8,14 @@ class IlotData
         [
             'nom_ax' => 100,
             'nom_irl' => 'Adhésif',
-            'nom_url' => 'Adhésif',
+            'nom_url' => 'Adhesif',
             'code_imprimante' => 'ADH',
             'printer' => 'Fraisage'
         ],
         [
             'nom_ax' => 160,
             'nom_irl' => 'Débit',
-            'nom_url' => 'Débit',
+            'nom_url' => 'Debit',
             'code_imprimante' => 'DEB',
             'printer' => 'Fraisage'
         ],
