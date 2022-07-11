@@ -2,6 +2,7 @@
 
 {% block body %}
     <section class="ilot">
+        {% include('_flash_messages.html.twig') %}
         <div class="form">
             {{ form_start(form) }}
             <label>Badgeage OF {{ ilot.nomIRL }}</label>
