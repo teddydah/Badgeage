@@ -1,3 +1,9 @@
 main {
   flex: 1;
+
+  div {
+    &.alert {
+      margin: 0.5em 0;
+    }
+  }
 }

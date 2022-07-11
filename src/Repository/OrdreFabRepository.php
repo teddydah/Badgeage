@@ -39,6 +39,15 @@ class OrdreFabRepository extends ServiceEntityRepository
         }
     }
 
+    public function findByNumeroOF()
+    {
+        $queryBuilder = $this->createQueryBuilder('o');
+        $queryBuilder->select('o.numero');
+        $query = $queryBuilder->getQuery();
+
+        return $query->getResult();
+    }
+
 //    /**
 //     * @return OrdreFab[] Returns an array of OrdreFab objects
 //     */

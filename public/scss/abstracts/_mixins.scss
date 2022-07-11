@@ -3,3 +3,13 @@
   font-weight: $weight;
   content: $content;
 }
+
+@mixin boutons-ilots() {
+  background-color: $self-signal;
+  border: 2px solid $color1;
+  border-radius: 0.5em;
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: bold;
+  margin: 0.5em 0;
+}

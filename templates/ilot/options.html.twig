@@ -1,16 +1,23 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{ parent() }}{% endblock %}
+
 {% block body %}
-    <section class="ilot">
-        {% include('_flash_messages.html.twig') %}
-        <div class="form">
-            {{ form_start(form) }}
-            <label>Badgeage OF {{ ilot.nomIRL }}</label>
-            {{ form_widget(form) }}
-            {{ form_end(form) }}
-        </div>
+    <section class="options">
+        <ul>
+            <li>
+                <a href="#" title="Historique ilôt">Historique ilôt</a>
+            </li>
+            <li>
+                <a href="#" title="Historique commande">Historique commande</a>
+            </li>
+            <li>
+                <a href="#" title="Suppression badgeage">Suppression badgeage</a>
+            </li>
+        </ul>
         <div class="boutons">
             <div class="item-1">
+                {# TODO #}
                 <a class="prev bouton" id="btn_retour_idx" onclick="history.back()" target="_self" role="button"
                    title="Page précédente">Précédent</a>
                 <a class="home bouton" href="{{ path('main_home') }}" title="Page d'accueil">Accueil</a>
@@ -18,9 +25,6 @@
             <div class="item-2">
                 <a class="print bouton" href="#" title="Page impression">Impression</a>
                 <a class="photo bouton" href="#" title="Page photo">Photo</a>
-            </div>
-            <div class="item-3">
-                <a class="options bouton" href="#" title="Page options">Options</a>
             </div>
         </div>
     </section>

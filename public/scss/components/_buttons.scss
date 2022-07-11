@@ -62,7 +62,7 @@
     }
 
     &.item-2 {
-      padding: 0 0.5em;
+      padding-top: 0;
 
       a {
         &.print {
@@ -81,8 +81,8 @@
       }
     }
 
-    &.item-3 {;
-
+    &.item-3 {
+      padding-top: 0;
       a {
         &::before {
           @include font-awesome(bold, "\2b");

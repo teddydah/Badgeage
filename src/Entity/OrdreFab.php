@@ -41,7 +41,7 @@ class OrdreFab
     private $ligneOFs;
 
     /**
-     * @ORM\OneToMany(targetEntity=Badgeage::class, mappedBy="ordreFab")
+     * @ORM\OneToMany(targetEntity=Badgeage::class, mappedBy="ordreFab", cascade={"persist"})
      */
     private $badgeages;
 
