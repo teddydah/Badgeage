@@ -7,6 +7,7 @@ use App\Entity\Client;
 use App\Entity\Ilot;
 use App\Entity\OrdreFab;
 use App\Form\OrdreFabType;
+use App\Repository\BadgeageRepository;
 use App\Repository\OrdreFabRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,7 +28,10 @@ class IlotController extends AbstractController
     public function getOF(
         Ilot                   $ilot = null,
         Client                 $client = null,
+        Badgeage               $badgeage = null,
+        OrdreFab               $ordreFab = null,
         OrdreFabRepository     $ordreFabRepository,
+        BadgeageRepository     $badgeageRepository,
         Request                $request,
         EntityManagerInterface $em): Response
     {
@@ -38,7 +42,7 @@ class IlotController extends AbstractController
 
         date_default_timezone_set('Europe/Paris');
 
-        $badgeage = new Badgeage();
+        //$badgeage = new Badgeage();
         $ordre = new OrdreFab();
 //
 //        if (!is_null($client)) {
@@ -91,29 +95,31 @@ class IlotController extends AbstractController
         $form->handleRequest($request);
 
         $ordreFab = $ordreFabRepository->findAll();
-        // dd($ilot->getBadgeages());
 
         foreach ($ordreFab as $fab) {
-            if ($fab->getNumero() == $form->get('numero')->getData() && $form->isSubmitted() && $form->isValid()) {
-                if ($ilot->getBadgeages() == null) {
+            // Si un numéro d'OF de la table OrdreFab correspond au numéro d'OF saisi
+            if ($fab->getNumero() == $form->get('numero')->getData()) {
+                if ($badgeage->getOrdreFab()->getNumero() !== $form->get('numero')->getData()) {
                     $badgeage->setIlot($ilot);
                     $badgeage->setOrdreFab($fab);
                     $badgeage->setDateBadgeage(new \DateTime());
                     $fab->addBadgeage($badgeage);
-                    $em->persist($fab);
-                    $em->flush();
 
-                    $this->addFlash('success', $ilot->getNomIRL() . ' : commande ' . $badgeage->getOrdreFab()->getNumero() . ' validée.');
+                    // Si le formulaire est soumis et valide
+                    if ($form->isSubmitted() && $form->isValid()) {
+                        $em->persist($badgeage);
+                        $em->flush();
+
+                        $this->addFlash('success', $ilot->getNomIRL() . ' : commande ' . $badgeage->getOrdreFab()->getNumero() . ' validée.');
+                    }
                 } else {
                     // TODO
                     $this->addFlash('danger', $ilot->getNomIRL() . ' : l\'OF ' . $form->get('numero')->getData() . ' a déjà été badgé.');
                 }
-                return $this->redirectToRoute('ilot_of', ['nomURL' => $ilot->getNomURL()]);
             }
         }
 
-        return $this->render('ilot/read.html.twig', [
-            'ilot' => $ilot,
+        return $this->render('ilot/read.html.twig', ['ilot' => $ilot,
             'form' => $form->createView()
         ]);
     }
@@ -121,7 +127,8 @@ class IlotController extends AbstractController
     /**
      * @Route("/options", name="options", methods={"GET"})
      */
-    public function options(Ilot $ilot = null)
+    public
+    function options(Ilot $ilot = null)
     {
         if (null === $ilot) {
             throw $this->createNotFoundException('Ilot non trouvé.');

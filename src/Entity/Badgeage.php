@@ -25,7 +25,7 @@ class Badgeage
     private $dateBadgeage;
 
     /**
-     * @ORM\ManyToOne(targetEntity=OrdreFab::class, inversedBy="badgeages")
+     * @ORM\ManyToOne(targetEntity=OrdreFab::class, inversedBy="badgeages", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $ordreFab;
