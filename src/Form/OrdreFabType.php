@@ -13,7 +13,8 @@ class OrdreFabType extends AbstractType
     {
         $builder
             ->add('numero', null, [
-                'label' => false
+                'label' => false,
+                'required' => true
             ])
         ;
     }
