@@ -25,15 +25,17 @@
 <body>
 <header>
     <div class="container">
-        <h1>
-            <a {% if ilot is not defined %} href="{{ path('main_home') }}"{% endif %} title="Badgeuse Self Signal">
-                {% if ilot is defined %}
-                    Ilôt  {{ ilot.nomIRL }}
-                {% else %}
-                    Badgeuse Self Signal
-                {% endif %}
-            </a>
-        </h1>
+        {% block titre %}
+            <h1>
+                <a {% if ilot is not defined %} href="{{ path('main_home') }}"{% endif %} title="Badgeuse Self Signal">
+                    {% if ilot is defined %}
+                        Ilôt  {{ ilot.nomIRL }}
+                    {% else %}
+                        Badgeuse Self Signal
+                    {% endif %}
+                </a>
+            </h1>
+        {% endblock %}
         {% include('_nav.html.twig') %}
     </div>
 </header>

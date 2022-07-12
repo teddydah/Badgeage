@@ -1,0 +1,19 @@
+.form {
+  background-color: $self-signal;
+  border: 2px solid $color1;
+  border-radius: 0.5em;
+  text-align: center;
+  width: 100%;
+  margin: 0.5em 0;
+  padding: 0 0.5em;
+
+  label {
+    font-size: 1.6rem;
+    font-weight: bold;
+  }
+
+  input {
+    border: 2px solid $color1;
+    font-size: 1.6rem;
+  }
+}
