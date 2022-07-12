@@ -31,7 +31,7 @@ class Badgeage
     private $ordreFab;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Ilot::class, inversedBy="badgeages")
+     * @ORM\ManyToOne(targetEntity=Ilot::class, inversedBy="badgeages", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $ilot;
