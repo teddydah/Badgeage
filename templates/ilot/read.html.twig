@@ -2,13 +2,13 @@
 
 {% block body %}
     <section class="ilot">
-        {% include('_flash_messages.html.twig') %}
         <div class="form">
             {{ form_start(form) }}
             <label>Badgeage OF {{ ilot.nomIRL }}</label>
             {{ form_widget(form) }}
             {{ form_end(form) }}
         </div>
+        {% include('_flash_messages.html.twig') %}
         <div class="boutons">
             <div class="item-1">
                 {# TODO #}

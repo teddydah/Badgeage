@@ -26,26 +26,23 @@ class IlotController extends AbstractController
      */
     // TODO : renommer méthode
     public function getOF(
-//        Ilot                   $ilot = null,
+        Ilot                   $ilot = null,
         Client                 $client = null,
         Badgeage               $badgeage = null,
-        OrdreFab               $ordreFab = null,
-        OrdreFabRepository     $ordreFabRepo,
-        BadgeageRepository     $badgeageRepo,
+        OrdreFabRepository     $ordreFabRepository,
+        BadgeageRepository     $badgeageRepository,
         Request                $request,
         EntityManagerInterface $em): Response
     {
-
-
         // ParamConverter => si $ilot est null, alors le contrôleur est exécuté
-//        if (null === $ilot) {
-//            throw $this->createNotFoundException('Ilot non trouvé.');
-//        }
+        if (null === $ilot) {
+            throw $this->createNotFoundException('Ilot non trouvé.');
+        }
 
         date_default_timezone_set('Europe/Paris');
 
         $badge = new Badgeage();
-        $ordre = new OrdreFab();
+        $ordreFab = new OrdreFab();
 
 
 //
@@ -96,19 +93,18 @@ class IlotController extends AbstractController
         //}
 
 
-        $form = $this->createForm(OrdreFabType::class, $ordre);
+        $form = $this->createForm(OrdreFabType::class, $ordreFab);
         $form->handleRequest($request);
 
         // Recup ilot depuis url
-        $ilot = $this->getDoctrine()
-            ->getRepository(Ilot::class)
-            ->findOneBy(["nomURL" => $request->get('nomURL')]);
+        //$ilot = $this->getDoctrine()
+          //  ->getRepository(Ilot::class)
+            //->findOneBy(["nomURL" => $request->get('nomURL')]);
 
         // Si pas d'ilot dans MYSQL alors 404
-        if (null === $ilot) {
-            throw $this->createNotFoundException('Ilot non trouvé.');
-        }
-
+        //if (null === $ilot) {
+          //  throw $this->createNotFoundException('Ilot non trouvé.');
+        //}
 
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -126,74 +122,29 @@ class IlotController extends AbstractController
 //                throw $this->createNotFoundException('Ilot non trouvé.');
 //            }
 
-            // Recupere num OF depuis form
+            // Récupération du numéro d'OF depuis le formulaire
             $numOF = $form->get('numero')->getData();
 
-            // Recupere OF avec num depuis bdd
-            $ordreExistant = $ordreFabRepo->findOneBy(["numero" => $numOF]);
+            // Récupération de l'OF avec $numOF depuis la BDD
+            $ordre = $ordreFabRepository->findOneBy(["numero" => $numOF]);
 
-            // todo: ajouter : si OF existant null alors interroger API + màj MYSQL avec nouvel OF (peu probable)
-            $badgeageExistant = $badgeageRepo->findOneBy(["ordreFab" => $ordreExistant]);
-            dump($ordreExistant);
-            dump($badgeageExistant);
-            dump($ilot);
+            // TODO : Ajouter : si OF existant null alors interroger API + màj MYSQL avec nouvel OF (peu probable)
+            $badgeageOF = $badgeageRepository->findOneBy(["ordreFab" => $ordre]);
+            $badgeageIlot = $badgeageRepository->findOneBy(["ilot" => $ilot]);
 
-            // Branchement
-            if (!is_null($badgeageExistant) && $badgeageExistant->getIlot() === $ilot) {
+            if ($badgeageOF !== null && $badgeageIlot !== null) {
                 // todo: on update la date
                 // todo: redirecttoRoute("mettre date à jour")
                 $this->addFlash('danger', $ilot->getNomIRL() . ' : l\'OF ' . $numOF . ' a déjà été badgé. Mettre à jour la date ? O/N');
-//                throw new \Error("Mettre à jour la date ? Y/N");
+                // throw new \Error("Mettre à jour la date ? Y/N");
             } else {
-                // todo: on insert le badgeage
-//                $this->addOF($badge, $numOF, $ilot);
-//                $em->persist($this->addOF($badgeageExistant, $ordreExistant, $ilot));
-                $badge->setOrdreFab($ordreExistant);
-                $badge->setDateBadgeage(new \DateTime());
-                $badge->setIlot($ilot);
-
-                $em->persist($ilot);
-                $em->persist($ordreExistant);
+                $this->addOF($badge, $ordre, $ilot);
                 $em->persist($badge);
                 $em->flush();
 
                 $this->addFlash('success', $ilot->getNomIRL() . ' : commande ' . $badge->getOrdreFab()->getNumero() . ' validée.');
             }
         }
-
-
-        /*foreach ($ordreFab as $fab) {
-            // Si l'OF existe dans la table OrdreFab
-            if ($fab->getNumero() == $numOF) {
-                // Si la table Badgeage contient des OF
-                if (!empty($badgeage)) {
-                    // Si le numéro d'OF saisi n'existe pas dans la table Badgeage
-                    if (!$badgeage->getOrdreFab()->getBadgeages()->contains($badge)) {
-                        $this->addOF($badge, $fab, $ilot);
-
-                        // Si le formulaire est soumis et valide
-                        if ($form->isSubmitted() && $form->isValid()) {
-                            $em->persist($badge);
-                            $em->flush();
-
-                            $this->addFlash('success', $ilot->getNomIRL() . ' : commande ' . $badge->getOrdreFab()->getNumero() . ' validée.');
-                        }
-                    } else {
-                        // TODO
-                        $this->addFlash('danger', $ilot->getNomIRL() . ' : l\'OF ' . $numOF . ' a déjà été badgé.');
-                    }
-                } else {
-                    $this->addOF($badge, $fab, $ilot);
-
-                    if ($form->isSubmitted() && $form->isValid()) {
-                        $em->persist($badge);
-                        $em->flush();
-
-                        $this->addFlash('success', $ilot->getNomIRL() . ' : commande ' . $badge->getOrdreFab()->getNumero() . ' validée.');
-                    }
-                }
-            }
-        }*/
 
         return $this->render('ilot/read.html.twig', ['ilot' => $ilot,
             'form' => $form->createView()
@@ -214,9 +165,9 @@ class IlotController extends AbstractController
         ]);
     }
 
-    private function addOF(Badgeage $badge, OrdreFab $fab, Ilot $ilot)
+    private function addOF(Badgeage $badge, OrdreFab $ordreFab, Ilot $ilot)
     {
-        $badge->setOrdreFab($fab);
+        $badge->setOrdreFab($ordreFab);
         $badge->setIlot($ilot);
         $badge->setDateBadgeage(new \DateTime());
 
