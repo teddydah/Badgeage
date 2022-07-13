@@ -6,28 +6,50 @@
 
 {% block body %}
     <section class="printer">
-        <div class="form">
-            {{ form_start(form) }}
-            <label>Impression étiquette</label>
-            {{ form_widget(form) }}
-            {{ form_end(form) }}
+        <div id="print-info" class="pop-up none">
+            <div>
+                <i id="close" class="fa-solid fa-xmark" title="Fermer la fenêtre"></i>
+                <i id="info" class="fa-solid fa-circle-info"></i>
+                <p>Scannez un OF pour imprimer les petites étiquettes à coller sur les panneaux
+                    <strong>ARMOR</strong>, <strong>ARMEN</strong> et <strong>TEMPO</strong></p>
+            </div>
         </div>
-        {% include('_flash_messages.html.twig') %}
-        <div class="boutons">
-            <div class="item-1">
-                {# TODO #}
-                <a class="prev bouton" id="btn_retour_idx" onclick="history.back()" target="_self" role="button"
-                   title="Page précédente">Précédent</a>
-                <a class="home bouton" href="{{ path('main_home') }}" title="Page d'accueil">Accueil</a>
+        <div id="printer-item" class="printer-item">
+            <div class="form">
+                {{ form_start(form) }}
+                <label>Impression étiquette</label>
+                <div class="form-input">
+                    {{ form_widget(form) }}
+                    <i id="circle-info" class="fa-solid fa-circle-info" title="Information impression"></i>
+                </div>
+                {{ form_end(form) }}
             </div>
-            <div class="item-2">
-                <a class="print bouton" href="{{ path('impression_etiquette', { 'nomURL' : ilot.nomURL }) }}"
-                   title="Page impression">Impression</a>
-                <a class="photo bouton" href="#" title="Page photo">Photo</a>
+            {% include('_flash_messages.html.twig') %}
+            <div class="printer-info">
+                <i class="fa-solid fa-print"></i>
+                <div>
+                    {# TODO : récupérer les infos #}
+                    <span><strong>Chef atelier</strong> @192.168.35.207</span>
+                    <span>Statut : <strong class="isActive">Active</strong></span>
+                </div>
             </div>
-            <div class="item-3">
-                <a class="options bouton" href="{{ path('ilot_options', { 'nomURL' : ilot.nomURL }) }}"
-                   title="Page options">Options</a>
+            <div class="boutons">
+                <div class="item-1">
+                    <a class="refresh bouton" href="{{ path('impression_etiquette', { 'nomURL' : ilot.nomURL }) }}"
+                       title="Page options">Rafraîchir</a>
+                </div>
+                <div class="item-2">
+                    {# TODO #}
+                    <a class="prev item-btn-1 bouton" id="btn_retour_idx" onclick="history.back()" target="_self"
+                       role="button"
+                       title="Page précédente">Précédent</a>
+                    <a class="home item-btn-2 bouton" href="{{ path('main_home') }}" title="Page d'accueil">Accueil</a>
+                </div>
+                <div class="item-3">
+                    <a class="photo item-btn-3 bouton" href="#" title="Page photo">Photo</a>
+                    <a class="options item-btn-4 bouton" href="{{ path('ilot_options', { 'nomURL' : ilot.nomURL }) }}"
+                       title="Page options">Options</a>
+                </div>
             </div>
         </div>
     </section>

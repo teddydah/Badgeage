@@ -6,4 +6,21 @@ main {
       margin: 0.5em 0;
     }
   }
+
+  .home,
+  .options {
+    li {
+      a {
+        @include boutons-ilots;
+        display: block;
+        padding: 1em;
+
+        &:hover {
+          background-color: $color1;
+          border-color: $self-signal;
+          color: $color2;
+        }
+      }
+    }
+  }
 }

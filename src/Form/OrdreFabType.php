@@ -14,7 +14,10 @@ class OrdreFabType extends AbstractType
         $builder
             ->add('numero', null, [
                 'label' => false,
-                'required' => true
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'Scannez OF'
+                ]
             ])
         ;
     }

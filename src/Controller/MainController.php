@@ -18,7 +18,7 @@ class MainController extends AbstractController
     public function home(IlotRepository $ilotRepository): Response
     {
         return $this->render('main/home.html.twig', [
-            'ilots' => $ilotRepository->findAll()
+            'ilots' => $ilotRepository->findByIlot()
         ]);
     }
 }

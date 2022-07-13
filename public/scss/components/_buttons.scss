@@ -8,6 +8,33 @@
   div {
     padding: 0.5em;
 
+    &.item-1,
+    &.item-2,
+    &.item-3,
+    &.item-4 {
+      display: flex;
+      align-items: center;
+
+      a {
+        width: 100%;
+
+        &.item-btn-1,
+        &.item-btn-3 {
+          margin-right: 0.25em;
+        }
+
+        &.item-btn-2,
+        &.item-btn-4 {
+          margin-left: 0.25em;
+        }
+      }
+    }
+
+    &.item-2,
+    &.item-3 {
+      padding-top: 0;
+    }
+
     a {
       background-color: $color1;
       border: 2px solid $color2;
@@ -18,74 +45,53 @@
       text-align: center;
       color: $color2;
       padding: 1em 0.5em;
-    }
-  }
 
-  div {
-    &.item-1,
-    &.item-2,
-    &.item-3 {
-      display: flex;
-      align-items: center;
+      &:hover {
+        background-color: $color2;
+        border-color: $color1;
+        color: $color1;
+      }
 
-      a {
-        width: 100%;
-
-        &.prev,
-        &.print {
-          margin-right: 0.25em;
-        }
-
-        &.home,
-        &.photo {
-          margin-left: 0.25em;
+      &.prev {
+        &::before {
+          @include font-awesome(bold, "\f060");
+          margin-right: 0.5em;
         }
       }
-    }
 
-    &.item-1 {
-      a {
-        &.prev {
-          &::before {
-            @include font-awesome(bold, "\f060");
-            margin-right: 0.5em;
-          }
-        }
-
-        &.home {
-          &::before {
-            @include font-awesome(bold, "\f015");
-            margin-right: 0.5em;
-          }
+      &.home {
+        &::before {
+          @include font-awesome(bold, "\f015");
+          margin-right: 0.5em;
         }
       }
-    }
 
-    &.item-2 {
-      padding-top: 0;
-
-      a {
-        &.print {
-          &::before {
-            @include font-awesome(bold, "\f02f");
-            margin-right: 0.5em;
-          }
-        }
-
-        &.photo {
-          &::before {
-            @include font-awesome(bold, "\f030");
-            margin-right: 0.5em;
-          }
+      &.print {
+        &::before {
+          @include font-awesome(bold, "\f02f");
+          margin-right: 0.5em;
         }
       }
-    }
 
-    &.item-3 {
-      padding-top: 0;
-      a {
+      &.photo {
+        &::before {
+          @include font-awesome(bold, "\f030");
+          margin-right: 0.5em;
+        }
+      }
+
+      &.options {
         &::before {
           @include font-awesome(bold, "\2b");
+          margin-right: 0.5em;
+        }
+      }
+
+      &.refresh {
+        background-color: $color5;
+
+        &::before {
+          @include font-awesome(bold, "\f2f1");
           margin-right: 0.5em;
         }
       }

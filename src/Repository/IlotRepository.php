@@ -39,12 +39,30 @@ class IlotRepository extends ServiceEntityRepository
         }
     }
 
-    public function findByNomIRL()
+    public function findByIlot()
     {
         $queryBuilder = $this->createQueryBuilder('i');
-        $queryBuilder->select('i.nomIRL');
+        $queryBuilder
+            ->andwhere('i.nomAX >= 40')
+            ->andWhere('i.nomAX <= 120')
+            ->orWhere('i.nomAX = 160')
+            ->orWhere('i.nomAX = 170')
+            ->orWhere('i.nomAX = 230')
+            ->orWhere('i.nomAX = 9995')
+            ->orderBy('i.nomIRL');
         $query = $queryBuilder->getQuery();
+        return $query->getResult();
+    }
 
+    public function findBySousIlotsPeinture()
+    {
+        $queryBuilder = $this->createQueryBuilder('i');
+        $queryBuilder
+            ->andwhere('i.nomAX >= 132')
+            ->andWhere('i.nomAX <= 140')
+            ->orWhere('i.nomAX = 9999')
+            ->orderBy('i.nomIRL');
+        $query = $queryBuilder->getQuery();
         return $query->getResult();
     }
 
