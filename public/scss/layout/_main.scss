@@ -5,6 +5,27 @@ main {
     &.alert {
       margin: 0.5em 0;
     }
+
+    &.alert-success {
+      &::before {
+        @include font-awesome(bold, "\f058");
+        margin-right: 0.25em;
+      }
+    }
+
+    &.alert-danger {
+      &::before {
+        @include font-awesome(bold, "\f071");
+        margin-right: 0.25em;
+      }
+    }
+
+    &.alert-warning {
+      &::before {
+        @include font-awesome(bold, "\f05a");
+        margin-right: 0.25em;
+      }
+    }
   }
 
   .home,

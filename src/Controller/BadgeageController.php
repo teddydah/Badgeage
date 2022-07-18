@@ -21,7 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class BadgeageController extends AbstractController
 {
     /**
-     * @Route("/{nomURL}/view", name="detail")
+     * @Route("/{nomURL}/view", name="detail", methods={"GET", "POST"})
      */
     public function detail(
         Ilot                   $ilot = null,
@@ -58,7 +58,7 @@ class BadgeageController extends AbstractController
     }
 
     /**
-     * @Route("/add", name="add")
+     * @Route("/add", name="add", methods={"GET", "POST"})
      */
     public function add(
         Ilot                   $ilot = null,
@@ -104,16 +104,50 @@ class BadgeageController extends AbstractController
             }
         }
 
-        return $this->redirectToRoute('badgeage_detail', ['nomURL' => $ilot->getNomURL()]);
+        return $this->redirectToRoute('badgeage_detail', [
+            'nomURL' => $ilot->getNomURL()
+        ]);
     }
 
     /**
-     * @Route("/{id<\d+>}/delete", name="delete")
+     * @Route("/{nomURL}/delete", name="delete", methods={"GET", "POST"})
      */
-    public function delete(): Response
+    public function delete(Ilot $ilot = null, Badgeage $badgeage = null, Request $request, EntityManagerInterface $em): Response
     {
-        return $this->render('badgeage/index.html.twig', [
-            'controller_name' => 'BadgeageController',
+        if (null === $ilot) {
+            throw $this->createNotFoundException('Ilot non trouvé.');
+        }
+
+        $ordreFab = new OrdreFab();
+
+        $form = $this->createForm(OrdreFabType::class, $ordreFab);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $numOF = $form->get('numero')->getData();
+
+            if (null !== $badgeage) {
+                if (TODO) {
+                    $em->remove($badgeage);
+                    $em->flush();
+
+                    $this->addFlash('success', 'Le badgeage ' . $badgeage->getOrdreFab()->getNumero() . ' pour l\'îlot ' . $ilot->getNomIRL() . ' a bien été supprimé.');
+                }
+            } else {
+                $this->addFlash('warning', 'Le badgeage ' . $numOF . ' pour l\'îlot ' . $ilot->getNomIRL() . ' n\'existe pas.');
+            }
+
+            $this->redirectToRoute('badgeage_detail', [
+                'nomURL' => $ilot->getNomURL()
+            ]);
+        }
+
+        return $this->render('badgeage/delete.html.twig', [
+            'ilot' => $ilot,
+            // 'sousIlots' => $ilotRepository->findBySousIlotsPeinture(),
+            'badgeage' => $badgeage,
+            'numOF' => $form->get('numero')->getData(),
+            'formDetail' => $form->createView()
         ]);
     }
 

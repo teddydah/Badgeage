@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block titre %}
+    <h1>Suppression badgeage {{ ilot.nomIRL }}</h1>
+{% endblock %}
+
+{% block body %}
+    <section>
+        <div class="form">
+            {{ form_start(formDetail, { 'attr': { 'novalidate' : 'novalidate' } }) }}
+            <label>Code-barres</label>
+            {{ form_widget(formDetail) }}
+            {{ form_end(formDetail) }}
+        </div>
+        <div id="badgeage" class="none">
+            {{ form_start(formDelete, { 'attr': { 'novalidate' : 'novalidate' } }) }}
+            <table class="table table-striped table-light text-center">
+                <tbody>
+                <tr>
+                    <th>Id :</th>
+                    <td>{{ badgeage.id }}</td>
+                </tr>
+                <tr>
+                    <th>Commande :</th>
+                    <td>{{ badgeage.ordreFab.numero }}</td>
+                </tr>
+                <tr>
+                    <th>Ilot :</th>
+                    <td>{{ badgeage.ilot.nomIRL }}</td>
+                </tr>
+                <tr>
+                    <th>Date :</th>
+                    <td>{{ badgeage.dateBadgeage | date("d/m/Y") }}</td>
+                </tr>
+                <tr>
+                    <td class="text-center" colspan="2">
+                        <button class="test" type="submit"
+                                onsubmit="confirm('Êtes-vous sûr de vouloir supprimer ce badgeage ?')">Supprimer
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            {{ form_end(formDelete) }}
+        </div>
+        {% include('_flash_messages.html.twig') %}
+        <div class="boutons">
+            <div class="item-1">
+                {# TODO #}
+                <a class="prev item-btn-1 bouton" id="btn_retour_idx" onclick="history.back()" target="_self"
+                   role="button"
+                   title="Page précédente">Précédent</a>
+                <a class="home item-btn-2 bouton" href="{{ path('main_home') }}" title="Page d'accueil">Accueil</a>
+            </div>
+            <div class="item-2">
+                <a class="print item-btn-3 bouton" href="{{ path('impression_etiquette', { 'nomURL' : ilot.nomURL }) }}"
+                   title="Page impression">Impression</a>
+                <a class="options item-btn-4 bouton" href="{{ path('ilot_options', { 'nomURL' : ilot.nomURL }) }}"
+                   title="Page options">Options</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+

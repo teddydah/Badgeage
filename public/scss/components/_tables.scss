@@ -1,0 +1,36 @@
+.table {
+  border: 2px solid $color1;
+
+  tr {
+    th {
+      text-align: right;
+    }
+
+    td {
+      text-align: left;
+
+      button {
+        background-color: $self-signal;
+        border: 2px solid $color1;
+        border-radius: 0.5em;
+        text-transform: uppercase;
+        font-size: 1.6rem;
+        font-weight: bold;
+        margin: 0.5em 0;
+        padding: 0.5em;
+
+        &::before {
+          @include font-awesome(bold, "\f2ed");
+          margin-right: 0.5em;
+        }
+
+        &:hover {
+          background-color: $color2;
+          // background-color: $color1;
+          // border-color: $color2;
+          // color: $color2;
+        }
+      }
+    }
+  }
+}

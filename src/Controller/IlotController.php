@@ -54,14 +54,15 @@ class IlotController extends AbstractController
     /**
      * @Route("/{nomURL}/options", name="options", methods={"GET"})
      */
-    public function options(Ilot $ilot = null, Request $request): Response
+    public function options(Ilot $ilot = null, Badgeage $badgeage = null, Request $request): Response
     {
         if (null === $ilot) {
             throw $this->createNotFoundException('Ilot non trouvé.');
         }
 
         return $this->render('ilot/options.html.twig', [
-            'ilot' => $ilot
+            'ilot' => $ilot,
+            'badgeage' => $badgeage
         ]);
     }
 }
