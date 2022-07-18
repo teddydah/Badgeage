@@ -26,54 +26,10 @@ class IlotController extends AbstractController
      * @Route("/{nomURL}", name="of", methods={"GET", "POST"})
      */
     // TODO : renommer
-    public function getOF(
-        Ilot                   $ilot = null,
-        IlotRepository         $ilotRepository,
-        OrdreFabRepository     $ordreFabRepository,
-        BadgeageRepository     $badgeageRepository,
-        Request                $request,
-        EntityManagerInterface $em): Response
+    public function getOF(): Response
     {
-        // ParamConverter => si $ilot est null, alors le contrôleur est exécuté
-        if (null === $ilot) {
-            throw $this->createNotFoundException('Ilot non trouvé.');
-        }
+        return $this->render('detail.html.twig', [
 
-        $badge = new Badgeage();
-        $ordreFab = new OrdreFab();
-
-        $form = $this->createForm(OrdreFabType::class, $ordreFab);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            // Récupération du numéro d'OF depuis le formulaire
-            $numOF = $form->get('numero')->getData();
-
-            // Récupération de l'OF avec $numOF depuis la BDD
-            $ordre = $ordreFabRepository->findOneBy(["numero" => $numOF]);
-
-            // TODO : Ajouter : si OF existant null alors interroger API + màj MYSQL avec nouvel OF (peu probable)
-            $badgeage = $badgeageRepository->findOneBy([
-                "ilot" => $ilot,
-                "ordreFab" => $ordre
-            ]);
-
-            if ($badgeage !== null) {
-                // TODO : Màj la date
-                // TODO : redirectToRoute("mettre date à jour")
-                $this->addFlash('danger', $ilot->getNomIRL() . ' : l\'OF ' . $numOF . ' a déjà été badgé.');
-            } else {
-                $this->addOF($badge, $ordre, $ilot);
-                $em->persist($badge);
-                $em->flush();
-
-                $this->addFlash('success', $ilot->getNomIRL() . ' : commande ' . $badge->getOrdreFab()->getNumero() . ' validée.');
-            }
-        }
-        return $this->render('ilot/read.html.twig', [
-            'ilot' => $ilot,
-            'sousIlots' => $ilotRepository->findBySousIlotsPeinture(),
-            'form' => $form->createView()
         ]);
     }
 
@@ -108,17 +64,4 @@ class IlotController extends AbstractController
             'ilot' => $ilot
         ]);
     }
-
-    private function addOF(Badgeage $badge, OrdreFab $ordreFab, Ilot $ilot)
-    {
-        date_default_timezone_set('Europe/Paris');
-
-        $badge->setOrdreFab($ordreFab);
-        $badge->setIlot($ilot);
-        $badge->setDateBadgeage(new \DateTime());
-
-        return $badge;
-    }
-
-
 }

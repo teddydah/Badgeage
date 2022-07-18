@@ -6,11 +6,19 @@
             <ul>
                 {% for sousIlot in sousIlots %}
                     <li>
-                        <a href="{{ path('ilot_paint', { 'nomURL' : sousIlot.nomURL }) }}"
+                        <a href="{{ path('badgeage_detail', { 'nomURL' : sousIlot.nomURL }) }}"
                            title="Ilôt {{ sousIlot.nomIRL }}">{{ sousIlot.nomIRL }}</a>
                     </li>
                 {% endfor %}
             </ul>
+            <div class="boutons">
+                <div class="item-1">
+                    {# TODO #}
+                    <a class="prev item-btn-1 bouton" id="btn_retour_idx" onclick="history.back()" target="_self" role="button"
+                       title="Page précédente">Précédent</a>
+                    <a class="home item-btn-2 bouton" href="{{ path('main_home') }}" title="Page d'accueil">Accueil</a>
+                </div>
+            </div>
         </section>
     {% else %}
         <section class="ilot">
