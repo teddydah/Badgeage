@@ -28,7 +28,7 @@ class IlotController extends AbstractController
     // TODO : renommer
     public function getOF(): Response
     {
-        return $this->render('detail.html.twig', [
+        return $this->render('view.html.twig', [
 
         ]);
     }

@@ -7,7 +7,7 @@
         <ul>
             {% for ilot in ilots %}
                 <li>
-                    <a href="{{ path('badgeage_detail', { 'nomURL' : ilot.nomURL }) }}"
+                    <a href="{{ path('badgeage_view', { 'nomURL' : ilot.nomURL }) }}"
                        title="Ilôt {{ ilot.nomIRL }}">{{ ilot.nomIRL }}</a>
                 </li>
             {% endfor %}

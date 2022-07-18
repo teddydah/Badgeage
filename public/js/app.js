@@ -28,9 +28,4 @@ $(document).ready(() => {
         $("#print-info").hide();
         $("#printer-item").removeClass("none");
     });
-
-    /* -- Afficher ... -- */
-    // $(".form").on("validate", () => {
-    //     $("#badgeage").show();
-    // });
 });
