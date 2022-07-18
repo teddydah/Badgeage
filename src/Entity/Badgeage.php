@@ -41,6 +41,11 @@ class Badgeage
      */
     private $status;
 
+    /**
+     * @ORM\Column(type="bigint")
+     */
+    private $recid;
+
     public function __construct()
     {
         $this->status = new ArrayCollection();
@@ -113,6 +118,18 @@ class Badgeage
                 $status->setBadgeage(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRecid(): ?string
+    {
+        return $this->recid;
+    }
+
+    public function setRecid(string $recid): self
+    {
+        $this->recid = $recid;
 
         return $this;
     }

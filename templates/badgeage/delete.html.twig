@@ -5,43 +5,42 @@
 {% endblock %}
 
 {% block body %}
-    <section>
+    <section class="delete-badgeage">
         <div class="form">
-            {{ form_start(form, { 'attr': { 'novalidate' : 'novalidate' } }) }}
+            {{ form_start(form, { 'attr': { 'novalidate' : 'novalidate' }}) }}
             <label>Code-barres</label>
             {{ form_widget(form) }}
-            {{ form_end(form) }}
         </div>
-        <div id="badgeage">
-            <table class="table table-striped table-light text-center">
-                <tbody>
-                <tr>
-                    <th>Id :</th>
-                    <td>{{ badgeage.id }}</td>
-                </tr>
-                <tr>
-                    <th>Commande :</th>
-                    <td>{{ badgeage.ordreFab.numero }}</td>
-                </tr>
-                <tr>
-                    <th>Ilot :</th>
-                    <td>{{ badgeage.ilot.nomIRL }}</td>
-                </tr>
-                <tr>
-                    <th>Date :</th>
-                    <td>{{ badgeage.dateBadgeage | date("d/m/Y") }}</td>
-                </tr>
-                <tr>
-                    <td class="text-center" colspan="2">
-                        <button class="test" type="submit"
-                                onsubmit="confirm('Êtes-vous sûr de vouloir supprimer ce badgeage ?')">Supprimer
-                        </button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            {{ form_end(form) }}
-        </div>
+        {% if numOF is same as(badgeage.ordreFab.numero) %}
+            <div id="badgeage" class="none">
+                <table class="table table-striped table-light text-center">
+                    <tbody>
+                    <tr>
+                        <th>Recid :</th>
+                        <td>{{ badgeage.recid }}</td>
+                    </tr>
+                    <tr>
+                        <th>Commande :</th>
+                        <td>{{ badgeage.ordreFab.numero }}</td>
+                    </tr>
+                    <tr>
+                        <th>Ilot :</th>
+                        <td>{{ badgeage.ilot.nomIRL }}</td>
+                    </tr>
+                    <tr>
+                        <th>Date :</th>
+                        <td>{{ badgeage.dateBadgeage | date("d/m/Y") }}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center" colspan="2">
+                            <button id="btn" type="submit">Supprimer</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                {{ form_end(form) }}
+            </div>
+        {% endif %}
         {% include('_flash_messages.html.twig') %}
         <div class="boutons">
             <div class="item-1">
