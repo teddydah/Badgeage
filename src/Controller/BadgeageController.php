@@ -25,6 +25,7 @@ class BadgeageController extends AbstractController
      */
     public function view(
         Ilot                   $ilot = null,
+        Badgeage               $badgeage = null,
         IlotRepository         $ilotRepository,
         OrdreFabRepository     $ordreFabRepository,
         BadgeageRepository     $badgeageRepository,
@@ -47,7 +48,8 @@ class BadgeageController extends AbstractController
         return $this->render('badgeage/view.html.twig', [
             'ilot' => $ilot,
             'sousIlots' => $ilotRepository->findBySousIlotsPeinture(),
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'badgeage' => $badgeage
         ]);
     }
 
@@ -62,7 +64,6 @@ class BadgeageController extends AbstractController
         Request                $request,
         EntityManagerInterface $em): Response
     {
-        // ParamConverter => si $ilot est null, alors le contrôleur est exécuté
         if (null === $ilot) {
             throw $this->createNotFoundException('Ilot non trouvé.');
         }
@@ -79,16 +80,6 @@ class BadgeageController extends AbstractController
             'ilot' => $ilot,
             'sousIlots' => $ilotRepository->findBySousIlotsPeinture(),
             'form' => $form->createView()
-        ]);
-    }
-
-    /**
-     * @Route("/{id<\d+>}/edit", name="edit")
-     */
-    public function edit(): Response
-    {
-        return $this->render('badgeage/index.html.twig', [
-
         ]);
     }
 
@@ -128,9 +119,8 @@ class BadgeageController extends AbstractController
 
             if (isset($ordre)) {
                 if ($badgeage !== null) {
-                    // TODO : Màj la date
-                    // TODO : redirectToRoute("mettre date à jour")
                     $this->addFlash('warning', $ilot->getNomIRL() . ' : l\'OF ' . $numOF . ' a déjà été badgé.');
+                    $this->addFlash('custom', '');
                 } else {
                     // Appel de la méthode addBadgeage()
                     $this->addBadgeage($badge, $ordre, $ilot);
@@ -143,6 +133,24 @@ class BadgeageController extends AbstractController
                 $this->addFlash('danger', $ilot->getNomIRL() . ' : l\'OF ' . $numOF . ' n\'existe pas.');
             }
         }
+
+        return $this->redirectToRoute('badgeage_view', ['nomURL' => $ilot->getNomURL()], 302);
+    }
+
+    /**
+     * @Route("/{nomURL}/edit", name="edit", methods={"GET", "POST"})
+     */
+    public function edit(Ilot $ilot = null, Badgeage $badgeage, OrdreFabRepository $ordre, EntityManagerInterface $em): Response
+    {
+        if (null === $ilot) {
+            throw $this->createNotFoundException('Ilot non trouvé.');
+        }
+        date_default_timezone_set('Europe/Paris');
+
+        $badgeage->setDateBadgeage(new \DateTime());
+        $em->flush();
+
+        $this->addFlash('success', 'Un triomphe !');
 
         return $this->redirectToRoute('badgeage_view', ['nomURL' => $ilot->getNomURL()], 302);
     }
