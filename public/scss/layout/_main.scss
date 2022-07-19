@@ -1,33 +1,6 @@
 main {
   flex: 1;
 
-  div {
-    &.alert {
-      margin: 0.5em 0;
-    }
-
-    &.alert-success {
-      &::before {
-        @include font-awesome(bold, "\f058");
-        margin-right: 0.25em;
-      }
-    }
-
-    &.alert-danger {
-      &::before {
-        @include font-awesome(bold, "\f071");
-        margin-right: 0.25em;
-      }
-    }
-
-    &.alert-warning {
-      &::before {
-        @include font-awesome(bold, "\f05a");
-        margin-right: 0.25em;
-      }
-    }
-  }
-
   .home,
   .paint,
   .options {
@@ -39,7 +12,7 @@ main {
 
         &:hover {
           background-color: $color1;
-          border-color: $self-signal;
+          border-color: $color-self-signal;
           color: $color2;
         }
       }

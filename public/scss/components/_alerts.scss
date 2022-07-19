@@ -1,5 +1,27 @@
 .alert {
   font-size: 1.6rem;
+  margin: 0.5em 0;
+}
+
+.alert-success {
+  &::before {
+    @include font-awesome(bold, "\f058");
+    margin-right: 0.25em;
+  }
+}
+
+.alert-danger {
+  &::before {
+    @include font-awesome(bold, "\f071");
+    margin-right: 0.25em;
+  }
+}
+
+.alert-warning {
+  &::before {
+    @include font-awesome(bold, "\f05a");
+    margin-right: 0.25em;
+  }
 }
 
 .alert-custom {
@@ -22,5 +44,25 @@
       @include font-awesome(bold, "\f073");
       margin-right: 0.5em;
     }
+  }
+}
+
+.alert-msg,
+.msg {
+  display: flex;
+}
+
+.alert-msg {
+  background-color: $color-success-bg;
+  border-color: $color-success-border;
+  color: $color-success;
+
+  &::before {
+    @include font-awesome(bold, "\f058");
+    margin-right: 0.5em;
+  }
+
+  .msg {
+    flex-direction: column;
   }
 }

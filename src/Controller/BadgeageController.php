@@ -120,7 +120,10 @@ class BadgeageController extends AbstractController
             if (isset($ordre)) {
                 if ($badgeage !== null) {
                     $this->addFlash('warning', $ilot->getNomIRL() . ' : l\'OF ' . $numOF . ' a déjà été badgé.');
-                    $this->addFlash('custom', '');
+                    // TODO ?
+                    $msg = '<a href="edit/' . $badgeage->getId() . '" title="Mettre à jour la date de badgeage de l\'OF">Voulez-vous mettre à jour la date ?</a>';
+
+                    $this->addFlash('custom', $msg);
                 } else {
                     // Appel de la méthode addBadgeage()
                     $this->addBadgeage($badge, $ordre, $ilot);
@@ -138,19 +141,36 @@ class BadgeageController extends AbstractController
     }
 
     /**
-     * @Route("/{nomURL}/edit", name="edit", methods={"GET", "POST"})
+     * @Route("/{nomURL}/edit/{id<\d+>}", name="edit", methods={"GET", "POST"})
      */
-    public function edit(Ilot $ilot = null, Badgeage $badgeage, OrdreFabRepository $ordre, EntityManagerInterface $em): Response
+    public function edit(Ilot $ilot = null, Badgeage $badgeage = null, BadgeageRepository $badgeageRepository, OrdreFabRepository $ordreFabRepository, Request $request, EntityManagerInterface $em): Response
     {
         if (null === $ilot) {
             throw $this->createNotFoundException('Ilot non trouvé.');
         }
+
+        $ordreFab = new OrdreFab();
+
+        $form = $this->createForm(OrdreFabType::class, $ordreFab);
+        $numOF = $form->get('numero')->getData();
+
+        // ordre = $ordreFabRepository->findByNumeroOF();
+        $ordre = $ordreFabRepository->findOneBy(["numero" => $numOF]);
+        $badge = $badgeageRepository->findBy(['id' => $badgeage->getId()]);
+
         date_default_timezone_set('Europe/Paris');
 
         $badgeage->setDateBadgeage(new \DateTime());
         $em->flush();
 
-        $this->addFlash('success', 'Un triomphe !');
+        $msg = "<div class='msg'>
+                    <span>Mise à jour de la date effectuée.</span>
+                    <span>Nouvelle date : <strong>" . $badgeage->getDateBadgeage()->format("d/m/Y") . "</strong></span>
+                    <span>OF : <strong>" . $badgeage->getOrdreFab()->getNumero() . "</strong></span>
+                    <span>Ilot : <strong>" . $ilot->getNomIRL() . "</strong></span>
+                </div>";
+
+        $this->addFlash('msg', $msg);
 
         return $this->redirectToRoute('badgeage_view', ['nomURL' => $ilot->getNomURL()], 302);
     }

@@ -37,7 +37,4 @@ $(document).ready(() => {
     $(".delete-badgeage form").on('submit', () => {
         return confirm('Êtes-vous sûr de vouloir supprimer ce badgeage ?');
     });
-
-    /* -- TODO -- */
-    $(".alert-custom").append('<a href="edit">Voulez-vous mettre à jour la date ?</a>');
 });
