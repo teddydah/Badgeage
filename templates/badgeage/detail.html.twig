@@ -5,37 +5,10 @@
 {% endblock %}
 
 {% block body %}
-    <section class="delete-badgeage">
+    <section class="detail-badgeage">
         <div class="form">
-            {{ form_start(form, { 'attr' : { 'novalidate' : 'novalidate' }}) }}
+            {{ form_start(form, { 'attr': { 'novalidate' : 'novalidate' }}) }}
             {{ form_widget(form) }}
-        </div>
-        <div id="badgeage">
-            <table class="table table-striped table-light text-center">
-                <tbody>
-                <tr>
-                    <th>Recid :</th>
-                    <td>{{ badgeage.recid }}</td>
-                </tr>
-                <tr>
-                    <th>Commande :</th>
-                    <td>{{ badgeage.ordreFab.numero }}</td>
-                </tr>
-                <tr>
-                    <th>Ilot :</th>
-                    <td>{{ badgeage.ilot.nomIRL }}</td>
-                </tr>
-                <tr>
-                    <th>Date :</th>
-                    <td>{{ badgeage.dateBadgeage | date("d/m/Y") }}</td>
-                </tr>
-                <tr>
-                    <td class="text-center" colspan="2">
-                        <button id="btn" type="submit">Supprimer</button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
             {{ form_end(form) }}
         </div>
         {% include('_flash_messages.html.twig') %}

@@ -38,6 +38,10 @@ class BadgeageController extends AbstractController
 
         $ordreFab = new OrdreFab();
         $form = $this->createForm(OrdreFabType::class, $ordreFab);
+        $form->add('numero', null, [
+            'label' => 'Badgeage OF ' . $ilot->getNomIRL(),
+            'attr' => ['placeholder' => 'Scannez OF']
+        ]);
         $this->add($ilot, $ilotRepository, $ordreFabRepository, $badgeageRepository, $request, $em);
 
         return $this->render('badgeage/view.html.twig', [
@@ -108,6 +112,41 @@ class BadgeageController extends AbstractController
     }
 
     /**
+     * @Route("/{nomURL}/detail", name="detail", methods={"GET", "POST"})
+     */
+    public function detail(Ilot $ilot = null, Badgeage $badgeage = null, Request $request, EntityManagerInterface $em): Response
+    {
+        if (null === $ilot) {
+            throw $this->createNotFoundException('Ilot non trouvé.');
+        }
+
+        $ordreFab = new OrdreFab();
+
+        $form = $this->createForm(OrdreFabType::class, $ordreFab);
+        $form->add('numero', null, [
+            'label' => 'Code-barres'
+        ]);
+        $form->handleRequest($request);
+
+        $numOF = $form->get('numero')->getData();
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if (isset($badgeage) && $badgeage->getOrdreFab()->getNumero() === $numOF) {
+                return $this->redirectToRoute('badgeage_delete', ['nomURL' => $ilot->getNomURL()], 302);
+            } else {
+                $this->addFlash('danger', 'Le badgeage ' . $numOF . ' pour l\'îlot ' . $ilot->getNomIRL() . ' n\'existe pas.');
+            }
+        }
+
+        return $this->render('badgeage/detail.html.twig', ['ilot' => $ilot,
+            // 'sousIlots' => $ilotRepository->findBySousIlotsPeinture(),
+            'badgeage' => $badgeage,
+            'numOF' => $form->get('numero')->getData(),
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
      * @Route("/{nomURL}/delete", name="delete", methods={"GET", "POST"})
      */
     public function delete(Ilot $ilot = null, Badgeage $badgeage = null, Request $request, EntityManagerInterface $em): Response
@@ -119,33 +158,36 @@ class BadgeageController extends AbstractController
         $ordreFab = new OrdreFab();
 
         $form = $this->createForm(OrdreFabType::class, $ordreFab);
+        $form->add('numero', null, [
+            'label' => 'Code-barres',
+            'data' => $badgeage->getOrdreFab()->getNumero()
+        ]);
         $form->handleRequest($request);
 
+        $numOF = $form->get('numero')->getData();
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $numOF = $form->get('numero')->getData();
-
             if (isset($badgeage) && $badgeage->getOrdreFab()->getNumero() === $numOF) {
-                $this->redirectToRoute('badgeage_delete', ['nomURL' => $ilot->getNomURL()], 302);
-
-                // $em->remove($badgeage);
-                // $em->flush();
+                $em->remove($badgeage);
+                $em->flush();
 
                 $this->addFlash('success', 'Le badgeage ' . $badgeage->getOrdreFab()->getNumero() . ' pour l\'îlot ' . $ilot->getNomIRL() . ' a bien été supprimé.');
+
+                return $this->redirectToRoute('badgeage_detail', ['nomURL' => $ilot->getNomURL()], 302);
             } else {
                 $this->addFlash('danger', 'Le badgeage ' . $numOF . ' pour l\'îlot ' . $ilot->getNomIRL() . ' n\'existe pas.');
             }
         }
 
         return $this->render('badgeage/delete.html.twig', ['ilot' => $ilot,
-            // 'sousIlots' => $ilotRepository->findBySousIlotsPeinture(),
             'badgeage' => $badgeage,
+            // 'sousIlots' => $ilotRepository->findBySousIlotsPeinture(),
             'numOF' => $form->get('numero')->getData(),
             'form' => $form->createView()
         ]);
     }
 
-    private
-    function addOF(Badgeage $badge, OrdreFab $ordreFab, Ilot $ilot)
+    private function addOF(Badgeage $badge, OrdreFab $ordreFab, Ilot $ilot)
     {
         date_default_timezone_set('Europe/Paris');
 

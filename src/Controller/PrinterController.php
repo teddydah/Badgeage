@@ -27,6 +27,9 @@ class PrinterController extends AbstractController
         }
 
         $form = $this->createForm(OrdreFabType::class, $ordreFab);
+        $form->add('numero', null, [
+            'label' => 'Impression étiquette'
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
