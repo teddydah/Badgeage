@@ -43,27 +43,29 @@ class BadgeageController extends AbstractController
             'label' => 'Badgeage OF ' . $ilot->getNomIRL(),
             'attr' => ['placeholder' => 'Scannez OF']
         ]);
-        $this->add($ilot, $ilotRepository, $ordreFabRepository, $badgeageRepository, $request, $em);
+        $this->add($ilot, $ordreFabRepository, $badgeageRepository, $request, $em);
 
         return $this->render('badgeage/view.html.twig', [
             'ilot' => $ilot,
+            'badgeage' => $badgeage,
             'sousIlots' => $ilotRepository->findBySousIlotsPeinture(),
-            'form' => $form->createView(),
-            'badgeage' => $badgeage
+            'form' => $form->createView()
         ]);
     }
 
     /**
-     * @Route("/Peinture/{nomURL}/view", name="view_paint", methods={"GET", "POST"})
+     * @Route("/{nomURL}/test", name="test", methods={"GET", "POST"})
      */
-    public function viewPaint(
+    public function listOF(
         Ilot                   $ilot = null,
+        Badgeage               $badgeage = null,
         IlotRepository         $ilotRepository,
         OrdreFabRepository     $ordreFabRepository,
         BadgeageRepository     $badgeageRepository,
         Request                $request,
         EntityManagerInterface $em): Response
     {
+        // ParamConverter => si $ilot est null, alors le contrôleur est exécuté
         if (null === $ilot) {
             throw $this->createNotFoundException('Ilot non trouvé.');
         }
@@ -74,10 +76,11 @@ class BadgeageController extends AbstractController
             'label' => 'Badgeage OF ' . $ilot->getNomIRL(),
             'attr' => ['placeholder' => 'Scannez OF']
         ]);
-        $this->add($ilot, $ilotRepository, $ordreFabRepository, $badgeageRepository, $request, $em);
+        $this->add($ilot, $ordreFabRepository, $badgeageRepository, $request, $em);
 
         return $this->render('badgeage/view.html.twig', [
             'ilot' => $ilot,
+            'badgeage' => $badgeage,
             'sousIlots' => $ilotRepository->findBySousIlotsPeinture(),
             'form' => $form->createView()
         ]);
@@ -88,7 +91,6 @@ class BadgeageController extends AbstractController
      */
     public function add(
         Ilot                   $ilot = null,
-        IlotRepository         $ilotRepository,
         OrdreFabRepository     $ordreFabRepository,
         BadgeageRepository     $badgeageRepository,
         Request                $request,
@@ -120,7 +122,7 @@ class BadgeageController extends AbstractController
             if (isset($ordre)) {
                 if ($badgeage !== null) {
                     $this->addFlash('warning', $ilot->getNomIRL() . ' : l\'OF ' . $numOF . ' a déjà été badgé.');
-                    // TODO ?
+
                     $msg = '<a href="edit/' . $badgeage->getId() . '" title="Mettre à jour la date de badgeage de l\'OF">Voulez-vous mettre à jour la date ?</a>';
 
                     $this->addFlash('custom', $msg);
@@ -143,7 +145,7 @@ class BadgeageController extends AbstractController
     /**
      * @Route("/{nomURL}/edit/{id<\d+>}", name="edit", methods={"GET", "POST"})
      */
-    public function edit(Badgeage $badgeage = null, BadgeageRepository $badgeageRepository, OrdreFabRepository $ordreFabRepository, Request $request, EntityManagerInterface $em): Response
+    public function edit(Badgeage $badgeage = null, IlotRepository $ilotRepository, EntityManagerInterface $em): Response
     {
         if (null === $badgeage) {
             throw $this->createNotFoundException('Badgeage non trouvé.');
@@ -193,7 +195,8 @@ class BadgeageController extends AbstractController
             }
         }
 
-        return $this->render('badgeage/detail.html.twig', ['ilot' => $ilot,
+        return $this->render('badgeage/detail.html.twig', [
+            'ilot' => $ilot,
             'badgeage' => $badgeage,
             'numOF' => $form->get('numero')->getData(),
             'form' => $form->createView()
@@ -233,7 +236,8 @@ class BadgeageController extends AbstractController
             }
         }
 
-        return $this->render('badgeage/delete.html.twig', ['ilot' => $ilot,
+        return $this->render('badgeage/delete.html.twig', [
+            'ilot' => $ilot,
             'badgeage' => $badgeage,
             'numOF' => $form->get('numero')->getData(),
             'form' => $form->createView()
