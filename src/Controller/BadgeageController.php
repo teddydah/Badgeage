@@ -143,20 +143,11 @@ class BadgeageController extends AbstractController
     /**
      * @Route("/{nomURL}/edit/{id<\d+>}", name="edit", methods={"GET", "POST"})
      */
-    public function edit(Ilot $ilot = null, Badgeage $badgeage = null, BadgeageRepository $badgeageRepository, OrdreFabRepository $ordreFabRepository, Request $request, EntityManagerInterface $em): Response
+    public function edit(Badgeage $badgeage = null, BadgeageRepository $badgeageRepository, OrdreFabRepository $ordreFabRepository, Request $request, EntityManagerInterface $em): Response
     {
-        if (null === $ilot) {
-            throw $this->createNotFoundException('Ilot non trouvé.');
+        if (null === $badgeage) {
+            throw $this->createNotFoundException('Badgeage non trouvé.');
         }
-
-        $ordreFab = new OrdreFab();
-
-        $form = $this->createForm(OrdreFabType::class, $ordreFab);
-        $numOF = $form->get('numero')->getData();
-
-        // ordre = $ordreFabRepository->findByNumeroOF();
-        $ordre = $ordreFabRepository->findOneBy(["numero" => $numOF]);
-        $badge = $badgeageRepository->findBy(['id' => $badgeage->getId()]);
 
         date_default_timezone_set('Europe/Paris');
 
@@ -167,12 +158,12 @@ class BadgeageController extends AbstractController
                     <span>Mise à jour de la date effectuée.</span>
                     <span>Nouvelle date : <strong>" . $badgeage->getDateBadgeage()->format("d/m/Y") . "</strong></span>
                     <span>OF : <strong>" . $badgeage->getOrdreFab()->getNumero() . "</strong></span>
-                    <span>Ilot : <strong>" . $ilot->getNomIRL() . "</strong></span>
+                    <span>Ilot : <strong>" . $badgeage->getIlot()->getNomIRL() . "</strong></span>
                 </div>";
 
         $this->addFlash('msg', $msg);
 
-        return $this->redirectToRoute('badgeage_view', ['nomURL' => $ilot->getNomURL()], 302);
+        return $this->redirectToRoute('badgeage_view', ['nomURL' => $badgeage->getIlot()->getNomURL()], 302);
     }
 
     /**
