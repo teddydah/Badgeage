@@ -17,8 +17,9 @@
         <div id="printer-item" class="printer-item">
             <div class="form">
                 {{ form_start(form) }}
-                <div class="form-input">
-                    {{ form_widget(form) }}
+                {{ form_label(form.numero) }}
+                <div class="form-input mb-3">
+                    {{ form_widget(form.numero) }}
                     <i id="circle-info" class="fa-solid fa-circle-info" title="Information impression"></i>
                 </div>
                 {{ form_end(form) }}

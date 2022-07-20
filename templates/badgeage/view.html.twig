@@ -7,7 +7,7 @@
                 {% for sousIlot in sousIlots %}
                     <li>
                         <a href="{{ path('badgeage_view', { 'nomURL' : sousIlot.nomURL }) }}"
-                           title="Ilôt {{ sousIlot.nomIRL }}">{{ sousIlot.nomIRL }}</a>
+                           title="Ilot {{ sousIlot.nomIRL }}">{{ sousIlot.nomIRL }}</a>
                     </li>
                 {% endfor %}
             </ul>
@@ -30,11 +30,32 @@
             </div>
             {% include('_flash_messages.html.twig') %}
             <div class="boutons">
+                {% if ilot.nomURL is same as('FacesPerm') %}
+                    <div class="item-4">
+                        <a class="ilot item-btn-6 bouton" href="{{ path('badgeage_view', { 'nomURL' : 'FacesTempo' }) }}"
+                           title="Ilot Faces Temporaire">Faces Temporaire</a>
+                    </div>
+                {% elseif ilot.nomURL is same as('FacesTempo') %}
+                    <div class="item-4">
+                        <a class="ilot item-btn-6 bouton" href="{{ path('badgeage_view', { 'nomURL' : 'FacesPerm' }) }}"
+                           title="Ilot Faces Permanente">Faces Permanente</a>
+                    </div>
+                {% elseif ilot.nomURL is same as('FraisagePerm') %}
+                    <div class="item-4">
+                        <a class="ilot item-btn-6 bouton" href="{{ path('badgeage_view', { 'nomURL' : 'FraisageTempo' }) }}"
+                           title="Ilot Fraisage Tempo">Fraisage Tempo</a>
+                    </div>
+                {% elseif ilot.nomURL is same as('FraisageTempo') %}
+                    <div class="item-4">
+                        <a class="ilot item-btn-6 bouton" href="{{ path('badgeage_view', { 'nomURL' : 'FraisagePerm' }) }}"
+                           title="Ilot Fraisage Permanent">Fraisage Permanent</a>
+                    </div>
+                {% endif %}
                 <div class="item-1">
-                    {# TODO #}
-                    <a class="prev item-btn-1 bouton" id="btn_retour_idx" onclick="history.back()" target="_self"
-                       role="button"
-                       title="Page précédente">Précédent</a>
+                    {# TODO #}<a class="prev item-btn-1 bouton" id="btn_retour_idx" onclick="history.back()"
+                                 target="_self"
+                                 role="button"
+                                 title="Page précédente">Précédent</a>
                     <a class="home item-btn-2 bouton" href="{{ path('main_home') }}" title="Page d'accueil">Accueil</a>
                 </div>
                 <div class="item-2">

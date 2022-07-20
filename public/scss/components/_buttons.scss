@@ -6,26 +6,47 @@
   margin: 0.5em 0;
 
   div {
-    padding: 0.5em;
-
     &.item-1,
     &.item-2,
     &.item-3,
     &.item-4 {
       display: flex;
-      align-items: center;
+      flex-wrap: wrap;
+
+      @media screen and (min-width: 387px) {
+        flex-wrap: nowrap;
+        align-items: center;
+      }
 
       a {
         width: 100%;
 
         &.item-btn-1,
         &.item-btn-3 {
-          margin-right: 0.25em;
+          @media screen and (min-width: 387px) {
+            margin-right: 0.25em;
+          }
         }
 
         &.item-btn-2,
         &.item-btn-4 {
-          margin-left: 0.25em;
+          @media screen and (min-width: 387px) {
+            margin-left: 0.25em;
+          }
+        }
+
+        &.item-btn-3 {
+          @media screen and (min-width: 387px) {
+            margin-top: 0;
+          }
+        }
+
+        &.item-btn-4 {
+          margin-bottom: 0.5em;
+        }
+
+        &.item-btn-5 {
+          margin: 0 0.5em 0.5em 0.5em;
         }
       }
     }
@@ -33,6 +54,10 @@
     &.item-2,
     &.item-3 {
       padding-top: 0;
+    }
+
+    &.item-4 {
+      padding-bottom: 0;
     }
 
     a {
@@ -44,6 +69,7 @@
       text-transform: uppercase;
       text-align: center;
       color: $color2;
+      margin: 0.5em 0.5em 0 0.5em;
       padding: 1em 0.5em;
 
       &:hover {
@@ -94,6 +120,10 @@
           @include font-awesome(bold, "\f2f1");
           margin-right: 0.5em;
         }
+      }
+
+      &.ilot {
+        background-color: $color6;
       }
     }
   }
