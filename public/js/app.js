@@ -37,4 +37,30 @@ $(document).ready(() => {
     $(".delete-badgeage form").on('submit', () => {
         return confirm('Êtes-vous sûr de vouloir supprimer ce badgeage ?');
     });
+
+    /* -- DataTables -- */
+    $('#datatables').DataTable({
+        language: {
+            processing: "Traitement en cours...",
+            search: "Rechercher&nbsp;:",
+            lengthMenu: "Résultats par page : _MENU_",
+            info: "Résulats _START_ &agrave; _END_ sur _TOTAL_",
+            infoEmpty: "Affichage de l'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
+            infoFiltered: "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+            infoPostFix: "",
+            loadingRecords: "Chargement en cours...",
+            zeroRecords: "Aucun &eacute;l&eacute;ment &agrave; afficher",
+            emptyTable: "Aucune donnée disponible dans le tableau",
+            paginate: {
+                first: "Premier",
+                previous: "Préc.",
+                next: "Suiv.",
+                last: "Dernier"
+            },
+            aria: {
+                sortAscending: ": activer pour trier la colonne par ordre croissant",
+                sortDescending: ": activer pour trier la colonne par ordre décroissant"
+            }
+        }
+    });
 });

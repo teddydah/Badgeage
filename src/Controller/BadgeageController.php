@@ -54,39 +54,6 @@ class BadgeageController extends AbstractController
     }
 
     /**
-     * @Route("/{nomURL}/test", name="test", methods={"GET", "POST"})
-     */
-    public function listOF(
-        Ilot                   $ilot = null,
-        Badgeage               $badgeage = null,
-        IlotRepository         $ilotRepository,
-        OrdreFabRepository     $ordreFabRepository,
-        BadgeageRepository     $badgeageRepository,
-        Request                $request,
-        EntityManagerInterface $em): Response
-    {
-        // ParamConverter => si $ilot est null, alors le contrôleur est exécuté
-        if (null === $ilot) {
-            throw $this->createNotFoundException('Ilot non trouvé.');
-        }
-
-        $ordreFab = new OrdreFab();
-        $form = $this->createForm(OrdreFabType::class, $ordreFab);
-        $form->add('numero', null, [
-            'label' => 'Badgeage OF ' . $ilot->getNomIRL(),
-            'attr' => ['placeholder' => 'Scannez OF']
-        ]);
-        $this->add($ilot, $ordreFabRepository, $badgeageRepository, $request, $em);
-
-        return $this->render('badgeage/view.html.twig', [
-            'ilot' => $ilot,
-            'badgeage' => $badgeage,
-            'sousIlots' => $ilotRepository->findBySousIlotsPeinture(),
-            'form' => $form->createView()
-        ]);
-    }
-
-    /**
      * @Route("/add", name="add", methods={"GET", "POST"})
      */
     public function add(
@@ -100,7 +67,7 @@ class BadgeageController extends AbstractController
             throw $this->createNotFoundException('Ilot non trouvé.');
         }
 
-        $badge = new Badgeage();
+        $badgeage = new Badgeage();
         $ordreFab = new OrdreFab();
 
         $form = $this->createForm(OrdreFabType::class, $ordreFab);
@@ -111,34 +78,33 @@ class BadgeageController extends AbstractController
             $numOF = $form->get('numero')->getData();
 
             // Récupération de l'OF avec $numOF depuis la BDD
-            $ordre = $ordreFabRepository->findOneBy(["numero" => $numOF]);
+            $ordreFabExistant = $ordreFabRepository->findOneBy(["numero" => $numOF]);
 
             // TODO : Ajouter : si OF existant null alors interroger API + màj MYSQL avec nouvel OF (peu probable)
-            $badgeage = $badgeageRepository->findOneBy([
+            $badgeageExistant = $badgeageRepository->findOneBy([
                 "ilot" => $ilot,
-                "ordreFab" => $ordre
+                "ordreFab" => $ordreFabExistant
             ]);
 
-            if (isset($ordre)) {
-                if ($badgeage !== null) {
+            if (isset($ordreFabExistant)) {
+                if ($badgeageExistant !== null) {
                     $this->addFlash('warning', $ilot->getNomIRL() . ' : l\'OF ' . $numOF . ' a déjà été badgé.');
 
-                    $msg = '<a href="edit/' . $badgeage->getId() . '" title="Mettre à jour la date de badgeage de l\'OF">Voulez-vous mettre à jour la date ?</a>';
+                    $msg = '<a href="edit/' . $badgeageExistant->getId() . '" title="Mettre à jour la date de badgeage de l\'OF">Voulez-vous mettre à jour la date ?</a>';
 
                     $this->addFlash('custom', $msg);
                 } else {
                     // Appel de la méthode addBadgeage()
-                    $this->addBadgeage($badge, $ordre, $ilot);
-                    $em->persist($badge);
+                    $this->addBadgeage($badgeage, $ordreFabExistant, $ilot);
+                    $em->persist($badgeage);
                     $em->flush();
 
-                    $this->addFlash('success', $ilot->getNomIRL() . ' : commande ' . $badge->getOrdreFab()->getNumero() . ' validée.');
+                    $this->addFlash('success', $ilot->getNomIRL() . ' : commande ' . $badgeage->getOrdreFab()->getNumero() . ' validée.');
                 }
             } else {
                 $this->addFlash('danger', $ilot->getNomIRL() . ' : l\'OF ' . $numOF . ' n\'existe pas.');
             }
         }
-
         return $this->redirectToRoute('badgeage_view', ['nomURL' => $ilot->getNomURL()], 302);
     }
 
@@ -244,16 +210,16 @@ class BadgeageController extends AbstractController
         ]);
     }
 
-    private function addBadgeage(Badgeage $badge, OrdreFab $ordreFab, Ilot $ilot)
+    private function addBadgeage(Badgeage $badgeage, OrdreFab $ordreFab, Ilot $ilot)
     {
         date_default_timezone_set('Europe/Paris');
 
-        $badge->setOrdreFab($ordreFab);
-        $badge->setIlot($ilot);
-        $badge->setDateBadgeage(new \DateTime());
+        $badgeage->setOrdreFab($ordreFab);
+        $badgeage->setIlot($ilot);
+        $badgeage->setDateBadgeage(new \DateTime());
         // TODO
-        $badge->setRecid(1);
+        $badgeage->setRecid(1);
 
-        return $badge;
+        return $badgeage;
     }
 }

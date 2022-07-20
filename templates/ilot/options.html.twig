@@ -1,12 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }}{% endblock %}
+{% block titre %}
+    <h1>TODO {{ ilot.nomIRL }}</h1>
+{% endblock %}
 
 {% block body %}
     <section class="options">
         <ul>
             <li>
-                <a href="#" title="Historique ilôt">Historique ilôt</a>
+                <a href="{{ path('options_historique_ilot', { 'nomURL' : ilot.nomURL, 'historiqueIlot' : 'HistoriqueIlot' }) }}" title="Historique îlot">Historique ilot</a>
             </li>
             <li>
                 <a href="#" title="Historique commande">Historique commande</a>

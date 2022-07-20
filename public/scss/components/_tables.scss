@@ -1,14 +1,9 @@
 .table {
   border: 2px solid $color1;
+  font-size: 1.6rem;
 
   tr {
-    th {
-      text-align: right;
-    }
-
     td {
-      text-align: left;
-
       button {
         background-color: $color-self-signal;
         border: 2px solid $color1;
@@ -26,6 +21,39 @@
 
         &:hover {
           background-color: $color2;
+        }
+      }
+    }
+  }
+}
+
+.delete-badgeage {
+  table {
+    tr {
+      th {
+        text-align: right;
+      }
+
+      td {
+        text-align: left;
+      }
+    }
+  }
+}
+
+.historique-ilot {
+  table {
+    th,
+    td {
+      width: 50%;
+    }
+
+    td {
+      &.numOF {
+        vertical-align: middle;
+
+        a {
+          text-decoration: underline;
         }
       }
     }

@@ -39,10 +39,19 @@ class OrdreFabRepository extends ServiceEntityRepository
         }
     }
 
-    public function findByNumeroOF()
+    /**
+     * @return float|int|mixed|string
+     *
+     * Récupère les OF par date des 7 derniers jours
+     */
+    public function findByDate()
     {
+        $date = date("Y/m/d h:i:s", strtotime("-8 days"));
         $queryBuilder = $this->createQueryBuilder('o');
-        $queryBuilder->select('o.numero');
+        $queryBuilder
+            ->andWhere('o.dateEcheance >= :date ')
+            ->setParameter('date', $date)
+            ->orderBy('o.dateEcheance', 'DESC');
         $query = $queryBuilder->getQuery();
 
         return $query->getResult();

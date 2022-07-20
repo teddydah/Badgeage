@@ -11,9 +11,8 @@ main {
         padding: 1em;
 
         &:hover {
-          background-color: $color1;
-          border-color: $color-self-signal;
-          color: $color2;
+          background-color: $color2;
+          color: $color1;
         }
       }
     }
