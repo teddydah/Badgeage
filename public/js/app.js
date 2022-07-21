@@ -6,7 +6,8 @@ $(document).ready(() => {
         let target = $(this).data("target");
         $(target).toggleClass("show");
         $("main").addClass(opacity);
-        $("input").prop("disabled", true);
+        $("input").prop("disabled", true)
+        $("select").prop("disabled", true);
     });
 
     /* -- Masquer le menu -- */
@@ -15,6 +16,7 @@ $(document).ready(() => {
         $(target).removeClass("show");
         $("main").removeClass(opacity);
         $("input").prop("disabled", false);
+        $("select").prop("disabled", false);
     });
 
     /* -- Afficher une pop-up -- */
