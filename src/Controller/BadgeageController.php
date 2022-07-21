@@ -83,7 +83,16 @@ class BadgeageController extends AbstractController
             // Récupération de l'OF avec $numOF depuis la BDD
             $ordreFabExistant = $ordreFabRepository->findOneBy(["numero" => $numOF]);
 
-            // TODO : Ajouter : si OF existant null alors interroger API + màj MYSQL avec nouvel OF (peu probable)
+            // Si OF existant null alors interroger API + màj MYSQL avec nouvel OF (peu probable)
+//            if (null === $ordreFabExistant) {
+//                $api = new ApiController();
+//                $ordreFabExistant = $api->getOneOrdreByNumero($numOF);
+//
+//                if (null === $ordreFabExistant) {
+//                    throw $this->createNotFoundException('OF non trouvé.');
+//                }
+//            }
+
             $badgeageExistant = $badgeageRepository->findOneBy([
                 "ilot" => $ilot,
                 "ordreFab" => $ordreFabExistant
