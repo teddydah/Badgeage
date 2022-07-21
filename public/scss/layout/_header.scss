@@ -1,7 +1,10 @@
 header {
   background-color: $color1;
   border-bottom: 4px solid $color-self-signal;
-  margin-bottom: 2em;
+
+  @media screen and (min-width: $sm) {
+    margin-bottom: 2em;
+  }
 
   div {
     &.container {
@@ -11,6 +14,16 @@ header {
   }
 
   h1 {
+    text-transform: uppercase;
+    font-weight: bold;
+    color: $color2;
+    font-size: 2rem;
+    padding: 0.5em 0;
+
+    @media screen and (min-width: $sm) {
+      padding: 1em 0;
+    }
+
     a {
       color: $color2;
 

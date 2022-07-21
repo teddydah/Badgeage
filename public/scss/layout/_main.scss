@@ -5,10 +5,21 @@ main {
   .paint,
   .options {
     li {
+      &:first-child {
+        a {
+          margin-top: 0.5em;
+        }
+      }
+
       a {
         @include boutons-ilots;
         display: block;
+        margin: 0.25em 0;
         padding: 1em;
+
+        @media screen and (min-width: $sm) {
+          margin: 0.5em 0;
+        }
 
         &:hover {
           background-color: $color2;

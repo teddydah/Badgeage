@@ -1,7 +1,10 @@
 footer {
   background-color: $color1;
   border-top: 4px solid $color-self-signal;
-  margin-top: 2em;
+
+  @media screen and (min-width: $sm) {
+    margin-top: 2em;
+  }
 
   div {
     display: flex;
@@ -13,8 +16,12 @@ footer {
       color: $color2;
       text-align: center;
       font-size: 1.2rem;
-      padding: 1em;
+      padding: 0.5em;
       flex: 1;
+
+      @media screen and (min-width: $sm) {
+        padding: 1em;
+      }
 
       p {
         margin: 0.5em;
