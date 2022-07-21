@@ -24,13 +24,13 @@ class BadgeageController extends AbstractController
      * @Route("/{nomURL}/view", name="view", methods={"GET", "POST"})
      */
     public function view(
-        Ilot                   $ilot = null,
-        Badgeage               $badgeage = null,
         IlotRepository         $ilotRepository,
         OrdreFabRepository     $ordreFabRepository,
         BadgeageRepository     $badgeageRepository,
         Request                $request,
-        EntityManagerInterface $em): Response
+        EntityManagerInterface $em,
+        Ilot                   $ilot = null,
+        Badgeage               $badgeage = null): Response
     {
         // ParamConverter => si $ilot est null, alors le contrôleur est exécuté
         if (null === $ilot) {
@@ -41,9 +41,12 @@ class BadgeageController extends AbstractController
         $form = $this->createForm(OrdreFabType::class, $ordreFab);
         $form->add('numero', null, [
             'label' => 'Badgeage OF ' . $ilot->getNomIRL(),
-            'attr' => ['placeholder' => 'Scannez OF']
+            'attr' => [
+                'placeholder' => 'Scannez OF',
+                'autofocus' => true
+            ]
         ]);
-        $this->add($ilot, $ordreFabRepository, $badgeageRepository, $request, $em);
+        $this->add($ordreFabRepository, $badgeageRepository, $request, $em, $ilot);
 
         return $this->render('badgeage/view.html.twig', [
             'ilot' => $ilot,
@@ -57,11 +60,11 @@ class BadgeageController extends AbstractController
      * @Route("/add", name="add", methods={"GET", "POST"})
      */
     public function add(
-        Ilot                   $ilot = null,
         OrdreFabRepository     $ordreFabRepository,
         BadgeageRepository     $badgeageRepository,
         Request                $request,
-        EntityManagerInterface $em): Response
+        EntityManagerInterface $em,
+        Ilot                   $ilot = null): Response
     {
         if (null === $ilot) {
             throw $this->createNotFoundException('Ilot non trouvé.');
@@ -111,7 +114,7 @@ class BadgeageController extends AbstractController
     /**
      * @Route("/{nomURL}/edit/{id<\d+>}", name="edit", methods={"GET", "POST"})
      */
-    public function edit(Badgeage $badgeage = null, IlotRepository $ilotRepository, EntityManagerInterface $em): Response
+    public function edit(IlotRepository $ilotRepository, EntityManagerInterface $em, Badgeage $badgeage = null): Response
     {
         if (null === $badgeage) {
             throw $this->createNotFoundException('Badgeage non trouvé.');
@@ -137,7 +140,7 @@ class BadgeageController extends AbstractController
     /**
      * @Route("/{nomURL}/detail", name="detail", methods={"GET", "POST"})
      */
-    public function detail(Ilot $ilot = null, Badgeage $badgeage = null, Request $request, EntityManagerInterface $em): Response
+    public function detail(Request $request, Ilot $ilot = null, Badgeage $badgeage = null): Response
     {
         if (null === $ilot) {
             throw $this->createNotFoundException('Ilot non trouvé.');
@@ -147,7 +150,10 @@ class BadgeageController extends AbstractController
 
         $form = $this->createForm(OrdreFabType::class, $ordreFab);
         $form->add('numero', null, [
-            'label' => 'Code-barres'
+            'label' => 'Code-barres',
+            'attr' => [
+                'autofocus' => true
+            ]
         ]);
         $form->handleRequest($request);
 
@@ -171,8 +177,13 @@ class BadgeageController extends AbstractController
 
     /**
      * @Route("/{nomURL}/delete", name="delete", methods={"GET", "POST"})
+     * @param Ilot|null $ilot
+     * @param Badgeage|null $badgeage
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @return Response
      */
-    public function delete(Ilot $ilot = null, Badgeage $badgeage = null, Request $request, EntityManagerInterface $em): Response
+    public function delete(Request $request, EntityManagerInterface $em, Ilot $ilot = null, Badgeage $badgeage = null): Response
     {
         if (null === $ilot) {
             throw $this->createNotFoundException('Ilot non trouvé.');
@@ -183,7 +194,10 @@ class BadgeageController extends AbstractController
         $form = $this->createForm(OrdreFabType::class, $ordreFab);
         $form->add('numero', null, [
             'label' => 'Code-barres',
-            'data' => $badgeage->getOrdreFab()->getNumero()
+            'data' => $badgeage->getOrdreFab()->getNumero(),
+            'attr' => [
+                'autofocus' => true
+            ]
         ]);
         $form->handleRequest($request);
 
