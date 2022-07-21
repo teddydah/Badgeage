@@ -11,7 +11,8 @@
   "components/buttons",
   "components/forms",
   "components/tables",
-  "components/alerts";
+  "components/alerts",
+  "components/datatables";
 
 @import
   "layout/header",
@@ -20,7 +21,5 @@
   "layout/footer";
 
 @import
-  "pages/detail",
-  "pages/paint",
   "pages/printer";
 

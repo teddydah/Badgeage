@@ -43,7 +43,7 @@ $(document).ready(() => {
         language: {
             processing: "Traitement en cours...",
             search: "Rechercher&nbsp;:",
-            lengthMenu: "Résultats par page : _MENU_",
+            lengthMenu: "Résultats par page :_MENU_",
             info: "Résulats _START_ &agrave; _END_ sur _TOTAL_",
             infoEmpty: "Affichage de l'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
             infoFiltered: "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",

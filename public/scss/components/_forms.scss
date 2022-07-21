@@ -13,7 +13,6 @@
   }
 
   input {
-    border: 2px solid $color1;
-    font-size: 1.6rem;
+    @include input;
   }
 }

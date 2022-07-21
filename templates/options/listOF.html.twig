@@ -6,33 +6,32 @@
 
 {% block body %}
     <section class="historique-ilot">
-        <div>
-            <table id="datatables" class="display table table-striped table-light text-center">
-                <thead>
+        <table id="datatables" class="display table table-striped table-light text-center">
+            <thead>
+            <tr>
+                <th>OF</th>
+                <th>Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for badgeage in badgeages %}
                 <tr>
-                    <th>OF</th>
-                    <th>Date</th>
+                    <td class="numOF">
+                        <a href="#" title="{{ badgeage.ordreFab.numero }}">{{ badgeage.ordreFab.numero }}</a>
+                    </td>
+                    <td>{{ badgeage.ordreFab.dateEcheance | date("d/m/Y @ h:i") }}</td>
                 </tr>
-                </thead>
-                <tbody>
-                {% for badgeage in badgeages %}
-                    <tr>
-                        <td class="numOF">
-                            <a href="#" title="{{ badgeage.ordreFab.numero }}">{{ badgeage.ordreFab.numero }}</a>
-                        </td>
-                        <td>{{ badgeage.ordreFab.dateEcheance | date("d/m/Y @ h:i") }}</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
+            {% endfor %}
+            </tbody>
+        </table>
         <div class="boutons">
             <div class="item-1">
                 {# TODO #}
                 <a class="prev item-btn-1 bouton" id="btn_retour_idx" onclick="history.back()" target="_self"
                    role="button"
                    title="Page précédente"><span>Précédent</span></a>
-                <a class="home item-btn-2 bouton" href="{{ path('main_home') }}" title="Page d'accueil"><span>Accueil</span></a>
+                <a class="home item-btn-2 bouton" href="{{ path('main_home') }}"
+                   title="Page d'accueil"><span>Accueil</span></a>
             </div>
             <div class="item-3">
                 <a class="print item-btn-3 bouton"
