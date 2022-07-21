@@ -27,6 +27,14 @@
         &.item-btn-4 {
           margin-left: 0.25em;
         }
+
+        span {
+          display: none;
+
+          @media screen and (min-width: $breakpoint) {
+            display: inline-block;
+          }
+        }
       }
     }
 
@@ -56,38 +64,46 @@
         color: $color1;
       }
 
+      &.prev,
+      &.home,
+      &.print,
+      &.photo,
+      &.options,
+      &.refresh {
+        &::before {
+          @media screen and (min-width: $breakpoint) {
+            margin-right: 0.5em;
+          }
+        }
+      }
+
       &.prev {
         &::before {
           @include font-awesome(bold, "\f060");
-          margin-right: 0.5em;
         }
       }
 
       &.home {
         &::before {
           @include font-awesome(bold, "\f015");
-          margin-right: 0.5em;
         }
       }
 
       &.print {
         &::before {
           @include font-awesome(bold, "\f02f");
-          margin-right: 0.5em;
         }
       }
 
       &.photo {
         &::before {
           @include font-awesome(bold, "\f030");
-          margin-right: 0.5em;
         }
       }
 
       &.options {
         &::before {
           @include font-awesome(bold, "\2b");
-          margin-right: 0.5em;
         }
       }
 
@@ -96,7 +112,6 @@
 
         &::before {
           @include font-awesome(bold, "\f2f1");
-          margin-right: 0.5em;
         }
       }
 
