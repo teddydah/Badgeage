@@ -19,13 +19,13 @@ class OptionsController extends AbstractController
     /**
      * @Route("/menu", name="menu", methods={"GET"})
      */
-    public function options(Ilot $ilot = null, Badgeage $badgeage = null): Response
+    public function menu(Ilot $ilot = null, Badgeage $badgeage = null): Response
     {
         if (null === $ilot) {
             throw $this->createNotFoundException('Ilot non trouvé.');
         }
 
-        return $this->render('ilot/options.html.twig', [
+        return $this->render('options/menu.html.twig', [
             'ilot' => $ilot,
             'badgeage' => $badgeage
         ]);
