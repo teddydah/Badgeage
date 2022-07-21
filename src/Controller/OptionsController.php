@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Badgeage;
 use App\Entity\Ilot;
+use App\Entity\OrdreFab;
 use App\Repository\BadgeageRepository;
 use App\Repository\IlotRepository;
 use App\Repository\OrdreFabRepository;
@@ -34,19 +35,14 @@ class OptionsController extends AbstractController
     /**
      * @Route("/{historiqueIlot}", name="historique_ilot")
      */
-    public function listOF(BadgeageRepository $badgeageRepository, Ilot $ilot = null, OrdreFabRepository $ordreFabRepository, IlotRepository $ilotRepository): Response
+    public function listOF(BadgeageRepository $badgeageRepository, OrdreFabRepository $ordreFabRepository, Ilot $ilot = null): Response
     {
         if (null === $ilot) {
             throw $this->createNotFoundException('Ilot non trouvé.');
         }
 
-        $ordreFab = $ordreFabRepository->findByDate();
-        $badgeage = $badgeageRepository->findBy([
-            'ordreFab' => $ordreFab, 'ilot' => $ilot
-        ]);
-
         return $this->render('options/listOF.html.twig', [
-            'badgeages' => $badgeage,
+            'badgeages' => $badgeageRepository->findBadgeage($ilot),
             'ilot' => $ilot
         ]);
     }

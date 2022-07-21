@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Badgeage;
+use App\Entity\Ilot;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,6 +38,26 @@ class BadgeageRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * @return float|int|mixed|string
+     *
+     * Récupère les badgeages par îlot et par date pour les 7 derniers jours
+     */
+    public function findBadgeage(Ilot $ilot)
+    {
+        $date = date("Y/m/d h:i:s", strtotime("-8 days"));
+        $queryBuilder = $this->createQueryBuilder('b');
+        $queryBuilder
+            ->andWhere('b.ilot = :ilot')
+            ->andWhere('b.dateBadgeage >= :date')
+            ->setParameter('date', $date)
+            ->setParameter('ilot', $ilot)
+            ->orderBy('b.dateBadgeage', 'DESC');
+        $query = $queryBuilder->getQuery();
+
+        return $query->getResult();
     }
 
 //    /**
