@@ -5,50 +5,27 @@
   width: 100%;
   margin: 0.5em 0;
 
-  // TODO mobile=>juste font-awesome et sur plusieurs lignes comme en desktop
-
   div {
+    padding: 0.5em;
+
     &.item-1,
     &.item-2,
     &.item-3,
     &.item-4 {
       display: flex;
-      flex-wrap: wrap;
-
-      @media screen and (min-width: 387px) {
-        flex-wrap: nowrap;
-        align-items: center;
-      }
+      align-items: center;
 
       a {
         width: 100%;
 
         &.item-btn-1,
         &.item-btn-3 {
-          @media screen and (min-width: 387px) {
-            margin-right: 0.25em;
-          }
+          margin-right: 0.25em;
         }
 
         &.item-btn-2,
         &.item-btn-4 {
-          @media screen and (min-width: 387px) {
-            margin-left: 0.25em;
-          }
-        }
-
-        &.item-btn-3 {
-          @media screen and (min-width: 387px) {
-            margin-top: 0;
-          }
-        }
-
-        &.item-btn-4 {
-          margin-bottom: 0.5em;
-        }
-
-        &.item-btn-5 {
-          margin: 0 0.5em 0.5em 0.5em;
+          margin-left: 0.25em;
         }
       }
     }
@@ -71,7 +48,6 @@
       text-transform: uppercase;
       text-align: center;
       color: $color2;
-      margin: 0.5em 0.5em 0 0.5em;
       padding: 1em 0.5em;
 
       &:hover {
