@@ -123,7 +123,7 @@ class BadgeageController extends AbstractController
     /**
      * @Route("/{nomURL}/edit/{id<\d+>}", name="edit", methods={"GET", "POST"})
      */
-    public function edit(IlotRepository $ilotRepository, EntityManagerInterface $em, Badgeage $badgeage = null): Response
+    public function edit(EntityManagerInterface $em, Badgeage $badgeage = null): Response
     {
         if (null === $badgeage) {
             throw $this->createNotFoundException('Badgeage non trouvé.');
@@ -149,7 +149,12 @@ class BadgeageController extends AbstractController
     /**
      * @Route("/{nomURL}/detail", name="detail", methods={"GET", "POST"})
      */
-    public function detail(Request $request, Ilot $ilot = null, Badgeage $badgeage = null): Response
+    public function detail(
+        OrdreFabRepository $ordreFabRepository,
+        BadgeageRepository $badgeageRepository,
+        Request            $request,
+        Ilot               $ilot = null,
+        Badgeage           $badgeage = null): Response
     {
         if (null === $ilot) {
             throw $this->createNotFoundException('Ilot non trouvé.');
@@ -168,9 +173,18 @@ class BadgeageController extends AbstractController
 
         $numOF = $form->get('numero')->getData();
 
+        $ordreFabExistant = $ordreFabRepository->findOneBy(["numero" => $numOF]);
+        $badgeageExistant = $badgeageRepository->findOneBy([
+            "ilot" => $ilot,
+            "ordreFab" => $ordreFabExistant
+        ]);
+
         if ($form->isSubmitted() && $form->isValid()) {
-            if (isset($badgeage) && $badgeage->getOrdreFab()->getNumero() === $numOF) {
-                return $this->redirectToRoute('badgeage_delete', ['nomURL' => $ilot->getNomURL()], 302);
+            if (isset($badgeageExistant) && $badgeageExistant->getOrdreFab()->getNumero() === $numOF) {
+                return $this->redirectToRoute('badgeage_delete', [
+                    'nomURL' => $ilot->getNomURL(),
+                    'id' => $badgeageExistant->getId()
+                ], 302);
             } else {
                 $this->addFlash('danger', 'Le badgeage ' . $numOF . ' pour l\'îlot ' . $ilot->getNomIRL() . ' n\'existe pas.');
             }
@@ -185,17 +199,12 @@ class BadgeageController extends AbstractController
     }
 
     /**
-     * @Route("/{nomURL}/delete", name="delete", methods={"GET", "POST"})
-     * @param Ilot|null $ilot
-     * @param Badgeage|null $badgeage
-     * @param Request $request
-     * @param EntityManagerInterface $em
-     * @return Response
+     * @Route("/{nomURL}/delete/{id<\d+>}", name="delete", methods={"GET", "POST"})
      */
-    public function delete(Request $request, EntityManagerInterface $em, Ilot $ilot = null, Badgeage $badgeage = null): Response
+    public function delete(Request $request, EntityManagerInterface $em, Badgeage $badgeage = null): Response
     {
-        if (null === $ilot) {
-            throw $this->createNotFoundException('Ilot non trouvé.');
+        if (null === $badgeage) {
+            throw $this->createNotFoundException('Badgeage non trouvé.');
         }
 
         $ordreFab = new OrdreFab();
@@ -217,16 +226,16 @@ class BadgeageController extends AbstractController
                 $em->remove($badgeage);
                 $em->flush();
 
-                $this->addFlash('success', 'Le badgeage ' . $badgeage->getOrdreFab()->getNumero() . ' pour l\'îlot ' . $ilot->getNomIRL() . ' a bien été supprimé.');
+                $this->addFlash('success', 'Le badgeage ' . $badgeage->getOrdreFab()->getNumero() . ' pour l\'îlot ' . $badgeage->getIlot()->getNomIRL() . ' a bien été supprimé.');
 
-                return $this->redirectToRoute('badgeage_detail', ['nomURL' => $ilot->getNomURL()], 302);
+                return $this->redirectToRoute('badgeage_detail', ['nomURL' => $badgeage->getIlot()->getNomURL()], 302);
             } else {
-                $this->addFlash('danger', 'Le badgeage ' . $numOF . ' pour l\'îlot ' . $ilot->getNomIRL() . ' n\'existe pas.');
+                $this->addFlash('danger', 'Le badgeage ' . $numOF . ' pour l\'îlot ' . $badgeage->getIlot()->getNomIRL() . ' n\'existe pas.');
             }
         }
 
         return $this->render('badgeage/delete.html.twig', [
-            'ilot' => $ilot,
+            'ilot' => $badgeage->getIlot(),
             'badgeage' => $badgeage,
             'numOF' => $form->get('numero')->getData(),
             'form' => $form->createView()
