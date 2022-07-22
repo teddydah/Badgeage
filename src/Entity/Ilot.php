@@ -26,7 +26,7 @@ class Ilot
     private $nomAX;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=50)
      */
     private $nomIRL;
 

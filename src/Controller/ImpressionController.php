@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Ilot;
 use App\Entity\OrdreFab;
+use App\Entity\Printer;
 use App\Form\OrdreFabType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,12 +15,12 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/{nomURL}/impression", name="impression_")
  */
-class PrinterController extends AbstractController
+class ImpressionController extends AbstractController
 {
     /**
-     * @Route(name="etiquette")
+     * @Route(name="etiquette", methods={"GET", "POST"})
      */
-    public function impressionEtiquette(Ilot $ilot = null, OrdreFab $ordreFab = null, Request $request, EntityManagerInterface $em): Response
+    public function print(Request $request, Ilot $ilot = null, OrdreFab $ordreFab = null): Response
     {
         // ParamConverter => si $ilot est null, alors le contrôleur est exécuté
         if (null === $ilot) {
@@ -32,6 +33,7 @@ class PrinterController extends AbstractController
         ]);
         $form->handleRequest($request);
 
+        // TODO
         if ($form->isSubmitted() && $form->isValid()) {
             $this->addFlash('success', 'L\'objet a bien été modifié.');
         }

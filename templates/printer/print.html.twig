@@ -16,7 +16,7 @@
         </div>
         <div id="printer-item" class="printer-item">
             <div class="form">
-                {{ form_start(form) }}
+                {{ form_start(form, { 'attr' : { 'novalidate' : 'novalidate' }}) }}
                 {{ form_label(form.numero) }}
                 <div class="form-input mb-3">
                     {{ form_widget(form.numero) }}
@@ -28,8 +28,8 @@
             <div class="printer-info">
                 <i class="fa-solid fa-print"></i>
                 <div>
-                    {# TODO : récupérer les infos #}
-                    <span><strong>Chef atelier</strong> @192.168.35.207</span>
+                    <span><strong>{{ ilot.printer.nom }}</strong> @{{ ilot.printer.ip }}</span>
+                    {# TODO : définir le statut #}
                     <span>Statut : <strong class="isActive">Active</strong></span>
                 </div>
             </div>

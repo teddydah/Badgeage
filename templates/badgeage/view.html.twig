@@ -24,9 +24,7 @@
     {% else %}
         <section class="ilot">
             <div class="form">
-                {{ form_start(form) }}
-                {{ form_widget(form) }}
-                {{ form_end(form) }}
+                {% include('_form.html.twig') %}
             </div>
             {% include('_flash_messages.html.twig') %}
             <div class="boutons">
