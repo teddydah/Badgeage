@@ -20,25 +20,44 @@ class Article
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(type="string", length=20)
      */
-    private $code;
+    private $codeArticle;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=1000)
      */
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=500, nullable=true)
+     * @ORM\Column(type="string", length=1000, nullable=true)
      */
     private $infoSupplementaire;
 
     /**
-     * @ORM\OneToMany(targetEntity=Symbole::class, mappedBy="article")
-     * @ORM\Column(nullable=true)
+     * @ORM\Column(type="string", length=50)
      */
     private $symbole;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $forme;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $type;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $dimension1;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $dimension2;
 
     /**
      * @ORM\OneToMany(targetEntity=LigneOF::class, mappedBy="article")
@@ -47,7 +66,6 @@ class Article
 
     public function __construct()
     {
-        $this->symbole = new ArrayCollection();
         $this->ligneOFs = new ArrayCollection();
     }
 
@@ -56,14 +74,14 @@ class Article
         return $this->id;
     }
 
-    public function getCode(): ?string
+    public function getCodeArticle(): ?string
     {
-        return $this->code;
+        return $this->codeArticle;
     }
 
-    public function setCode(string $code): self
+    public function setCodeArticle(string $codeArticle): self
     {
-        $this->code = $code;
+        $this->codeArticle = $codeArticle;
 
         return $this;
     }
@@ -88,36 +106,6 @@ class Article
     public function setInfoSupplementaire(string $infoSupplementaire): self
     {
         $this->infoSupplementaire = $infoSupplementaire;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Symbole>
-     */
-    public function getSymbole(): Collection
-    {
-        return $this->symbole;
-    }
-
-    public function addSymbole(Symbole $symbole): self
-    {
-        if (!$this->symbole->contains($symbole)) {
-            $this->symbole[] = $symbole;
-            $symbole->setArticle($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSymbole(Symbole $symbole): self
-    {
-        if ($this->symbole->removeElement($symbole)) {
-            // set the owning side to null (unless already changed)
-            if ($symbole->getArticle() === $this) {
-                $symbole->setArticle(null);
-            }
-        }
 
         return $this;
     }
@@ -148,6 +136,66 @@ class Article
                 $ligneOF->setArticle(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSymbole(): ?string
+    {
+        return $this->symbole;
+    }
+
+    public function setSymbole(string $symbole): self
+    {
+        $this->symbole = $symbole;
+
+        return $this;
+    }
+
+    public function getForme(): ?string
+    {
+        return $this->forme;
+    }
+
+    public function setForme(string $forme): self
+    {
+        $this->forme = $forme;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getDimension1(): ?int
+    {
+        return $this->dimension1;
+    }
+
+    public function setDimension1(int $dimension1): self
+    {
+        $this->dimension1 = $dimension1;
+
+        return $this;
+    }
+
+    public function getDimension2(): ?int
+    {
+        return $this->dimension2;
+    }
+
+    public function setDimension2(int $dimension2): self
+    {
+        $this->dimension2 = $dimension2;
 
         return $this;
     }

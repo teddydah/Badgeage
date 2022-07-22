@@ -31,13 +31,12 @@ class AppFixtures extends Fixture
         $this->connection->executeQuery('TRUNCATE TABLE article');
         $this->connection->executeQuery('TRUNCATE TABLE badgeage');
         $this->connection->executeQuery('TRUNCATE TABLE client');
-        $this->connection->executeQuery('TRUNCATE TABLE fichier');
         $this->connection->executeQuery('TRUNCATE TABLE ilot');
         $this->connection->executeQuery('TRUNCATE TABLE ligne_of');
+        $this->connection->executeQuery('TRUNCATE TABLE ordonnancement');
         $this->connection->executeQuery('TRUNCATE TABLE ordre_fab');
         $this->connection->executeQuery('TRUNCATE TABLE printer');
         $this->connection->executeQuery('TRUNCATE TABLE status');
-        $this->connection->executeQuery('TRUNCATE TABLE symbole');
     }
 
     public function load(ObjectManager $manager): void
@@ -64,7 +63,7 @@ class AppFixtures extends Fixture
             $ilot->setNomAX($data['nom_ax']);
             $ilot->setNomIRL($data['nom_irl']);
             $ilot->setNomURL($data['nom_url']);
-            $ilot->setCodeImprimante($data['code_imprimante']);
+            $ilot->setInitiales($data['initiales']);
             $ilot->setPrinter($printerList[$data['printer']]);
 
             $manager->persist($ilot);

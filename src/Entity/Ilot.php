@@ -26,7 +26,7 @@ class Ilot
     private $nomAX;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=20)
      */
     private $nomIRL;
 
@@ -38,7 +38,7 @@ class Ilot
     /**
      * @ORM\Column(type="string", length=10)
      */
-    private $codeImprimante;
+    private $initiales;
 
     /**
      * @ORM\ManyToOne(targetEntity=Printer::class, inversedBy="ilots")
@@ -97,14 +97,14 @@ class Ilot
         return $this;
     }
 
-    public function getCodeImprimante(): ?string
+    public function getInitiales(): ?string
     {
-        return $this->codeImprimante;
+        return $this->initiales;
     }
 
-    public function setCodeImprimante(string $codeImprimante): self
+    public function setInitiales(?string $initiales): self
     {
-        $this->codeImprimante = $codeImprimante;
+        $this->initiales = $initiales;
 
         return $this;
     }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\StatusRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -23,15 +25,19 @@ class Status
     private $code;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=50)
      */
     private $nom;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Badgeage::class, inversedBy="status")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToMany(targetEntity=LigneOF::class, mappedBy="status")
      */
-    private $badgeage;
+    private $ligneOFs;
+
+    public function __construct()
+    {
+        $this->ligneOFs = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -62,14 +68,32 @@ class Status
         return $this;
     }
 
-    public function getBadgeage(): ?Badgeage
+    /**
+     * @return Collection<int, LigneOF>
+     */
+    public function getLigneOFs(): Collection
     {
-        return $this->badgeage;
+        return $this->ligneOFs;
     }
 
-    public function setBadgeage(?Badgeage $badgeage): self
+    public function addLigneOF(LigneOF $ligneOF): self
     {
-        $this->badgeage = $badgeage;
+        if (!$this->ligneOFs->contains($ligneOF)) {
+            $this->ligneOFs[] = $ligneOF;
+            $ligneOF->setStatus($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLigneOF(LigneOF $ligneOF): self
+    {
+        if ($this->ligneOFs->removeElement($ligneOF)) {
+            // set the owning side to null (unless already changed)
+            if ($ligneOF->getStatus() === $this) {
+                $ligneOF->setStatus(null);
+            }
+        }
 
         return $this;
     }

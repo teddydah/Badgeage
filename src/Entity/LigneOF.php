@@ -18,24 +18,9 @@ class LigneOF
     private $id;
 
     /**
-     * @ORM\Column(type="bigint")
+     * @ORM\Column(type="string", length="50")
      */
     private $recid;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $quantite;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $dateEcheance;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $dateExpedition;
 
     /**
      * @ORM\Column(type="boolean")
@@ -54,6 +39,38 @@ class LigneOF
      */
     private $ordreFab;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $numLigne;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $qteCommandee;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $qteRestante;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $datePrevue;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Ordonnancement::class, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $ordo;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Status::class, inversedBy="ligneOFs")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $status;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -67,42 +84,6 @@ class LigneOF
     public function setRecid(string $recid): self
     {
         $this->recid = $recid;
-
-        return $this;
-    }
-
-    public function getQuantite(): ?int
-    {
-        return $this->quantite;
-    }
-
-    public function setQuantite(int $quantite): self
-    {
-        $this->quantite = $quantite;
-
-        return $this;
-    }
-
-    public function getDateEcheance(): ?\DateTimeInterface
-    {
-        return $this->dateEcheance;
-    }
-
-    public function setDateEcheance(\DateTimeInterface $dateEcheance): self
-    {
-        $this->dateEcheance = $dateEcheance;
-
-        return $this;
-    }
-
-    public function getDateExpedition(): ?\DateTimeInterface
-    {
-        return $this->dateExpedition;
-    }
-
-    public function setDateExpedition(\DateTimeInterface $dateExpedition): self
-    {
-        $this->dateExpedition = $dateExpedition;
 
         return $this;
     }
@@ -139,6 +120,78 @@ class LigneOF
     public function setOrdreFab(?OrdreFab $ordreFab): self
     {
         $this->ordreFab = $ordreFab;
+
+        return $this;
+    }
+
+    public function getNumLigne(): ?int
+    {
+        return $this->numLigne;
+    }
+
+    public function setNumLigne(int $numLigne): self
+    {
+        $this->numLigne = $numLigne;
+
+        return $this;
+    }
+
+    public function getQteCommandee(): ?int
+    {
+        return $this->qteCommandee;
+    }
+
+    public function setQteCommandee(int $qteCommandee): self
+    {
+        $this->qteCommandee = $qteCommandee;
+
+        return $this;
+    }
+
+    public function getQteRestante(): ?int
+    {
+        return $this->qteRestante;
+    }
+
+    public function setQteRestante(int $qteRestante): self
+    {
+        $this->qteRestante = $qteRestante;
+
+        return $this;
+    }
+
+    public function getDatePrevue(): ?\DateTimeInterface
+    {
+        return $this->datePrevue;
+    }
+
+    public function setDatePrevue(\DateTimeInterface $datePrevue): self
+    {
+        $this->datePrevue = $datePrevue;
+
+        return $this;
+    }
+
+    public function getOrdo(): ?Ordonnancement
+    {
+        return $this->ordo;
+    }
+
+    public function setOrdo(Ordonnancement $ordo): self
+    {
+        $this->ordo = $ordo;
+
+        return $this;
+    }
+
+    public function getStatus(): ?Status
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?Status $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

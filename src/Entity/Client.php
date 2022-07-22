@@ -20,25 +20,24 @@ class Client
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=60)
      */
     private $nom;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=10)
      */
     private $numero;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Adresse::class, inversedBy="clients")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $adresseLivraison;
 
     /**
      * @ORM\OneToMany(targetEntity=OrdreFab::class, mappedBy="client")
      */
     private $ordreFabs;
+
+    /**
+     * @ORM\Column(type="bigint")
+     */
+    private $recid;
 
     public function __construct()
     {
@@ -74,18 +73,6 @@ class Client
         return $this;
     }
 
-    public function getAdresseLivraison(): ?Adresse
-    {
-        return $this->adresseLivraison;
-    }
-
-    public function setAdresseLivraison(?Adresse $adresseLivraison): self
-    {
-        $this->adresseLivraison = $adresseLivraison;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, OrdreFab>
      */
@@ -112,6 +99,18 @@ class Client
                 $ordreFab->setClient(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRecid(): ?string
+    {
+        return $this->recid;
+    }
+
+    public function setRecid(string $recid): self
+    {
+        $this->recid = $recid;
 
         return $this;
     }

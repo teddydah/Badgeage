@@ -25,7 +25,7 @@ class Printer
     private $nom;
 
     /**
-     * @ORM\Column(type="string", length=15)
+     * @ORM\Column(type="string", length=20)
      */
     private $ip;
 
@@ -33,11 +33,6 @@ class Printer
      * @ORM\Column(type="integer")
      */
     private $port;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Ilot::class, mappedBy="printer")
-     */
-    private $ilots;
 
     public function __construct()
     {

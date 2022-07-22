@@ -53,8 +53,7 @@ class BadgeageRepository extends ServiceEntityRepository
             ->andWhere('b.ilot = :ilot')
             ->andWhere('b.dateBadgeage >= :date')
             ->setParameter('date', $date)
-            ->setParameter('ilot', $ilot)
-            ->orderBy('b.dateBadgeage', 'DESC');
+            ->setParameter('ilot', $ilot);
         $query = $queryBuilder->getQuery();
 
         return $query->getResult();

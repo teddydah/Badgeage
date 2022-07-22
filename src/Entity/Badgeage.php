@@ -37,19 +37,9 @@ class Badgeage
     private $ilot;
 
     /**
-     * @ORM\OneToMany(targetEntity=Status::class, mappedBy="badgeage")
-     */
-    private $status;
-
-    /**
      * @ORM\Column(type="bigint")
      */
     private $recid;
-
-    public function __construct()
-    {
-        $this->status = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -88,36 +78,6 @@ class Badgeage
     public function setIlot(?Ilot $ilot): self
     {
         $this->ilot = $ilot;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Status>
-     */
-    public function getStatus(): Collection
-    {
-        return $this->status;
-    }
-
-    public function addStatus(Status $status): self
-    {
-        if (!$this->status->contains($status)) {
-            $this->status[] = $status;
-            $status->setBadgeage($this);
-        }
-
-        return $this;
-    }
-
-    public function removeStatus(Status $status): self
-    {
-        if ($this->status->removeElement($status)) {
-            // set the owning side to null (unless already changed)
-            if ($status->getBadgeage() === $this) {
-                $status->setBadgeage(null);
-            }
-        }
 
         return $this;
     }

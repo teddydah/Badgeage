@@ -45,6 +45,12 @@ class OrdreFab
      */
     private $badgeages;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Adresse::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $adresseLivraison;
+
     public function __construct()
     {
         $this->ligneOFs = new ArrayCollection();
@@ -148,6 +154,18 @@ class OrdreFab
                 $badgeage->setOrdreFab(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAdresseLivraison(): ?Adresse
+    {
+        return $this->adresseLivraison;
+    }
+
+    public function setAdresseLivraison(?Adresse $adresseLivraison): self
+    {
+        $this->adresseLivraison = $adresseLivraison;
 
         return $this;
     }

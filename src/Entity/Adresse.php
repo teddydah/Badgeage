@@ -20,9 +20,14 @@ class Adresse
     private $id;
 
     /**
+     * @ORM\Column(type="bigint")
+     */
+    private $recid;
+
+    /**
      * @ORM\Column(type="string", length=5)
      */
-    private $zipCode;
+    private $codePostal;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -34,6 +39,16 @@ class Adresse
      */
     private $clients;
 
+    /**
+     * @ORM\Column(type="string", length=125, nullable=true)
+     */
+    private $fullAddress;
+
+    /**
+     * @ORM\Column(type="string", length=8)
+     */
+    private $codePays;
+
     public function __construct()
     {
         $this->clients = new ArrayCollection();
@@ -44,14 +59,26 @@ class Adresse
         return $this->id;
     }
 
-    public function getZipCode(): ?string
+    public function getRecid(): ?string
     {
-        return $this->zipCode;
+        return $this->recid;
     }
 
-    public function setZipCode(string $zipCode): self
+    public function setRecid(string $recid): self
     {
-        $this->zipCode = $zipCode;
+        $this->recid = $recid;
+
+        return $this;
+    }
+
+    public function getCodePostal(): ?string
+    {
+        return $this->codePostal;
+    }
+
+    public function setCodePostal(string $codePostal): self
+    {
+        $this->codePostal = $codePostal;
 
         return $this;
     }
@@ -94,6 +121,30 @@ class Adresse
                 $client->setAdresseLivraison(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFullAddress(): ?string
+    {
+        return $this->fullAddress;
+    }
+
+    public function setFullAddress(?string $fullAddress): self
+    {
+        $this->fullAddress = $fullAddress;
+
+        return $this;
+    }
+
+    public function getCodePays(): ?string
+    {
+        return $this->codePays;
+    }
+
+    public function setCodePays(?string $codePays): self
+    {
+        $this->codePays = $codePays;
 
         return $this;
     }
