@@ -47,7 +47,7 @@ class BadgeageRepository extends ServiceEntityRepository
      */
     public function findBadgeage(Ilot $ilot)
     {
-        $date = date("Y/m/d h:i:s", strtotime("-8 days"));
+        $date = date("Y/m/d h:i:s", strtotime("-7 days"));
         $queryBuilder = $this->createQueryBuilder('b');
         $queryBuilder
             ->andWhere('b.ilot = :ilot')
