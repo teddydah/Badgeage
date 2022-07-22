@@ -16,3 +16,13 @@
     @include input;
   }
 }
+
+.admin {
+  .form {
+    text-align: left;
+
+    h2 {
+      text-align: center;
+    }
+  }
+}

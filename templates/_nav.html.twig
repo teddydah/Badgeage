@@ -7,15 +7,20 @@
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"  data-target="#offcanvasNavbar"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"
+                        data-target="#offcanvasNavbar"></button>
             </div>
             <div class="offcanvas-body">
                 <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{ path('main_home') }}">Accueil</a>
+                        <a class="home nav-link active" aria-current="page" href="{{ path('main_home') }}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                        {% if app.user %}
+                            <a class="logout nav-link" href="{{ path('app_logout') }}">Log Out</a>
+                        {% else %}
+                            <a class="login nav-link" href="{{ path('app_login') }}">Log In</a>
+                        {% endif %}
                     </li>
                     <li class="nav-item dropdown">
                         <ul class="dropdown-menu" aria-labelledby="offcanvasNavbarDropdown">

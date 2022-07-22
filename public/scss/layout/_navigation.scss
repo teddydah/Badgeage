@@ -27,4 +27,30 @@ nav {
     font-weight: bold;
     text-transform: uppercase;
   }
+
+  .home,
+  .login,
+  .logout {
+    &::before {
+      margin-right: 0.5em;
+    }
+  }
+
+  .home {
+    &::before {
+      @include font-awesome(bold, "\f015");
+    }
+  }
+
+  .login {
+    &::before {
+      @include font-awesome(bold, "\f2f6");
+    }
+  }
+
+  .logout {
+    &::before {
+      @include font-awesome(bold, "\f2f5");
+    }
+  }
 }
