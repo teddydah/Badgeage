@@ -47,9 +47,19 @@
 
 .historique-ilot {
   table {
-    th,
-    td {
-      width: 50%;
+    tr {
+      th {
+        &:nth-child(1) {
+          width: 40%;
+        }
+      }
+
+      td,
+      th {
+        @media screen and (min-width: $xs) {
+          width: 50%;
+        }
+      }
     }
 
     td {
