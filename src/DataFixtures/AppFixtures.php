@@ -2,9 +2,15 @@
 
 namespace App\DataFixtures;
 
+use App\DataFixtures\Data\AdresseData;
+use App\DataFixtures\Data\ClientData;
 use App\DataFixtures\Data\IlotData;
+use App\DataFixtures\Data\OrdreFabData;
 use App\DataFixtures\Data\PrinterData;
+use App\Entity\Adresse;
+use App\Entity\Client;
 use App\Entity\Ilot;
+use App\Entity\OrdreFab;
 use App\Entity\Printer;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\DBAL\Connection;
@@ -41,6 +47,8 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
+        date_default_timezone_set('Europe/Paris');
+
         $this->truncate();
 
         $printerList = [];
@@ -67,6 +75,47 @@ class AppFixtures extends Fixture
             $ilot->setPrinter($printerList[$data['printer']]);
 
             $manager->persist($ilot);
+        };
+
+        $clientList = [];
+
+        foreach (ClientData::$clientData as $data) {
+            $client = new Client();
+
+            $client->setNom($data['nom']);
+            $client->setNumero($data['numero']);
+            $client->setRecid($data['recid']);
+
+            $clientList[$data['nom']] = $client;
+
+            $manager->persist($client);
+        };
+
+        $adresseList = [];
+
+        foreach (AdresseData::$adresseData as $data) {
+            $adresse = new Adresse();
+
+            $adresse->setRecid($data['recid']);
+            $adresse->setCodePostal($data['code_postal']);
+            $adresse->setVille($data['ville']);
+            $adresse->setFullAddress($data['full_address']);
+            $adresse->setCodePays($data['code_pays']);
+
+            $adresseList[$data['recid']] = $adresse;
+
+            $manager->persist($adresse);
+        };
+
+        foreach (OrdreFabData::$ordreFabData as $data) {
+            $ordreFab = new OrdreFab();
+
+            $ordreFab->setNumero($data['numero']);
+            $ordreFab->setDateEcheance(new \DateTime());
+            $ordreFab->setClient($clientList[$data['client']]);
+            $ordreFab->setAdresseLivraison($adresseList[$data['adresse']]);
+
+            $manager->persist($ordreFab);
         };
 
         $manager->flush();
