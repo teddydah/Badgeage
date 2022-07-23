@@ -35,11 +35,6 @@ class Adresse
     private $ville;
 
     /**
-     * @ORM\OneToMany(targetEntity=Client::class, mappedBy="adresseLivraison")
-     */
-    private $clients;
-
-    /**
      * @ORM\Column(type="string", length=125, nullable=true)
      */
     private $fullAddress;
@@ -48,11 +43,6 @@ class Adresse
      * @ORM\Column(type="string", length=8)
      */
     private $codePays;
-
-    public function __construct()
-    {
-        $this->clients = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -91,36 +81,6 @@ class Adresse
     public function setVille(string $ville): self
     {
         $this->ville = $ville;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Client>
-     */
-    public function getClients(): Collection
-    {
-        return $this->clients;
-    }
-
-    public function addClient(Client $client): self
-    {
-        if (!$this->clients->contains($client)) {
-            $this->clients[] = $client;
-            $client->setAdresseLivraison($this);
-        }
-
-        return $this;
-    }
-
-    public function removeClient(Client $client): self
-    {
-        if ($this->clients->removeElement($client)) {
-            // set the owning side to null (unless already changed)
-            if ($client->getAdresseLivraison() === $this) {
-                $client->setAdresseLivraison(null);
-            }
-        }
 
         return $this;
     }
