@@ -6,41 +6,62 @@
 
 {% block body %}
     <section class="historique-commande">
-        <div class="form">
-            {% include('_form.html.twig') %}
-        </div>
-        <table class="table table-striped table-light text-center">
-            <thead>
-            <tr>
-                <th colspan="2">Avancement</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for badgeage in badgeages %}
-                <tr>
-                    <td class="">
-                        <a href="#" title="{{ badgeage.ilot.nomIRL }}">{{ badgeage.ilot.nomIRL }}</a>
-                    </td>
-                    <td>{{ badgeage.dateBadgeage | date("d/m/Y @ h:i") }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-        <div class="boutons">
-            <div class="item-1">
-                {# TODO #}
-                <a class="prev item-btn-1 bouton" id="btn_retour_idx" onclick="history.back()" target="_self"
-                   role="button"
-                   title="Page précédente"><span>Précédent</span></a>
-                <a class="home item-btn-2 bouton" href="{{ path('main_home') }}"
-                   title="Page d'accueil"><span>Accueil</span></a>
+        <div id="ilot-info" class="pop-up none">
+            <div>
+                <i id="close" class="fa-solid fa-xmark" title="Fermer la fenêtre"></i>
+                <i id="info" class="fa-solid fa-circle-info"></i>
+                <p>Cliquez sur le nom de l'ilot pour voir son historique sur 7 jours.</p>
             </div>
-            <div class="item-3">
-                <a class="print item-btn-3 bouton"
-                   href="{{ path('impression_etiquette', { 'nomURL' : ilot.nomURL }) }}"
-                   title="Page impression"><span>Impression</span></a>
-                <a class="options item-btn-4 bouton" href="{{ path('options_menu', { 'nomURL' : ilot.nomURL }) }}"
-                   title="Page options"><span>Options</span></a>
+        </div>
+        <div id="ilot-item" class="ilot-item">
+            <div class="form">
+                {{ form_start(form, { 'attr' : { 'novalidate' : 'novalidate' }}) }}
+                {{ form_label(form.numero) }}
+                <div class="form-input mb-3">
+                    {{ form_widget(form.numero) }}
+                    {% if badgeage is not null and numOF is same as(badgeage.ordreFab.numero) %}
+                    <i id="circle-info" class="fa-solid fa-circle-info" title="Information commande"></i>
+                    {% endif %}
+                </div>
+                {{ form_end(form) }}
+            </div>
+            {% include('_flash_messages.html.twig') %}
+            {% if badgeage is not null and numOF is same as(badgeage.ordreFab.numero) %}
+                <table class="table table-striped table-light text-center">
+                    <thead>
+                    <tr>
+                        <th colspan="2">Avancement de {{ badgeage.ordreFab.numero }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for badgeage in badgeages %}
+                        <tr>
+                            <td>
+                                <a href="{{ path('options_historique_ilot', { 'nomURL' : badgeage.ilot.nomURL }) }}"
+                                   title="{{ badgeage.ilot.nomIRL }}">{{ badgeage.ilot.nomIRL }}</a>
+                            </td>
+                            <td>{{ badgeage.dateBadgeage | date("d/m/Y @ H:i") }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+            <div class="boutons">
+                <div class="item-1">
+                    {# TODO #}
+                    <a class="prev item-btn-1 bouton" id="btn_retour_idx" onclick="history.back()" target="_self"
+                       role="button"
+                       title="Page précédente"><span>Précédent</span></a>
+                    <a class="home item-btn-2 bouton" href="{{ path('main_home') }}"
+                       title="Page d'accueil"><span>Accueil</span></a>
+                </div>
+                <div class="item-3">
+                    <a class="print item-btn-3 bouton"
+                       href="{{ path('impression_etiquette', { 'nomURL' : ilot.nomURL }) }}"
+                       title="Page impression"><span>Impression</span></a>
+                    <a class="options item-btn-4 bouton" href="{{ path('options_menu', { 'nomURL' : ilot.nomURL }) }}"
+                       title="Page options"><span>Options</span></a>
+                </div>
             </div>
         </div>
     </section>

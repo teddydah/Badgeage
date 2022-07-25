@@ -15,12 +15,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/options", name="options_")
+ * @Route("/{nomURL}/options", name="options_")
  */
 class OptionsController extends AbstractController
 {
     /**
-     * @Route("/{nomURL}/menu", name="menu", methods={"GET"})
+     * @Route("/menu", name="menu", methods={"GET"})
      */
     public function menu(Ilot $ilot = null, Badgeage $badgeage = null): Response
     {
@@ -35,9 +35,9 @@ class OptionsController extends AbstractController
     }
 
     /**
-     * @Route("/{nomURL}/HistoriqueIlot", name="historique_ilot", methods={"GET"})
+     * @Route("/HistoriqueIlot", name="historique_ilot", methods={"GET"})
      */
-    public function listOF(BadgeageRepository $badgeageRepository, Ilot $ilot = null, Badgeage $badgeage = null): Response
+    public function listOF(BadgeageRepository $badgeageRepository, Ilot $ilot = null): Response
     {
         if (null === $ilot) {
             throw $this->createNotFoundException('Ilot non trouvé.');
@@ -50,9 +50,14 @@ class OptionsController extends AbstractController
     }
 
     /**
-     * @Route("/{nomURL}/HistoriqueCommande", name="historique_commande", methods={"GET", "POST"})
+     * @Route("/HistoriqueCommande/{numero}", name="historique_commande", methods={"GET", "POST"})
      */
-    public function detailCommande(BadgeageRepository $badgeageRepository, OrdreFabRepository $ordreFabRepository, Request $request, Ilot $ilot = null): Response
+    public function listIlots(
+        BadgeageRepository $badgeageRepository,
+        OrdreFabRepository $ordreFabRepository,
+        Request            $request,
+        string             $numero = null,
+        Ilot               $ilot = null): Response
     {
         if (null === $ilot) {
             throw $this->createNotFoundException('Ilot non trouvé.');
@@ -70,8 +75,14 @@ class OptionsController extends AbstractController
         ]);
         $form->handleRequest($request);
 
-        // Récupération du numéro d'OF depuis le formulaire
         $numOF = $form->get('numero')->getData();
+        $numero = $request->get('numero');
+
+        if (null !== $numOF) {
+            $numero = $request->get('numero');;
+        } else {
+            $numOF = $request->get('numero');
+        }
 
         $ordreFabExistant = $ordreFabRepository->findOneBy(["numero" => $numOF]);
         $badgeageExistant = $badgeageRepository->findOneBy(['ordreFab' => $ordreFabExistant]);
@@ -82,7 +93,7 @@ class OptionsController extends AbstractController
             }
         }
 
-        return $this->render('options/detailCommande.html.twig', [
+        return $this->render('options/listIlots.html.twig', [
             'badgeages' => $badgeageRepository->findBy(
                 ['ordreFab' => $ordreFabExistant],
                 ['dateBadgeage' => 'DESC']
