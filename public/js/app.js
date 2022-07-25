@@ -1,5 +1,7 @@
 $(document).ready(() => {
     const opacity = "opacity-25";
+    const circleInfo = $("#circle-info");
+    const close = $("#close");
 
     /* -- Afficher le menu -- */
     $(".navbar-toggler").on("click", function (e) {
@@ -19,21 +21,33 @@ $(document).ready(() => {
         $("select").prop("disabled", false);
     });
 
-    /* -- Afficher une pop-up -- */
-    $("#circle-info").on("click", () => {
+    /* -- Afficher une pop-up d'information sur l'impression -- */
+    circleInfo.on("click", () => {
         $("#print-info").show();
         $("#printer-item").addClass("none");
     });
 
-    /* -- Fermer pop-up info impression -- */
-    $("#close").on("click", () => {
+    /* -- Afficher une pop-up d'information sur la commande -- */
+    circleInfo.on("click", () => {
+        $("#ilot-info").show();
+        $("#ilot-item").addClass("none");
+    });
+
+    /* -- Fermer pop-up d'information sur l'impression -- */
+    close.on("click", () => {
         $("#print-info").hide();
         $("#printer-item").removeClass("none");
     });
 
-    $(".delete-badgeage input").on("focus", () => {
-        $("#badgeage").load();
+    /* -- Fermer pop-up d'information sur l'impression -- */
+    close.on("click", () => {
+        $("#ilot-info").hide();
+        $("#ilot-item").removeClass("none");
     });
+
+    // $(".delete-badgeage input").on("focus", () => {
+    //     $("#badgeage").load();
+    // });
 
     /* -- Afficher une fenêtre de confirmation avant suppression -- */
     $(".delete-badgeage form").on('submit', () => {

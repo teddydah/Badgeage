@@ -44,7 +44,7 @@ class OptionsController extends AbstractController
         }
 
         return $this->render('options/listOF.html.twig', [
-            'badgeages' => $badgeageRepository->findBadgeage($ilot),
+            'badgeages' => $badgeageRepository->findBadgeageByIlot($ilot),
             'ilot' => $ilot
         ]);
     }
@@ -52,25 +52,21 @@ class OptionsController extends AbstractController
     /**
      * @Route("/{nomURL}/HistoriqueCommande", name="historique_commande", methods={"GET", "POST"})
      */
-    public function detailCommande(
-        BadgeageRepository $badgeageRepository,
-        OrdreFabRepository $ordreFabRepository,
-        Request            $request,
-        Ilot               $ilot = null,
-        Badgeage           $badgeage = null): Response
+    public function detailCommande(BadgeageRepository $badgeageRepository, OrdreFabRepository $ordreFabRepository, Request $request, Ilot $ilot = null): Response
     {
         if (null === $ilot) {
             throw $this->createNotFoundException('Ilot non trouvé.');
         }
-
-        $this->addFlash('primary', 'Veuillez badger un OF.');
 
         $ordreFab = new OrdreFab();
 
         $form = $this->createForm(OrdreFabType::class, $ordreFab);
         $form->add('numero', null, [
             'label' => 'Historique OF ',
-            'attr' => ['autofocus' => true]
+            'attr' => [
+                'placeholder' => 'Veuillez badger un OF',
+                'autofocus' => true
+            ]
         ]);
         $form->handleRequest($request);
 
@@ -78,10 +74,7 @@ class OptionsController extends AbstractController
         $numOF = $form->get('numero')->getData();
 
         $ordreFabExistant = $ordreFabRepository->findOneBy(["numero" => $numOF]);
-        $badgeageExistant = $badgeageRepository->findOneBy([
-            "ilot" => $ilot,
-            "ordreFab" => $ordreFabExistant
-        ]);
+        $badgeageExistant = $badgeageRepository->findOneBy(['ordreFab' => $ordreFabExistant]);
 
         if ($form->isSubmitted() && $form->isValid()) {
             if (!isset($badgeageExistant)) {
@@ -90,7 +83,10 @@ class OptionsController extends AbstractController
         }
 
         return $this->render('options/detailCommande.html.twig', [
-            'badgeages' => $badgeageRepository->findBadgeage($ilot),
+            'badgeages' => $badgeageRepository->findBy(
+                ['ordreFab' => $ordreFabExistant],
+                ['dateBadgeage' => 'DESC']
+            ),
             'badgeage' => $badgeageExistant,
             'ilot' => $ilot,
             'numOF' => $numOF,

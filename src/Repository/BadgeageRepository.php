@@ -45,7 +45,7 @@ class BadgeageRepository extends ServiceEntityRepository
      *
      * Récupère les badgeages par îlot et par date pour les 7 derniers jours
      */
-    public function findBadgeage(Ilot $ilot)
+    public function findBadgeageByIlot(Ilot $ilot)
     {
         $date = date("Y/m/d h:i:s", strtotime("-7 days"));
         $queryBuilder = $this->createQueryBuilder('b');

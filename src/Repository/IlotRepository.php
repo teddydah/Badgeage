@@ -67,15 +67,6 @@ class IlotRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function findIlotByBadgeage(Badgeage $badgeage) {
-        $queryBuilder = $this->createQueryBuilder('i');
-        $queryBuilder
-            ->select('i.nomIRL')
-            ->setParameter('badgeage', $badgeage);
-        $query = $queryBuilder->getQuery();
-        return $query->getResult();
-    }
-
 //    /**
 //     * @return Ilot[] Returns an array of Ilot objects
 //     */
