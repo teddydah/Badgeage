@@ -19,7 +19,9 @@
                 {{ form_label(form.numero) }}
                 <div class="form-input mb-3">
                     {{ form_widget(form.numero) }}
+                    {% if badgeage is not null and numOF is same as(badgeage.ordreFab.numero) %}
                     <i id="circle-info" class="fa-solid fa-circle-info" title="Information commande"></i>
+                    {% endif %}
                 </div>
                 {{ form_end(form) }}
             </div>
@@ -33,7 +35,6 @@
                     </thead>
                     <tbody>
                     {% for badgeage in badgeages %}
-
                         <tr>
                             <td>
                                 <a href="{{ path('options_historique_ilot', { 'nomURL' : badgeage.ilot.nomURL }) }}"
@@ -41,7 +42,6 @@
                             </td>
                             <td>{{ badgeage.dateBadgeage | date("d/m/Y @ H:i") }}</td>
                         </tr>
-
                     {% endfor %}
                     </tbody>
                 </table>
