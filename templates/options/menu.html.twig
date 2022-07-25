@@ -8,10 +8,10 @@
     <section class="options">
         <ul>
             <li>
-                <a href="{{ path('options_historique_ilot', { 'nomURL' : ilot.nomURL, 'historiqueIlot' : 'HistoriqueIlot' }) }}" title="Historique îlot">Historique ilot</a>
+                <a href="{{ path('options_historique_ilot', { 'nomURL' : ilot.nomURL }) }}" title="Historique îlot">Historique ilot</a>
             </li>
             <li>
-                <a href="#" title="Historique commande">Historique commande</a>
+                <a href="{{ path('options_historique_commande', { 'nomURL' : ilot.nomURL }) }}" title="Historique commande">Historique commande</a>
             </li>
             <li>
                 <a href="{{ path('badgeage_detail', { 'nomURL' : ilot.nomURL }) }}" title="Suppression badgeage">Suppression badgeage</a>

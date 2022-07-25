@@ -12,12 +12,19 @@
 
 .alert-danger {
   &::before {
-    @include font-awesome(bold, "\f071");
+    @include font-awesome(bold, "\f057");
     margin-right: 0.25em;
   }
 }
 
 .alert-warning {
+  &::before {
+    @include font-awesome(bold, "\f071");
+    margin-right: 0.25em;
+  }
+}
+
+.alert-primary {
   &::before {
     @include font-awesome(bold, "\f05a");
     margin-right: 0.25em;

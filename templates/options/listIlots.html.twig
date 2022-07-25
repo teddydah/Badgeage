@@ -1,24 +1,25 @@
 {% extends 'base.html.twig' %}
 
 {% block titre %}
-    <h1>Historique {{ ilot.nomIRL }}</h1>
+    <h1>Historique Commande</h1>
 {% endblock %}
 
 {% block body %}
-    <section class="historique-ilot">
-        <table id="datatables" class="display table table-striped table-light text-center" data-order='[[ 1, "desc" ]]'>
+    <section class="historique-commande">
+        <div class="form">
+            {% include('_form.html.twig') %}
+        </div>
+        <table class="table table-striped table-light text-center">
             <thead>
             <tr>
-                <th>OF</th>
-                <th>Date</th>
+                <th colspan="2">Avancement</th>
             </tr>
             </thead>
             <tbody>
             {% for badgeage in badgeages %}
                 <tr>
-                    <td class="numOF">
-                        <a href="#"
-                           title="{{ badgeage.ordreFab.numero }}">{{ badgeage.ordreFab.numero }}</a>
+                    <td class="">
+                        <a href="#" title="{{ badgeage.ilot.nomIRL }}">{{ badgeage.ilot.nomIRL }}</a>
                     </td>
                     <td>{{ badgeage.dateBadgeage | date("d/m/Y @ h:i") }}</td>
                 </tr>

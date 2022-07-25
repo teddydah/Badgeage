@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Badgeage;
 use App\Entity\Ilot;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -62,6 +63,15 @@ class IlotRepository extends ServiceEntityRepository
             ->andWhere('i.nomAX <= 140')
             ->orWhere('i.nomAX = 9999')
             ->orderBy('i.nomIRL');
+        $query = $queryBuilder->getQuery();
+        return $query->getResult();
+    }
+
+    public function findIlotByBadgeage(Badgeage $badgeage) {
+        $queryBuilder = $this->createQueryBuilder('i');
+        $queryBuilder
+            ->select('i.nomIRL')
+            ->setParameter('badgeage', $badgeage);
         $query = $queryBuilder->getQuery();
         return $query->getResult();
     }
