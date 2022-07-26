@@ -105,12 +105,7 @@ class OptionsController extends AbstractController
     /**
      * @Route("/HistoriqueCommande/{numero}", name="historique_commande_of", methods={"GET", "POST"})
      */
-    public function listIlots(
-        BadgeageRepository $badgeageRepository,
-        OrdreFabRepository $ordreFabRepository,
-        Request            $request,
-        Ilot               $ilot = null
-    ): Response
+    public function listIlots(BadgeageRepository $badgeageRepository, OrdreFabRepository $ordreFabRepository, Request $request, Ilot $ilot = null): Response
     {
         if (null === $ilot) {
             throw $this->createNotFoundException('Ilot non trouvé.');
@@ -139,20 +134,23 @@ class OptionsController extends AbstractController
         $badgeageExistant = $badgeageRepository->findOneBy(['ordreFab' => $ordreFabExistant]);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if (!isset($badgeageExistant)) {
+            if (isset($badgeageExistant)) {
+                return $this->redirectToRoute('options_historique_commande_of', [
+                    'numero' => $badgeageExistant->getOrdreFab()->getNumero(),
+                    'nomURL' => $ilot->getNomURL()
+                ], 302);
+            } else {
                 $this->addFlash('danger', 'Pas de badgeage pour la commande ' . $numOF);
             }
         }
 
-        return $this->render('options/listIlots.html.twig', [
-            'badgeages' => $badgeageRepository->findBy(
-                ['ordreFab' => $ordreFabExistant],
-                ['dateBadgeage' => 'DESC']
-            ),
+        return $this->render('options/listIlots.html.twig', ['badgeages' => $badgeageRepository->findBy(
+            ['ordreFab' => $ordreFabExistant],
+            ['dateBadgeage' => 'DESC']
+        ),
             'badgeage' => $numOF,
             'ilot' => $ilot,
             'numOF' => $numOF,
-            'form' => $form->createView()
-        ]);
+            'form' => $form->createView()]);
     }
 }
