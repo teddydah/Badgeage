@@ -214,7 +214,7 @@ class BadgeageController extends AbstractController
             'label' => 'Code-barres',
             'data' => $badgeage->getOrdreFab()->getNumero(),
             'attr' => [
-                'autofocus' => true
+                'disabled' => true
             ]
         ]);
         $form->handleRequest($request);
@@ -222,7 +222,7 @@ class BadgeageController extends AbstractController
         $numOF = $form->get('numero')->getData();
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($badgeage->getOrdreFab()->getNumero() === $numOF) {
+            if ($badgeage->getOrdreFab()->getNumero() !== null) {
                 $em->remove($badgeage);
                 $em->flush();
 
