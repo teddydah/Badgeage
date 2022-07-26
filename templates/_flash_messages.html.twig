@@ -1,7 +1,19 @@
 {% for label, messages in app.flashes %}
     {% for message in messages %}
         <div class="alert alert-{{ label }}">
-            {{ message | raw }}
+            {% if label is same as('custom') %}
+                <a href="{{ message }}"
+                   title="Mettre à jour la date de badgeage de l'OF">Voulez-vous mettre à jour la date ?</a>
+            {% elseif label is same as('msg') %}
+                <div class="msg">
+                    <span>Mise à jour de la date effectuée.</span>
+                    <span>Nouvelle date : <strong>{{ message.dateBadgeage | date("d/m/Y") }}</strong></span>
+                    <span>OF : <strong>{{ message.ordreFab.numero }}</strong></span>
+                    <span>Ilot : <strong>{{ message.ilot.nomIRL }}</strong></span>
+                </div>
+            {% else %}
+                {{ message }}
+            {% endif %}
         </div>
     {% endfor %}
 {% endfor %}

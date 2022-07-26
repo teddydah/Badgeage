@@ -52,6 +52,7 @@ class BadgeageController extends AbstractController
                 'autofocus' => true
             ]
         ]);
+
         $this->add($ordreFabRepository, $badgeageRepository, $request, $em, $ilot);
 
         return $this->render('badgeage/view.html.twig', [
@@ -135,9 +136,7 @@ class BadgeageController extends AbstractController
                 if ($badgeageExistant !== null) {
                     $this->addFlash('warning', $ilot->getNomIRL() . ' : l\'OF ' . $numOF . ' a déjà été badgé.');
 
-                    $msg = '<a href="edit/' . $badgeageExistant->getId() . '" title="Mettre à jour la date de badgeage de l\'OF">Voulez-vous mettre à jour la date ?</a>';
-
-                    $this->addFlash('custom', $msg);
+                    $this->addFlash('custom', "edit/" . $badgeageExistant->getId());
                 } else {
                     // Appel de la méthode addBadgeage()
                     $this->addBadgeage($badgeage, $ordreFabExistant, $ilot);
@@ -167,14 +166,7 @@ class BadgeageController extends AbstractController
         $badgeage->setDateBadgeage(new \DateTime());
         $em->flush();
 
-        $msg = "<div class='msg'>
-                    <span>Mise à jour de la date effectuée.</span>
-                    <span>Nouvelle date : <strong>" . $badgeage->getDateBadgeage()->format("d/m/Y") . "</strong></span>
-                    <span>OF : <strong>" . $badgeage->getOrdreFab()->getNumero() . "</strong></span>
-                    <span>Ilot : <strong>" . $badgeage->getIlot()->getNomIRL() . "</strong></span>
-                </div>";
-
-        $this->addFlash('msg', $msg);
+        $this->addFlash('msg', $badgeage);
 
         return $this->redirectToRoute('badgeage_view', ['nomURL' => $badgeage->getIlot()->getNomURL()], 302);
     }
@@ -275,7 +267,7 @@ class BadgeageController extends AbstractController
         ]);
     }
 
-    private function addBadgeage(Badgeage $badgeage, OrdreFab $ordreFab, Ilot $ilot)
+    private function addBadgeage(Badgeage $badgeage, OrdreFab $ordreFab, Ilot $ilot): Badgeage
     {
         date_default_timezone_set('Europe/Paris');
 
