@@ -26,24 +26,26 @@
                 {{ form_end(form) }}
             </div>
             {% include('_flash_messages.html.twig') %}
-            <table class="table table-striped table-light text-center">
-                <thead>
-                <tr>
-                    <th colspan="2">Avancement de {{ numOF }}</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for badgeage in badgeages %}
+            {% if badgeage is not null %}
+                <table class="table table-striped table-light text-center">
+                    <thead>
                     <tr>
-                        <td>
-                            <a href="{{ path('options_historique_ilot', { 'nomURL' : badgeage.ilot.nomURL }) }}"
-                               title="{{ badgeage.ilot.nomIRL }}">{{ badgeage.ilot.nomIRL }}</a>
-                        </td>
-                        <td>{{ badgeage.dateBadgeage | date("d/m/Y @ H:i") }}</td>
+                        <th colspan="2">Avancement de {{ badgeage.ordreFab.numero }}</th>
                     </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    {% for badgeage in badgeages %}
+                        <tr>
+                            <td>
+                                <a href="{{ path('options_historique_ilot', { 'nomURL' : badgeage.ilot.nomURL }) }}"
+                                   title="{{ badgeage.ilot.nomIRL }}">{{ badgeage.ilot.nomIRL }}</a>
+                            </td>
+                            <td>{{ badgeage.dateBadgeage | date("d/m/Y @ H:i") }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
             <div class="boutons">
                 <div class="item-1">
                     {# TODO #}

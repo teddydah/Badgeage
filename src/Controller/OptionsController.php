@@ -144,11 +144,12 @@ class OptionsController extends AbstractController
             }
         }
 
-        return $this->render('options/listIlots.html.twig', ['badgeages' => $badgeageRepository->findBy(
-            ['ordreFab' => $ordreFabExistant],
-            ['dateBadgeage' => 'DESC']
-        ),
-            'badgeage' => $numOF,
+        return $this->render('options/listIlots.html.twig', [
+            'badgeages' => $badgeageRepository->findBy(
+                ['ordreFab' => $ordreFabExistant],
+                ['dateBadgeage' => 'DESC']
+            ),
+            'badgeage' => $badgeageExistant,
             'ilot' => $ilot,
             'numOF' => $numOF,
             'form' => $form->createView()]);
