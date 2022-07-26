@@ -17,7 +17,7 @@
             {% for badgeage in badgeages %}
                 <tr>
                     <td class="numOF">
-                        <a href="{{ path('options_historique_commande', { 'nomURL' : badgeage.ilot.nomURL, 'numero' : badgeage.ordreFab.numero }) }}"
+                        <a href="{{ path('options_historique_commande_of', { 'nomURL' : badgeage.ilot.nomURL, 'numero' : badgeage.ordreFab.numero }) }}"
                            title="{{ badgeage.ordreFab.numero }}">{{ badgeage.ordreFab.numero }}</a>
                     </td>
                     <td>{{ badgeage.dateBadgeage | date("d/m/Y @ H:i") }}</td>
