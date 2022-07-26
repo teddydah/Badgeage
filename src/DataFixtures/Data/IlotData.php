@@ -109,14 +109,14 @@ class IlotData
         [
             'nom_ax' => 9997,
             'nom_irl' => 'Etiquettes Laquage : RAL',
-            'nom_url' => 'Laquage', // LaqImpr ImprEtiqLaqRAL LaqEtiqRAL
+            'nom_url' => 'LaqEtiqRAL', // LaqImpr ImprEtiqLaqRAL LaqEtiqRAL
             'initiales' => 'LAQRAL',
             'printer' => 'Laquage'
         ],
         [
             'nom_ax' => 9998,
             'nom_irl' => 'Etiquettes Laquage : OF',
-            'nom_url' => 'Laquage', // LaqEtiqOF
+            'nom_url' => 'LaqEtiqOF', // LaqEtiqOF
             'initiales' => 'LAQOF',
             'printer' => 'Laquage'
         ],

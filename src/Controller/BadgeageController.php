@@ -37,6 +37,12 @@ class BadgeageController extends AbstractController
             throw $this->createNotFoundException('Ilot non trouvé.');
         }
 
+        // Récupération des sous-îlots "Etiquettes Laquage : OF" et "Etiquettes Laquage : RAL" propres au sous-îlot "Etiquettes Laquage"
+        $sousIlotsLaquageURL = [
+            'LaqEtiqOF',
+            'LaqEtiqRAL'
+        ];
+
         $ordreFab = new OrdreFab();
         $form = $this->createForm(OrdreFabType::class, $ordreFab);
         $form->add('numero', null, [
@@ -52,7 +58,33 @@ class BadgeageController extends AbstractController
             'ilot' => $ilot,
             'badgeage' => $badgeage,
             'sousIlots' => $ilotRepository->findBySousIlotsPeinture(),
+            'sousIlotsLaquage' => $ilotRepository->findBy(['nomURL' => $sousIlotsLaquageURL]),
             'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/Laquage/{nomURL}", name="view_paint", methods={"GET"})
+     */
+    public function viewPaint(IlotRepository $ilotRepository, Ilot $ilot = null): Response
+    {
+        if (null === $ilot) {
+            throw $this->createNotFoundException('Ilot non trouvé.');
+        }
+
+        // Récupération des sous-îlots "Etiquettes Laquage : OF" et "Etiquettes Laquage : RAL" propres au sous-îlot "Etiquettes Laquage"
+        $sousIlotsLaquageURL = [
+            'LaqEtiqOF',
+            'LaqEtiqRAL'
+        ];
+
+        return $this->render('badgeage/laquage.html.twig', [
+            'ilot' => $ilot,
+            'sousIlots' => $ilotRepository->findBySousIlotsPeinture(),
+            'sousIlotsLaquage' => $ilotRepository->findBy(
+                ['nomURL' => $sousIlotsLaquageURL],
+                ['nomURL' => 'ASC']
+            )
         ]);
     }
 

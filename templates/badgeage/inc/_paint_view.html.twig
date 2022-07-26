@@ -2,8 +2,13 @@
     <ul>
         {% for sousIlot in sousIlots %}
             <li>
-                <a href="{{ path('badgeage_view', { 'nomURL' : sousIlot.nomURL }) }}"
-                   title="Ilot {{ sousIlot.nomIRL }}">{{ sousIlot.nomIRL }}</a>
+                {% if sousIlot.nomURL is same as('LaqEtiqHome') %}
+                    <a href="{{ path('badgeage_view_paint', { 'nomURL' : sousIlot.nomURL }) }}"
+                       title="Ilot {{ sousIlot.nomIRL }}">{{ sousIlot.nomIRL }}</a>
+                {% else %}
+                    <a href="{{ path('badgeage_view', { 'nomURL' : sousIlot.nomURL }) }}"
+                       title="Ilot {{ sousIlot.nomIRL }}">{{ sousIlot.nomIRL }}</a>
+                {% endif %}
             </li>
         {% endfor %}
     </ul>
