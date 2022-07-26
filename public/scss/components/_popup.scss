@@ -61,4 +61,10 @@
       margin-left: 0.5em;
     }
   }
+
+  .printer-info {
+    .isActive {
+      color: $color5;
+    }
+  }
 }

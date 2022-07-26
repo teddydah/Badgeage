@@ -40,6 +40,11 @@ class IlotRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * Récupérer les îlots pour les affciher sur la page principale, à l'exception des "sous-îlots" de l'îlot Peinture
+     *
+     * @return float|int|mixed|string
+     */
     public function findByIlot()
     {
         $queryBuilder = $this->createQueryBuilder('i');
@@ -55,6 +60,11 @@ class IlotRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    /**
+     * Récupérer les "sous-îlots" de l'îlot principal Peinture
+     *
+     * @return float|int|mixed|string
+     */
     public function findBySousIlotsPeinture()
     {
         $queryBuilder = $this->createQueryBuilder('i');

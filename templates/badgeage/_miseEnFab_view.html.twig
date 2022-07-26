@@ -1,0 +1,49 @@
+<div id="print-info" class="pop-up none">
+    <div>
+        <i id="close" class="fa-solid fa-xmark" title="Fermer la fenêtre"></i>
+        <i id="info" class="fa-solid fa-circle-info"></i>
+        <p>Scannez un OF pour imprimer les petites étiquettes à coller sur les panneaux
+            <strong>ARMOR</strong>, <strong>ARMEN</strong> et <strong>TEMPO</strong></p>
+    </div>
+</div>
+<div id="printer-item" class="printer-item">
+    <div class="form">
+        {{ form_start(form, { 'attr' : { 'novalidate' : 'novalidate' }}) }}
+        {{ form_label(form.numero) }}
+        <div class="form-input mb-3">
+            {{ form_widget(form.numero) }}
+            <i id="circle-info" class="fa-solid fa-circle-info" title="Information impression"></i>
+        </div>
+        {{ form_end(form) }}
+    </div>
+    {% include('_flash_messages.html.twig') %}
+    <div id="printer-item" class="printer-item">
+        <div class="printer-info">
+            <i class="fa-solid fa-print"></i>
+            <div>
+                <span><strong>{{ ilot.printer.nom }}</strong> @{{ ilot.printer.ip }}</span>
+                {# TODO : définir le statut #}
+                <span>Statut : <strong class="isActive">Active</strong></span>
+            </div>
+        </div>
+    </div>
+    <div class="boutons">
+        <div class="item-1">
+            <a class="refresh bouton" href="{{ path('badgeage_view', { 'nomURL' : ilot.nomURL }) }}"
+               title="Page options"><span>Rafraîchir</span></a>
+        </div>
+        <div class="item-2">
+            <a class="prev item-btn-1 bouton" id="btn_retour_idx" onclick="history.back()"
+               target="_self"
+               role="button"
+               title="Page précédente"><span>Précédent</span></a>
+            <a class="home item-btn-2 bouton" href="{{ path('main_home') }}"
+               title="Page d'accueil"><span>Accueil</span></a>
+        </div>
+        <div class="item-3">
+            <a class="options item-btn-5 bouton"
+               href="{{ path('options_menu', { 'nomURL' : ilot.nomURL }) }}"
+               title="Page options"><span>Options</span></a>
+        </div>
+    </div>
+</div>
