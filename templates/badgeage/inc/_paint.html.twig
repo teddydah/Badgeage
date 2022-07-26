@@ -3,7 +3,7 @@
         {% for sousIlot in sousIlots %}
             <li>
                 {% if sousIlot.nomURL is same as('LaqEtiqHome') %}
-                    <a href="{{ path('badgeage_view_paint', { 'nomURL' : sousIlot.nomURL }) }}"
+                    <a href="{{ path('paint_laquage', { 'nomURL' : sousIlot.nomURL }) }}"
                        title="Ilot {{ sousIlot.nomIRL }}">{{ sousIlot.nomIRL }}</a>
                 {% else %}
                     <a href="{{ path('badgeage_view', { 'nomURL' : sousIlot.nomURL }) }}"
@@ -18,7 +18,8 @@
             <a class="prev item-btn-1 bouton" id="btn_retour_idx" onclick="history.back()" target="_self"
                role="button"
                title="Page précédente"><span>Précédent</span></a>
-            <a class="home item-btn-2 bouton" href="{{ path('main_home') }}" title="Page d'accueil"><span>Accueil</span></a>
+            <a class="home item-btn-2 bouton" href="{{ path('main_home') }}"
+               title="Page d'accueil"><span>Accueil</span></a>
         </div>
     </div>
 </section>

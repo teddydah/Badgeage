@@ -87,7 +87,7 @@ class IlotData
         ],
         [
             'nom_ax' => 140,
-            'nom_irl' => 'Laquage en sous-traitance',
+            'nom_irl' => 'Départ en sous-traitance', // Laquage en sous-traitance
             'nom_url' => 'LaqSst',
             'initiales' => 'LAQSST',
             'printer' => 'Temporaire'
@@ -108,14 +108,14 @@ class IlotData
         ],
         [
             'nom_ax' => 9997,
-            'nom_irl' => 'Etiquettes Laquage : RAL',
+            'nom_irl' => 'Etiquettes RAL', // Etiquettes Laquage : RAL
             'nom_url' => 'LaqEtiqRAL', // LaqImpr ImprEtiqLaqRAL LaqEtiqRAL
             'initiales' => 'LAQRAL',
             'printer' => 'Laquage'
         ],
         [
             'nom_ax' => 9998,
-            'nom_irl' => 'Etiquettes Laquage : OF',
+            'nom_irl' => 'Etiquette OF', // Etiquettes Laquage : OF
             'nom_url' => 'LaqEtiqOF', // LaqEtiqOF
             'initiales' => 'LAQOF',
             'printer' => 'Laquage'

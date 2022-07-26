@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {% if ilot.nomIRL == 'Peinture' %}
-        {% include('badgeage/inc/_paint_view.html.twig') %}
+    {% if ilot.nomURL is same as('Peinture') %}
+        {% include('badgeage/inc/_paint.html.twig') %}
     {% else %}
-        <section class="ilot">
-        {% if ilot.nomAX == 40 %}
-            {% include('badgeage/inc/_miseEnFab_view.html.twig') %}
+    <section class="ilot">
+        {% if ilot.nomAX is same as(40) %}
+            {% include('badgeage/inc/_miseEnFab.html.twig') %}
         {% else %}
             <div class="form">
                 {% include('_form.html.twig') %}
@@ -56,7 +56,7 @@
                        title="Page options"><span>Options</span></a>
                 </div>
             </div>
-            </section>
         {% endif %}
+    </section>
     {% endif %}
 {% endblock %}

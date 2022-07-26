@@ -58,6 +58,7 @@ class BadgeageController extends AbstractController
             'ilot' => $ilot,
             'badgeage' => $badgeage,
             'sousIlots' => $ilotRepository->findBySousIlotsPeinture(),
+            'laqEtiqHome' => $ilotRepository->findOneBy(['nomURL' => 'laqEtiqHome']),
             'sousIlotsLaquage' => $ilotRepository->findBy(['nomURL' => $sousIlotsLaquageURL]),
             'form' => $form->createView()
         ]);
@@ -66,7 +67,7 @@ class BadgeageController extends AbstractController
     /**
      * @Route("/Laquage/{nomURL}", name="view_paint", methods={"GET"})
      */
-    public function viewPaint(IlotRepository $ilotRepository, Ilot $ilot = null): Response
+    public function laquage(IlotRepository $ilotRepository, Ilot $ilot = null): Response
     {
         if (null === $ilot) {
             throw $this->createNotFoundException('Ilot non trouvé.');
