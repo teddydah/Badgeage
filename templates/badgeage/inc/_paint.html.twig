@@ -3,7 +3,7 @@
         {% for sousIlot in sousIlots %}
             <li>
                 {% if sousIlot.nomURL is same as('LaqEtiqHome') %}
-                    <a href="{{ path('paint_laquage', { 'nomURL' : sousIlot.nomURL }) }}"
+                    <a href="{{ path('badgeage_laquage', { 'nomURL' : sousIlot.nomURL }) }}"
                        title="Ilot {{ sousIlot.nomIRL }}">{{ sousIlot.nomIRL }}</a>
                 {% else %}
                     <a href="{{ path('badgeage_view', { 'nomURL' : sousIlot.nomURL }) }}"

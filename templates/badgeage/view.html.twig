@@ -5,7 +5,9 @@
         {% include('badgeage/inc/_paint.html.twig') %}
     {% else %}
         <section class="ilot">
-            {% if ilot.nomAX is same as(40) %}
+            {% if ilot.nomURL is same as('LaqEtiqOF') or ilot.nomURL is same as('LaqEtiqRAL') %}
+                {% include('badgeage/inc/_laquage.html.twig') %}
+            {% elseif ilot.nomAX is same as(40) %}
                 {% include('badgeage/inc/_miseEnFab.html.twig') %}
             {% else %}
                 <div class="form">

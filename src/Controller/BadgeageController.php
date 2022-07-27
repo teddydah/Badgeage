@@ -45,13 +45,36 @@ class BadgeageController extends AbstractController
 
         $ordreFab = new OrdreFab();
         $form = $this->createForm(OrdreFabType::class, $ordreFab);
-        $form->add('numero', null, [
-            'label' => 'Badgeage OF ' . $ilot->getNomIRL(),
-            'attr' => [
-                'placeholder' => 'Scannez OF',
-                'autofocus' => true
-            ]
-        ]);
+
+        // Test nomURL de l'îlot => libellé du label en fonction du nomURL
+        switch ($ilot->getNomURL()) {
+            case 'LaqEtiqOF':
+                $form->add('numero', null, [
+                    'label' => 'Code-barres OF',
+                    'attr' => [
+                        'placeholder' => 'Scannez OF',
+                        'autofocus' => true
+                    ]
+                ]);
+                break;
+            case 'LaqEtiqRAL':
+                $form->add('numero', null, [
+                    'label' => 'Code-barres CARTON RAL',
+                    'attr' => [
+                        'placeholder' => 'Scannez OF',
+                        'autofocus' => true
+                    ]
+                ]);
+                break;
+            default:
+                $form->add('numero', null, [
+                    'label' => 'Badgeage OF ' . $ilot->getNomIRL(),
+                    'attr' => [
+                        'placeholder' => 'Scannez OF',
+                        'autofocus' => true
+                    ]
+                ]);
+        }
 
         $this->add($ordreFabRepository, $badgeageRepository, $request, $em, $ilot);
 
@@ -66,7 +89,7 @@ class BadgeageController extends AbstractController
     }
 
     /**
-     * @Route("/Laquage/{nomURL}", name="view_paint", methods={"GET"})
+     * @Route("/Laquage/{nomURL}", name="laquage", methods={"GET", "POST"})
      */
     public function laquage(IlotRepository $ilotRepository, Ilot $ilot = null): Response
     {
@@ -80,13 +103,24 @@ class BadgeageController extends AbstractController
             'LaqEtiqRAL'
         ];
 
-        return $this->render('badgeage/laquage.html.twig', [
+        $ordreFab = new OrdreFab();
+        $form = $this->createForm(OrdreFabType::class, $ordreFab);
+        $form->add('numero', null, [
+            'label' => 'Badgeage OF ' . $ilot->getNomIRL(),
+            'attr' => [
+                'placeholder' => 'Scannez OF',
+                'autofocus' => true
+            ]
+        ]);
+
+        return $this->render('paint/laquage.html.twig', [
             'ilot' => $ilot,
             'sousIlots' => $ilotRepository->findBySousIlotsPeinture(),
             'sousIlotsLaquage' => $ilotRepository->findBy(
                 ['nomURL' => $sousIlotsLaquageURL],
                 ['nomURL' => 'ASC']
-            )
+            ),
+            'form' => $form->createView()
         ]);
     }
 

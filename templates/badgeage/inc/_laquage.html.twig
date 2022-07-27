@@ -2,7 +2,11 @@
     <div>
         <i id="close" class="fa-solid fa-xmark" title="Fermer la fenêtre"></i>
         <i id="info" class="fa-solid fa-circle-info"></i>
-        <p>Scannez un OF pour imprimer une étiquette avec numéro d'OF + nom client</p>
+        {% if ilot.nomURL is same as('LaqEtiqOF') %}
+            <p>Scannez un OF pour imprimer une étiquette avec numéro d'OF + nom client</p>
+        {% elseif ilot.nomURL is same as('LaqEtiqRAL') %}
+            <p>Badger code-barre du RAL pour imprimer des étiquettes par lot de 20</p>
+        {% endif %}
     </div>
 </div>
 <div id="printer-item" class="printer-item">
@@ -31,6 +35,17 @@
             <a class="refresh bouton" href="{{ path('badgeage_view', { 'nomURL' : ilot.nomURL }) }}"
                title="Page options"><span>Rafraîchir</span></a>
         </div>
+        <div class="item-3">
+            {% if ilot.nomURL is same as('LaqEtiqOF') %}
+                <a class="ilot item-btn-6 bouton"
+                   href="{{ path('badgeage_view', { 'nomURL' : 'LaqEtiqRAL' }) }}"
+                   title="Ilot Etiquettes RAL">Etiquettes RAL</a>
+            {% elseif ilot.nomURL is same as('LaqEtiqRAL') %}
+                <a class="ilot item-btn-6 bouton"
+                   href="{{ path('badgeage_view', { 'nomURL' : 'LaqEtiqOF' }) }}"
+                   title="Ilot Etiquettes OF">Etiquettes OF</a>
+            {% endif %}
+        </div>
         <div class="item-2">
             <a class="prev item-btn-1 bouton" id="btn_retour_idx" onclick="history.back()"
                target="_self"
@@ -38,11 +53,6 @@
                title="Page précédente"><span>Précédent</span></a>
             <a class="home item-btn-2 bouton" href="{{ path('main_home') }}"
                title="Page d'accueil"><span>Accueil</span></a>
-        </div>
-        <div class="item-3">
-            <a class="options item-btn-5 bouton"
-               href="{{ path('options_menu', { 'nomURL' : ilot.nomURL }) }}"
-               title="Page options"><span>Options</span></a>
         </div>
     </div>
 </div>
