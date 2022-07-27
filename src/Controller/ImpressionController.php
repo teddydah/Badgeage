@@ -6,6 +6,7 @@ use App\Entity\Ilot;
 use App\Entity\OrdreFab;
 use App\Entity\Printer;
 use App\Form\OrdreFabType;
+use App\Service\PreviousPage;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +21,7 @@ class ImpressionController extends AbstractController
     /**
      * @Route(name="etiquette", methods={"GET", "POST"})
      */
-    public function print(Request $request, Ilot $ilot = null, OrdreFab $ordreFab = null): Response
+    public function print(Request $request, PreviousPage $previousPage, Ilot $ilot = null, OrdreFab $ordreFab = null): Response
     {
         // ParamConverter => si $ilot est null, alors le contrôleur est exécuté
         if (null === $ilot) {
@@ -40,7 +41,8 @@ class ImpressionController extends AbstractController
 
         return $this->render('printer/print.html.twig', [
             'ilot' => $ilot,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'path' => $previousPage->pagePrecedente()
         ]);
     }
 

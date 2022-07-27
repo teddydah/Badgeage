@@ -9,6 +9,7 @@ use App\Form\OrdreFabType;
 use App\Repository\BadgeageRepository;
 use App\Repository\IlotRepository;
 use App\Repository\OrdreFabRepository;
+use App\Service\PreviousPage;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,6 +30,7 @@ class BadgeageController extends AbstractController
         BadgeageRepository     $badgeageRepository,
         Request                $request,
         EntityManagerInterface $em,
+        PreviousPage           $previousPage,
         Ilot                   $ilot = null,
         Badgeage               $badgeage = null): Response
     {
@@ -84,7 +86,8 @@ class BadgeageController extends AbstractController
             'sousIlots' => $ilotRepository->findBySousIlotsPeinture(),
             'laqEtiqHome' => $ilotRepository->findOneBy(['nomURL' => 'laqEtiqHome']),
             'sousIlotsLaquage' => $ilotRepository->findBy(['nomURL' => $sousIlotsLaquageURL]),
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'path' => $previousPage->pagePrecedente()
         ]);
     }
 
@@ -212,6 +215,7 @@ class BadgeageController extends AbstractController
         OrdreFabRepository $ordreFabRepository,
         BadgeageRepository $badgeageRepository,
         Request            $request,
+        PreviousPage       $previousPage,
         Ilot               $ilot = null,
         Badgeage           $badgeage = null): Response
     {
@@ -253,7 +257,8 @@ class BadgeageController extends AbstractController
             'ilot' => $ilot,
             'badgeage' => $badgeage,
             'numOF' => $form->get('numero')->getData(),
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'path' => $previousPage->pagePrecedente()
         ]);
     }
 
