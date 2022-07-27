@@ -113,7 +113,7 @@ class BadgeageController extends AbstractController
             ]
         ]);
 
-        return $this->render('paint/laquage.html.twig', [
+        return $this->render('badgeage/laquage.html.twig', [
             'ilot' => $ilot,
             'sousIlots' => $ilotRepository->findBySousIlotsPeinture(),
             'sousIlotsLaquage' => $ilotRepository->findBy(
