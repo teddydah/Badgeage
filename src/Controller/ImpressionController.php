@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/{nomURL}/impression", name="impression_")
+ * @Route("/impression/{nomURL}", name="impression_")
  */
 class ImpressionController extends AbstractController
 {

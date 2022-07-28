@@ -45,28 +45,47 @@ class PreviousPage
             $badgeageView = HOME . "badgeage/" . $nomURL . "/view";
             $badgeageDetail = HOME . "badgeage/" . $nomURL . "/detail";
             $badgeageDelete = HOME . "badgeage/" . $nomURL . "/delete";
-            $badgeageLaquage = HOME . "badgeage/Laquage" . $nomURL;
 
             // Impression
-            $impression = HOME . $nomURL . "/impression";
+            $impression = HOME . "impression/" . $nomURL;
 
             // Options
             $optionsMenu = HOME . "options/" . $nomURL . "/menu";
             $optionsHistoriqueIlot = HOME . "options/" . $nomURL . "/HistoriqueIlot";
             $optionsHistoriqueCommande = HOME . "options/" . $nomURL . "/HistoriqueCommande";
 
+            // Peinture
+            $peintureView = HOME . "badgeage/Peinture/view";
+            $laqSstView = HOME . "badgeage/LaqSst/view";
+            $laqAccView = HOME . "badgeage/LaqAcc/view";
+            $laqPanView = HOME . "badgeage/LaqPan/view";
+            $laqSupView = HOME . "badgeage/LaqSup/view";
+            $laqEtiqHome = HOME . "badgeage/Laquage/LaqEtiqHome";
+            $laqEtiqOF = HOME . "badgeage/LaqEtiqOF/view";
+            $laqEtiqRAL = HOME . "badgeage/LaqEtiqRAL/view";
+
             if ($url == $badgeageView) {
                 $uri = HOME;
-            } else if ($url == $impression || $url == $optionsMenu) {
+            } else if (
+                $url == $impression || $url == $optionsMenu) {
                 $uri = $badgeageView;
+            } else if (str_contains($url, $badgeageDelete)) {
+                $uri = $badgeageDetail;
             } else if (
                 $url == $optionsHistoriqueIlot ||
                 $url == $optionsHistoriqueCommande ||
-                $url == $optionsHistoriqueCommande . substr($url, -10) ||
-                $url == $badgeageDetail) {
+                $url == $badgeageDetail ||
+                str_contains($url, $optionsHistoriqueCommande)) {
                 $uri = $optionsMenu;
-            } else if(str_contains($url, $badgeageDelete)) {
-                $uri = $badgeageDetail;
+            } else if (
+                $url == $laqSstView ||
+                $url == $laqAccView ||
+                $url == $laqPanView ||
+                $url == $laqSupView ||
+                $url == $laqEtiqHome) {
+                $uri = $peintureView;
+            } else if ($url == $laqEtiqOF || $url == $laqEtiqRAL) {
+                $uri = $laqEtiqHome;
             }
         }
         return $uri;
