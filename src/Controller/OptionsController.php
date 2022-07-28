@@ -7,22 +7,22 @@ use App\Entity\Ilot;
 use App\Entity\OrdreFab;
 use App\Form\OrdreFabType;
 use App\Repository\BadgeageRepository;
-use App\Repository\IlotRepository;
 use App\Repository\OrdreFabRepository;
+use App\Service\PreviousPage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/{nomURL}/options", name="options_")
+ * @Route("/options/{nomURL}", name="options_")
  */
 class OptionsController extends AbstractController
 {
     /**
      * @Route("/menu", name="menu", methods={"GET"})
      */
-    public function menu(Ilot $ilot = null, Badgeage $badgeage = null): Response
+    public function menu(PreviousPage $previousPage, Ilot $ilot = null, Badgeage $badgeage = null): Response
     {
         if (null === $ilot) {
             throw $this->createNotFoundException('Ilot non trouvé.');
@@ -30,14 +30,15 @@ class OptionsController extends AbstractController
 
         return $this->render('options/menu.html.twig', [
             'ilot' => $ilot,
-            'badgeage' => $badgeage
+            'badgeage' => $badgeage,
+            'path' => $previousPage->pagePrecedente()
         ]);
     }
 
     /**
      * @Route("/HistoriqueIlot", name="historique_ilot", methods={"GET"})
      */
-    public function listOF(BadgeageRepository $badgeageRepository, Ilot $ilot = null): Response
+    public function listOF(BadgeageRepository $badgeageRepository, PreviousPage $previousPage, Ilot $ilot = null): Response
     {
         if (null === $ilot) {
             throw $this->createNotFoundException('Ilot non trouvé.');
@@ -45,7 +46,8 @@ class OptionsController extends AbstractController
 
         return $this->render('options/listOF.html.twig', [
             'badgeages' => $badgeageRepository->findBadgeageByIlot($ilot),
-            'ilot' => $ilot
+            'ilot' => $ilot,
+            'path' => $previousPage->pagePrecedente()
         ]);
     }
 
@@ -56,6 +58,7 @@ class OptionsController extends AbstractController
         BadgeageRepository $badgeageRepository,
         OrdreFabRepository $ordreFabRepository,
         Request            $request,
+        PreviousPage       $previousPage,
         Ilot               $ilot = null): Response
     {
         if (null === $ilot) {
@@ -98,14 +101,20 @@ class OptionsController extends AbstractController
             'badgeage' => $badgeageExistant,
             'ilot' => $ilot,
             'numOF' => $numOF,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'path' => $previousPage->pagePrecedente()
         ]);
     }
 
     /**
      * @Route("/HistoriqueCommande/{numero}", name="historique_commande_of", methods={"GET", "POST"})
      */
-    public function listIlots(BadgeageRepository $badgeageRepository, OrdreFabRepository $ordreFabRepository, Request $request, Ilot $ilot = null): Response
+    public function listIlots(
+        BadgeageRepository $badgeageRepository,
+        OrdreFabRepository $ordreFabRepository,
+        Request            $request,
+        PreviousPage       $previousPage,
+        Ilot               $ilot = null): Response
     {
         if (null === $ilot) {
             throw $this->createNotFoundException('Ilot non trouvé.');
@@ -152,6 +161,8 @@ class OptionsController extends AbstractController
             'badgeage' => $badgeageExistant,
             'ilot' => $ilot,
             'numOF' => $numOF,
-            'form' => $form->createView()]);
+            'form' => $form->createView(),
+            'path' => $previousPage->pagePrecedente()
+        ]);
     }
 }

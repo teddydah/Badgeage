@@ -94,7 +94,7 @@ class BadgeageController extends AbstractController
     /**
      * @Route("/Laquage/{nomURL}", name="laquage", methods={"GET", "POST"})
      */
-    public function laquage(IlotRepository $ilotRepository, Ilot $ilot = null): Response
+    public function laquage(IlotRepository $ilotRepository, PreviousPage $previousPage, Ilot $ilot = null): Response
     {
         if (null === $ilot) {
             throw $this->createNotFoundException('Ilot non trouvé.');
@@ -123,7 +123,8 @@ class BadgeageController extends AbstractController
                 ['nomURL' => $sousIlotsLaquageURL],
                 ['nomURL' => 'ASC']
             ),
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'path' => $previousPage->pagePrecedente()
         ]);
     }
 
@@ -265,7 +266,7 @@ class BadgeageController extends AbstractController
     /**
      * @Route("/{nomURL}/delete/{id<\d+>}", name="delete", methods={"GET", "POST"})
      */
-    public function delete(Request $request, EntityManagerInterface $em, Badgeage $badgeage = null): Response
+    public function delete(Request $request, EntityManagerInterface $em, PreviousPage $previousPage, Badgeage $badgeage = null): Response
     {
         if (null === $badgeage) {
             throw $this->createNotFoundException('Badgeage non trouvé.');
@@ -302,7 +303,8 @@ class BadgeageController extends AbstractController
             'ilot' => $badgeage->getIlot(),
             'badgeage' => $badgeage,
             'numOF' => $form->get('numero')->getData(),
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'path' => $previousPage->pagePrecedente()
         ]);
     }
 

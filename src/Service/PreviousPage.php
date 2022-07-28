@@ -20,12 +20,20 @@ class PreviousPage
             'Magasin',
             'MiseEnFab',
             'MobilierUrbain',
-            'Peinture', // TODO : sous-îlots
+            'Peinture',
+            'LaqSst',
+            'LaqEtiqHome',
+            'LaqEtiqOF',
+            'LaqEtiqRAL',
+            'LaqAcc',
+            'LaqPan',
+            'LaqSup',
             'Permanente',
             'PrepaPerm',
             'Serrurerie',
             'Temporaire'
         ]);
+
 
         // URL page courante
         $url = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
@@ -33,14 +41,32 @@ class PreviousPage
         $uri = $url;
 
         foreach (NOM_URL as $nomURL) {
-            // Si l'URL correspond à celle de la page "http://localhost/badgeage/public/badgeage/$nomURL/view" :
-            // $uri = URL page d'accueil
-            if ($url == HOME . "badgeage/" . $nomURL . "/view") {
+            // Badgeage
+            $badgeageView = HOME . "badgeage/" . $nomURL . "/view";
+            $badgeageDetail = HOME . "badgeage/" . $nomURL . "/detail";
+            $badgeageDelete = HOME . "badgeage/" . $nomURL . "/delete";
+            $badgeageLaquage = HOME . "badgeage/Laquage" . $nomURL;
+
+            // Impression
+            $impression = HOME . $nomURL . "/impression";
+
+            // Options
+            $optionsMenu = HOME . "options/" . $nomURL . "/menu";
+            $optionsHistoriqueIlot = HOME . "options/" . $nomURL . "/HistoriqueIlot";
+            $optionsHistoriqueCommande = HOME . "options/" . $nomURL . "/HistoriqueCommande";
+
+            if ($url == $badgeageView) {
                 $uri = HOME;
-                // Sinon si l'URL correspond à celle de la page "$nomURL/impression" :
-                // $uri = URL page "http://localhost/badgeage/public/badgeage/$nomURL/view"
-            } else if ($url == HOME . $nomURL . "/impression") {
-                $uri = HOME . "badgeage/" . $nomURL . "/view";
+            } else if ($url == $impression || $url == $optionsMenu) {
+                $uri = $badgeageView;
+            } else if (
+                $url == $optionsHistoriqueIlot ||
+                $url == $optionsHistoriqueCommande ||
+                $url == $optionsHistoriqueCommande . substr($url, -10) ||
+                $url == $badgeageDetail) {
+                $uri = $optionsMenu;
+            } else if(str_contains($url, $badgeageDelete)) {
+                $uri = $badgeageDetail;
             }
         }
         return $uri;
