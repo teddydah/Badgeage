@@ -39,6 +39,16 @@ class BadgeageController extends AbstractController
             throw $this->createNotFoundException('Ilot non trouvé.');
         }
 
+        // Redirection vers "impression/nomURL/view" si le nomURL est "MiseEnFab", "LaqEtiqOF" ou "LaqEtiqRAL"
+        if ($ilot->getNomURL() == "MiseEnFab" || $ilot->getNomURL() == "LaqEtiqOF" || $ilot->getNomURL() == "LaqEtiqRAL") {
+            return $this->redirectToRoute('impression_view', ['nomURL' => $ilot->getNomURL()], 301);
+        }
+
+        // Redirection vers "badgeage/Laquage/LaqEtiqHome" si le nomURL est "LaqEtiqHome"
+        if ($ilot->getNomURL() == "LaqEtiqHome") {
+            return $this->redirectToRoute('badgeage_laquage', ['nomURL' => $ilot->getNomURL()], 301);
+        }
+
         // Récupération des sous-îlots "Etiquettes Laquage : OF" et "Etiquettes Laquage : RAL" propres au sous-îlot "Etiquettes Laquage"
         $sousIlotsLaquageURL = [
             'LaqEtiqOF',
@@ -47,36 +57,13 @@ class BadgeageController extends AbstractController
 
         $ordreFab = new OrdreFab();
         $form = $this->createForm(OrdreFabType::class, $ordreFab);
-
-        // Test nomURL de l'îlot => libellé du label en fonction du nomURL
-        switch ($ilot->getNomURL()) {
-            case 'LaqEtiqOF':
-                $form->add('numero', null, [
-                    'label' => 'Code-barres OF',
-                    'attr' => [
-                        'placeholder' => 'Scannez OF',
-                        'autofocus' => true
-                    ]
-                ]);
-                break;
-            case 'LaqEtiqRAL':
-                $form->add('numero', null, [
-                    'label' => 'Code-barres CARTON RAL',
-                    'attr' => [
-                        'placeholder' => 'Scannez OF',
-                        'autofocus' => true
-                    ]
-                ]);
-                break;
-            default:
-                $form->add('numero', null, [
-                    'label' => 'Badgeage OF ' . $ilot->getNomIRL(),
-                    'attr' => [
-                        'placeholder' => 'Scannez OF',
-                        'autofocus' => true
-                    ]
-                ]);
-        }
+        $form->add('numero', null, [
+            'label' => 'Badgeage OF ' . $ilot->getNomIRL(),
+            'attr' => [
+                'placeholder' => 'Scannez OF',
+                'autofocus' => true
+            ]
+        ]);
 
         $this->add($ordreFabRepository, $badgeageRepository, $request, $em, $ilot);
 
@@ -222,6 +209,15 @@ class BadgeageController extends AbstractController
     {
         if (null === $ilot) {
             throw $this->createNotFoundException('Ilot non trouvé.');
+        }
+
+        // Redirection vers la page d'accueil si le nomURL est "MiseEnFab", "LaqEtiqHome", "LaqEtiqOF" ou "LaqEtiqRAL"
+        if (
+            $ilot->getNomURL() == "MiseEnFab" ||
+            $ilot->getNomURL() == "LaqEtiqHome" ||
+            $ilot->getNomURL() == "LaqEtiqOF" ||
+            $ilot->getNomURL() == "LaqEtiqRAL") {
+            return $this->redirectToRoute('main_home', [], 301);
         }
 
         $ordreFab = new OrdreFab();

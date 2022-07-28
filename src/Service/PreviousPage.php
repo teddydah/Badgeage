@@ -46,14 +46,6 @@ class PreviousPage
             $badgeageDetail = HOME . "badgeage/" . $nomURL . "/detail";
             $badgeageDelete = HOME . "badgeage/" . $nomURL . "/delete";
 
-            // Impression
-            $impression = HOME . "impression/" . $nomURL;
-
-            // Options
-            $optionsMenu = HOME . "options/" . $nomURL . "/menu";
-            $optionsHistoriqueIlot = HOME . "options/" . $nomURL . "/HistoriqueIlot";
-            $optionsHistoriqueCommande = HOME . "options/" . $nomURL . "/HistoriqueCommande";
-
             // Peinture
             $peintureView = HOME . "badgeage/Peinture/view";
             $laqSstView = HOME . "badgeage/LaqSst/view";
@@ -61,11 +53,30 @@ class PreviousPage
             $laqPanView = HOME . "badgeage/LaqPan/view";
             $laqSupView = HOME . "badgeage/LaqSup/view";
             $laqEtiqHome = HOME . "badgeage/Laquage/LaqEtiqHome";
-            $laqEtiqOF = HOME . "badgeage/LaqEtiqOF/view";
-            $laqEtiqRAL = HOME . "badgeage/LaqEtiqRAL/view";
 
-            if ($url == $badgeageView) {
+            $laqEtiqOF = HOME . "impression/LaqEtiqOF/view";
+            $laqEtiqRAL = HOME . "impression/LaqEtiqRAL/view";
+
+            // Impression
+            $impression = HOME . "impression/" . $nomURL . "/view";
+            $impressionMiseEnFab = HOME . "impression/MiseEnFab/view";
+
+            // Options
+            $optionsMenu = HOME . "options/" . $nomURL . "/menu";
+            $optionsHistoriqueIlot = HOME . "options/" . $nomURL . "/HistoriqueIlot";
+            $optionsHistoriqueCommande = HOME . "options/" . $nomURL . "/HistoriqueCommande";
+
+            if ($url == $badgeageView || $url == $impressionMiseEnFab) {
                 $uri = HOME;
+            } else if (
+                $url == $laqSstView ||
+                $url == $laqAccView ||
+                $url == $laqPanView ||
+                $url == $laqSupView ||
+                $url == $laqEtiqHome) {
+                $uri = $peintureView;
+            } else if ($url == $laqEtiqOF || $url == $laqEtiqRAL) {
+                $uri = $laqEtiqHome;
             } else if (
                 $url == $impression || $url == $optionsMenu) {
                 $uri = $badgeageView;
@@ -77,15 +88,6 @@ class PreviousPage
                 $url == $badgeageDetail ||
                 str_contains($url, $optionsHistoriqueCommande)) {
                 $uri = $optionsMenu;
-            } else if (
-                $url == $laqSstView ||
-                $url == $laqAccView ||
-                $url == $laqPanView ||
-                $url == $laqSupView ||
-                $url == $laqEtiqHome) {
-                $uri = $peintureView;
-            } else if ($url == $laqEtiqOF || $url == $laqEtiqRAL) {
-                $uri = $laqEtiqHome;
             }
         }
         return $uri;

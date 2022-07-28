@@ -4,10 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Ilot;
 use App\Entity\OrdreFab;
-use App\Entity\Printer;
 use App\Form\OrdreFabType;
+use App\Repository\BadgeageRepository;
+use App\Repository\OrdreFabRepository;
 use App\Service\PreviousPage;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,9 +19,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class ImpressionController extends AbstractController
 {
     /**
-     * @Route(name="etiquette", methods={"GET", "POST"})
+     * @Route("/view", name="view", methods={"GET", "POST"})
      */
-    public function print(Request $request, PreviousPage $previousPage, Ilot $ilot = null, OrdreFab $ordreFab = null): Response
+    public function print(
+        OrdreFabRepository $ordreFabRepository,
+        BadgeageRepository $badgeageRepository,
+        Request            $request,
+        PreviousPage       $previousPage,
+        Ilot               $ilot = null,
+        OrdreFab           $ordreFab = null): Response
     {
         // ParamConverter => si $ilot est null, alors le contrôleur est exécuté
         if (null === $ilot) {
@@ -30,13 +36,33 @@ class ImpressionController extends AbstractController
 
         $form = $this->createForm(OrdreFabType::class, $ordreFab);
         $form->add('numero', null, [
-            'label' => 'Impression étiquette'
+            'label' => 'Code-barres ' . $ilot->getNomIRL(),
+            'attr' => [
+                'placeholder' => 'Scannez OF',
+                'autofocus' => true
+            ]
         ]);
         $form->handleRequest($request);
 
         // TODO
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->addFlash('success', 'L\'objet a bien été modifié.');
+            // Récupération du numéro d'OF depuis le formulaire
+            $numOF = $form->get('numero')->getData();
+
+            // Récupération de l'OF avec $numOF depuis la BDD
+            $ordreFabExistant = $ordreFabRepository->findOneBy(["numero" => $numOF]);
+
+            $badgeageExistant = $badgeageRepository->findOneBy([
+                "ilot" => $ilot,
+                "ordreFab" => $ordreFabExistant
+            ]);
+
+            if (isset($badgeageExistant)) {
+                $this->addFlash('success', 'Impression réussie pour ' . $badgeageExistant->getOrdreFab()->getNumero() . '.');
+
+            } else {
+                $this->addFlash('danger', $ilot->getNomIRL() . ' : l\'OF ' . $numOF . ' n\'existe pas.');
+            }
         }
 
         return $this->render('printer/print.html.twig', [
@@ -45,6 +71,4 @@ class ImpressionController extends AbstractController
             'path' => $previousPage->pagePrecedente()
         ]);
     }
-
-
 }

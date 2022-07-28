@@ -7,8 +7,13 @@
         <ul>
             {% for ilot in ilots %}
                 <li>
-                    <a href="{{ path('badgeage_view', { 'nomURL' : ilot.nomURL }) }}"
-                       title="Ilot {{ ilot.nomIRL }}">{{ ilot.nomIRL }}</a>
+                    {% if ilot.nomURL is same as('MiseEnFab') %}
+                        <a href="{{ path('impression_view', { 'nomURL' : ilot.nomURL }) }}"
+                           title="Ilot {{ ilot.nomIRL }}">{{ ilot.nomIRL }}</a>
+                    {% else %}
+                        <a href="{{ path('badgeage_view', { 'nomURL' : ilot.nomURL }) }}"
+                           title="Ilot {{ ilot.nomIRL }}">{{ ilot.nomIRL }}</a>
+                    {% endif %}
                 </li>
             {% endfor %}
         </ul>

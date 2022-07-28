@@ -1,55 +1,55 @@
 {% extends 'base.html.twig' %}
 
 {% block titre %}
-    <h1>Impression étiquette {{ ilot.nomIRL }}</h1>
+    {% if ilot.nomURL is same as('MiseEnFab') %}
+        <h1>Imprimer une étiquette par panneau</h1>
+    {% else %}
+        <h1>Impression {{ ilot.nomIRL }}</h1>
+    {% endif %}
 {% endblock %}
 
 {% block body %}
     <section class="printer">
-        <div id="print-info" class="pop-up none">
-            <div>
-                <i id="close" class="fa-solid fa-xmark" title="Fermer la fenêtre"></i>
-                <i id="info" class="fa-solid fa-circle-info"></i>
-                <p>Scannez un OF pour imprimer les petites étiquettes à coller sur les panneaux
-                    <strong>ARMOR</strong>, <strong>ARMEN</strong> et <strong>TEMPO</strong></p>
-            </div>
-        </div>
-        <div id="printer-item" class="printer-item">
-            <div class="form">
-                {{ form_start(form, { 'attr' : { 'novalidate' : 'novalidate' }}) }}
-                {{ form_label(form.numero) }}
-                <div class="form-input mb-3">
-                    {{ form_widget(form.numero) }}
-                    <i id="circle-info" class="fa-solid fa-circle-info" title="Information impression"></i>
+        {% if ilot.nomURL is same as('LaqEtiqOF') or ilot.nomURL is same as('LaqEtiqRAL') %}
+            {% include('badgeage/inc/_laquage_view.html.twig') %}
+        {% elseif ilot.nomURL is same as('MiseEnFab') %}
+            {% include('printer/inc/_miseEnFab_view.html.twig') %}
+        {% else %}
+            <div id="printer-item" class="printer-item">
+                <div class="form">
+                    {% include('_form.html.twig') %}
                 </div>
-                {{ form_end(form) }}
-            </div>
-            {% include('_flash_messages.html.twig') %}
-            <div class="printer-info">
-                <i class="fa-solid fa-print"></i>
-                <div>
-                    <span><strong>{{ ilot.printer.nom }}</strong> @{{ ilot.printer.ip }}</span>
-                    {# TODO : définir le statut #}
-                    <span>Statut : <strong class="isActive">Active</strong></span>
+                {% include('_flash_messages.html.twig') %}
+                <div id="printer-item" class="printer-item">
+                    <div class="printer-info">
+                        <i class="fa-solid fa-print"></i>
+                        <div>
+                            <span><strong>{{ ilot.printer.nom }}</strong> @{{ ilot.printer.ip }}</span>
+                            {# TODO : définir le statut #}
+                            <span>Statut : <strong class="isActive">Active</strong></span>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="boutons">
-                <div class="item-1">
-                    <a class="refresh bouton" href="{{ path('impression_etiquette', { 'nomURL' : ilot.nomURL }) }}"
-                       title="Page options"><span>Rafraîchir</span></a>
-                </div>
-                <div class="item-2">
-                    <a class="prev item-btn-1 bouton" id="btn_retour" href="{{ path }}"
-                       role="button"
-                       title="Page précédente"><span>Précédent</span></a>
-                    <a class="home item-btn-2 bouton" href="{{ path('main_home') }}" title="Page d'accueil"><span>Accueil</span></a>
-                </div>
-                <div class="item-3">
-                    <a class="photo item-btn-3 bouton" href="#" title="Page photo"><span>Photo</span></a>
-                    <a class="options item-btn-4 bouton" href="{{ path('options_menu', { 'nomURL' : ilot.nomURL }) }}"
-                       title="Page options"><span>Options</span></a>
+                <div class="boutons">
+                    <div class="item-1">
+                        <a class="refresh bouton" href="{{ path('impression_view', { 'nomURL' : ilot.nomURL }) }}"
+                           title="Page options"><span>Rafraîchir</span></a>
+                    </div>
+                    <div class="item-2">
+                        <a class="prev item-btn-1 bouton" id="btn_retour" href="{{ path }}"
+                           role="button"
+                           title="Page précédente"><span>Précédent</span></a>
+                        <a class="home item-btn-2 bouton" href="{{ path('main_home') }}"
+                           title="Page d'accueil"><span>Accueil</span></a>
+                    </div>
+                    <div class="item-3">
+                        <a class="photo item-btn-3 bouton" href="#" title="Page photo"><span>Photo</span></a>
+                        <a class="options item-btn-4 bouton"
+                           href="{{ path('options_menu', { 'nomURL' : ilot.nomURL }) }}"
+                           title="Page options"><span>Options</span></a>
+                    </div>
                 </div>
             </div>
-        </div>
+        {% endif %}
     </section>
 {% endblock %}
