@@ -4,7 +4,7 @@ namespace App\DataFixtures\Data;
 
 class PrinterData
 {
-    public static $printerData = [
+    public static array $printerData = [
         [
             'nom' => 'Adhésif',
             'ip' => '192.168.35.202'

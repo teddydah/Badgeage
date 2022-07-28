@@ -4,7 +4,7 @@ namespace App\DataFixtures\Data;
 
 class OrdreFabData
 {
-    public static $ordreFabData = [
+    public static array $ordreFabData = [
         [
             'numero' => 'C000000-1',
             'client' => 'Groupe Self Signal',

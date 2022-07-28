@@ -4,7 +4,7 @@ namespace App\DataFixtures\Data;
 
 class IlotData
 {
-    public static $ilotData = [
+    public static array $ilotData = [
         [
             'nom_ax' => 100,
             'nom_irl' => 'Adhésif',

@@ -7,18 +7,20 @@ use App\DataFixtures\Data\ClientData;
 use App\DataFixtures\Data\IlotData;
 use App\DataFixtures\Data\OrdreFabData;
 use App\DataFixtures\Data\PrinterData;
+use App\DataFixtures\Data\UserData;
 use App\Entity\Adresse;
 use App\Entity\Client;
 use App\Entity\Ilot;
 use App\Entity\OrdreFab;
 use App\Entity\Printer;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\DBAL\Connection;
 use Doctrine\Persistence\ObjectManager;
 
 class AppFixtures extends Fixture
 {
-    private $connection;
+    private Connection $connection;
 
     public function __construct(Connection $connection)
     {
@@ -43,6 +45,7 @@ class AppFixtures extends Fixture
         $this->connection->executeQuery('TRUNCATE TABLE ordre_fab');
         $this->connection->executeQuery('TRUNCATE TABLE printer');
         $this->connection->executeQuery('TRUNCATE TABLE status');
+        $this->connection->executeQuery('TRUNCATE TABLE user');
     }
 
     public function load(ObjectManager $manager): void
@@ -116,6 +119,16 @@ class AppFixtures extends Fixture
             $ordreFab->setAdresseLivraison($adresseList[$data['adresse']]);
 
             $manager->persist($ordreFab);
+        };
+
+        foreach (UserData::$userData as $data) {
+            $user = new User();
+
+            $user->setEmail($data['email']);
+            $user->setRoles([$data['roles']]);
+            $user->setPassword($data['password']);
+
+            $manager->persist($user);
         };
 
         $manager->flush();

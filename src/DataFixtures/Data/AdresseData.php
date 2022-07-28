@@ -4,7 +4,7 @@ namespace App\DataFixtures\Data;
 
 class AdresseData
 {
-    public static $adresseData = [
+    public static array $adresseData = [
         [
             'recid' => '1',
             'code_postal' => '35510',
