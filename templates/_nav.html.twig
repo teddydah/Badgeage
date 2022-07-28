@@ -13,13 +13,16 @@
             <div class="offcanvas-body">
                 <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                     <li class="nav-item">
-                        <a class="home nav-link active" aria-current="page" href="{{ path('main_home') }}">Home</a>
+                        <a class="home nav-link active" aria-current="page" href="{{ path('main_home') }}"
+                           title="Page d'accueil">Accueil</a>
                     </li>
                     <li class="nav-item">
                         {% if app.user %}
-                            <a class="logout nav-link" href="{{ path('app_logout') }}">Log Out</a>
+                            <a class="logout nav-link" href="{{ path('app_logout') }}"
+                               title="Se déconnecter de l'espace admin">Déconnexion</a>
                         {% else %}
-                            <a class="login nav-link" href="{{ path('app_login') }}">Log In</a>
+                            <a class="login nav-link" href="{{ path('app_login') }}"
+                               title="Se connecter à l'espace admin">Se connecter</a>
                         {% endif %}
                     </li>
                     <li class="nav-item dropdown">
