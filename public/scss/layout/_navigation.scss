@@ -30,6 +30,7 @@ nav {
 
   .home,
   .login,
+  .settings,
   .logout {
     &::before {
       margin-right: 0.5em;
@@ -45,6 +46,12 @@ nav {
   .login {
     &::before {
       @include font-awesome(bold, "\f2f6");
+    }
+  }
+
+  .settings {
+    &::before {
+      @include font-awesome(bold, "\f013");
     }
   }
 

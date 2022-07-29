@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Admin{% endblock %}
+
+{% block titre %}
+    <h1>Badgeuse Paramètres</h1>
+{% endblock %}
+
+{% block body %}
+    <section class="home">
+        <ul>
+            <li>
+                <a href="#" title="#">Mon compte</a>
+            </li>
+        </ul>
+        <div class="boutons">
+            <div class="item-1">
+                <a class="prev item-btn-1 bouton" id="btn_retour" href="{{ path }}"
+                   role="button"
+                   title="Page précédente"><span>Précédent</span></a>
+                <a class="home item-btn-2 bouton" href="{{ path('main_home') }}"
+                   title="Page d'accueil"><span>Accueil</span></a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -4,6 +4,7 @@
 
 {% block body %}
     <section class="home">
+        {% include('_flash_messages.html.twig') %}
         <ul>
             {% for ilot in ilots %}
                 <li>

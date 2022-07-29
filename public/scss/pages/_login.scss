@@ -1,0 +1,45 @@
+.login {
+  max-width: 30em;
+  margin: auto;
+
+  div {
+    &.login-item {
+      background-color: $color-self-signal;
+      border: 2px solid $color1;
+      border-radius: 0.5em;
+      width: 100%;
+      margin: 0.5em 0;
+      padding: 0.5em;
+
+      h2 {
+        color: $color1;
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: bold;
+        margin: 0;
+      }
+    }
+
+    button {
+      font-size: 1.6rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      border: 2px solid $color2;
+      border-radius: 0.5em;
+      width: 100%;
+      margin-top: 0.5em;
+      padding: 1em;
+
+      &::before {
+        @include font-awesome(bold, "\f090");
+        margin-right: 0.5em;
+      }
+
+      &:hover {
+        background-color: $color2;
+        border-color: $color1;
+        color: $color1;
+      }
+    }
+  }
+}

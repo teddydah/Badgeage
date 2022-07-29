@@ -22,8 +22,7 @@
             <i class="fa-solid fa-print"></i>
             <div>
                 <span><strong>{{ ilot.printer.nom }}</strong> @{{ ilot.printer.ip }}</span>
-                {# TODO : définir le statut #}
-                <span>Statut : <strong class="isActive">Active</strong></span>
+                <span>Statut : <strong class="{{ isActive }}">{{ imprimante }}</strong></span>
             </div>
         </div>
     </div>

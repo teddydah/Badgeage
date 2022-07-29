@@ -16,8 +16,11 @@
                         <a class="home nav-link active" aria-current="page" href="{{ path('main_home') }}"
                            title="Page d'accueil">Accueil</a>
                     </li>
+                    {# TODO => active #}
                     <li class="nav-item">
                         {% if app.user %}
+                            <a class="settings nav-link" href="{{ path('admin_settings') }}"
+                               title="Page paramètres">Paramètres</a>
                             <a class="logout nav-link" href="{{ path('app_logout') }}"
                                title="Se déconnecter de l'espace admin">Déconnexion</a>
                         {% else %}

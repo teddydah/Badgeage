@@ -3,6 +3,11 @@
   font-size: 1.6rem;
 
   tr {
+    th,
+    td {
+      padding: 0.5em;
+    }
+
     td {
       button {
         background-color: $color-self-signal;
@@ -11,7 +16,7 @@
         text-transform: uppercase;
         font-size: 1.6rem;
         font-weight: bold;
-        margin: 0.5em 0;
+        // margin: 0.5em 0;
         padding: 1em 0.5em;
 
         &::before {

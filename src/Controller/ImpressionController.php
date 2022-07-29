@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Badgeage;
 use App\Entity\Ilot;
 use App\Entity\OrdreFab;
 use App\Form\OrdreFabType;
@@ -44,6 +45,21 @@ class ImpressionController extends AbstractController
         ]);
         $form->handleRequest($request);
 
+        $imprimante = "Désactivée";
+        // $imprimante = "Active";
+
+        switch ($imprimante) {
+            case 'Active' :
+                $isActive = 'isActive';
+                $imprimante = 'Active';
+                break;
+            default:
+                $isActive = "isNotActive";
+            // $imprimante = 'Désactivée';
+        }
+
+        $badgeageExistant = null;
+
         // TODO
         if ($form->isSubmitted() && $form->isValid()) {
             // Récupération du numéro d'OF depuis le formulaire
@@ -59,7 +75,6 @@ class ImpressionController extends AbstractController
 
             if (isset($badgeageExistant)) {
                 $this->addFlash('success', 'Impression réussie pour ' . $badgeageExistant->getOrdreFab()->getNumero() . '.');
-
             } else {
                 $this->addFlash('danger', $ilot->getNomIRL() . ' : l\'OF ' . $numOF . ' n\'existe pas.');
             }
@@ -67,8 +82,11 @@ class ImpressionController extends AbstractController
 
         return $this->render('printer/print.html.twig', [
             'ilot' => $ilot,
+            'badgeage' => $badgeageExistant,
             'form' => $form->createView(),
-            'path' => $previousPage->pagePrecedente()
+            'path' => $previousPage->pagePrecedente(),
+            'isActive' => $isActive,
+            'imprimante' => $imprimante
         ]);
     }
 }

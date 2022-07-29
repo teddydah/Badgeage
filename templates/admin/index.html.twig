@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Admin{% endblock %}
+
+{% block titre %}
+    <h1>Badgeuse Admin</h1>
+{% endblock %}
+
+{% block body %}
+    <section class="admin">
+        {#        {% include('_flash_messages.html.twig') %} #}
+        <ul>
+            <li>
+                <a href="#" title="Gestion ilots">Ilots</a>
+            </li>
+            <li>
+                <a href="#" title="Gestion imprimantes">Imprimantes</a>
+            </li>
+        </ul>
+        <div class="boutons">
+            <div class="item-1">
+                <a class="home item-btn-1 bouton" href="{{ path('main_home') }}"
+                   title="Page d'accueil"><span>Accueil</span></a>
+                <a class="settings item-btn-2 bouton" href="{{ path('admin_settings') }}"
+                   title="Page paramètres"><span>Paramètres</span></a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

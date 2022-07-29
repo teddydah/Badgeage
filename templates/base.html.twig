@@ -30,7 +30,7 @@
     <div class="container">
         {% block titre %}
             <h1>
-                <a {% if ilot is not defined %} href="{{ path('main_home') }}"{% endif %} title="Badgeuse Self Signal">
+                <a {% if ilot is not defined %} href="{{ path('main_home') }}"{% endif %} title="Page d'accueil">
                     {% if ilot is defined %}
                         Ilot  {{ ilot.nomIRL }}
                     {% else %}

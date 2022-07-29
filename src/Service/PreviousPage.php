@@ -9,6 +9,9 @@ class PreviousPage
         // URL de la page d'accueil
         define("HOME", "http://localhost/badgeage/public/");
 
+        // URL de la page d'accueil admin
+        define("ADMIN", "http://localhost/badgeage/public/admin");
+
         // nomURL => îlots
         define('NOM_URL', [
             'Adhesif',
@@ -66,6 +69,9 @@ class PreviousPage
             $optionsHistoriqueIlot = HOME . "options/" . $nomURL . "/HistoriqueIlot";
             $optionsHistoriqueCommande = HOME . "options/" . $nomURL . "/HistoriqueCommande";
 
+            // Admin
+            $adminSettings = ADMIN . "/settings";
+
             if ($url == $badgeageView || $url == $impressionMiseEnFab) {
                 $uri = HOME;
             } else if (
@@ -80,6 +86,10 @@ class PreviousPage
             } else if (
                 $url == $impression || $url == $optionsMenu) {
                 $uri = $badgeageView;
+                // Si l'URL de la page courante (exemple : "http://localhost/badgeage/public/badgeage/Adhesif/delete/id")
+                // contient "badgeage/$nomURL"/delete (astuce par rapport à l'id)
+                // => c'est qu'il s'agit de la page de suppression d'un badgeage
+                // => donc "Précédent" pointe vers la page de détail d'un badgeage
             } else if (str_contains($url, $badgeageDelete)) {
                 $uri = $badgeageDetail;
             } else if (
@@ -88,6 +98,8 @@ class PreviousPage
                 $url == $badgeageDetail ||
                 str_contains($url, $optionsHistoriqueCommande)) {
                 $uri = $optionsMenu;
+            } else if ($url == $adminSettings) {
+                $uri = ADMIN;
             }
         }
         return $uri;

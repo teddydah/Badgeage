@@ -72,6 +72,7 @@
       &.print,
       &.photo,
       &.options,
+      &.settings,
       &.refresh {
         &::before {
           @media screen and (min-width: $xs) {
@@ -107,6 +108,12 @@
       &.options {
         &::before {
           @include font-awesome(bold, "\2b");
+        }
+      }
+
+      &.settings {
+        &::before {
+          @include font-awesome(bold, "\f013");
         }
       }
 
