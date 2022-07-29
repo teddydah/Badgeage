@@ -49,7 +49,7 @@ class IlotRepository extends ServiceEntityRepository
     {
         $queryBuilder = $this->createQueryBuilder('i');
         $queryBuilder
-            ->andwhere('i.nomAX >= 40')
+            ->andWhere('i.nomAX >= 40')
             ->andWhere('i.nomAX <= 120')
             ->orWhere('i.nomAX = 160')
             ->orWhere('i.nomAX = 170')
@@ -69,7 +69,7 @@ class IlotRepository extends ServiceEntityRepository
     {
         $queryBuilder = $this->createQueryBuilder('i');
         $queryBuilder
-            ->andwhere('i.nomAX >= 132')
+            ->andWhere('i.nomAX >= 132')
             ->andWhere('i.nomAX <= 140')
             ->orWhere('i.nomAX = 9999')
             ->orderBy('i.nomIRL');

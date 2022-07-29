@@ -47,7 +47,7 @@ class Ilot
     private $printer;
 
     /**
-     * @ORM\OneToMany(targetEntity=Badgeage::class, mappedBy="ilot", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity=Badgeage::class, mappedBy="ilot")
      */
     private $badgeages;
 

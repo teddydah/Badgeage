@@ -36,7 +36,6 @@ class Printer
 
     public function __construct()
     {
-        $this->ilots = new ArrayCollection();
         $this->port = 9100;
     }
 
@@ -77,36 +76,6 @@ class Printer
     public function setPort(int $port): self
     {
         $this->port = $port;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Ilot>
-     */
-    public function getIlots(): Collection
-    {
-        return $this->ilots;
-    }
-
-    public function addIlot(Ilot $ilot): self
-    {
-        if (!$this->ilots->contains($ilot)) {
-            $this->ilots[] = $ilot;
-            $ilot->setPrinter($this);
-        }
-
-        return $this;
-    }
-
-    public function removeIlot(Ilot $ilot): self
-    {
-        if ($this->ilots->removeElement($ilot)) {
-            // set the owning side to null (unless already changed)
-            if ($ilot->getPrinter() === $this) {
-                $ilot->setPrinter(null);
-            }
-        }
 
         return $this;
     }
