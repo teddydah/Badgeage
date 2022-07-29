@@ -7,7 +7,7 @@ class PreviousPage
     public function pagePrecedente(): string
     {
         // URL de la page d'accueil
-        define("HOME", "http://localhost/badgeage/public/");
+        define("HOME", "http://" . $_SERVER['HTTP_HOST'] . "/badgeage/public/");
 
         // URL de la page d'accueil admin
         define("ADMIN", "http://localhost/badgeage/public/admin");
