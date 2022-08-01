@@ -3,15 +3,15 @@
 {% block title %}{{ parent() }} | Admin{% endblock %}
 
 {% block titre %}
-    <h1>Badgeuse Admin</h1>
+    <h1>Badgeage Admin</h1>
 {% endblock %}
 
 {% block body %}
     <section class="admin">
-        {#        {% include('_flash_messages.html.twig') %} #}
+        {% include('_flash_messages.html.twig') %}
         <ul>
             <li>
-                <a href="#" title="Gestion ilots">Ilots</a>
+                <a href="{{ path('ilot_index') }}" title="Gestion ilots">Ilots</a>
             </li>
             <li>
                 <a href="#" title="Gestion imprimantes">Imprimantes</a>

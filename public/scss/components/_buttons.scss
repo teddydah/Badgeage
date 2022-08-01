@@ -69,6 +69,7 @@
 
       &.prev,
       &.home,
+      &.nav-admin,
       &.print,
       &.photo,
       &.options,
@@ -90,6 +91,12 @@
       &.home {
         &::before {
           @include font-awesome(bold, "\f015");
+        }
+      }
+
+      &.nav-admin {
+        &::before {
+          @include font-awesome(bold, "\e1b0");
         }
       }
 
@@ -127,6 +134,10 @@
 
       &.ilot {
         background-color: $color6;
+      }
+
+      &.ilot-add {
+        background-color: $color-primary;
       }
     }
   }

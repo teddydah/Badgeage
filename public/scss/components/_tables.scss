@@ -6,6 +6,7 @@
     th,
     td {
       padding: 0.5em;
+      vertical-align: middle;
     }
 
     td {
@@ -16,7 +17,6 @@
         text-transform: uppercase;
         font-size: 1.6rem;
         font-weight: bold;
-        // margin: 0.5em 0;
         padding: 1em 0.5em;
 
         &::before {
@@ -82,6 +82,32 @@
       td {
         &.numOF {
           vertical-align: middle;
+        }
+      }
+    }
+  }
+}
+
+.admin {
+  &.ilots {
+    table {
+      tr {
+        .see,
+        .edit,
+        .delete {
+          width: 10%;
+        }
+
+        td {
+          .btn {
+            font-size: 1.6rem;
+
+            &:hover {
+              background-color: $color2;
+              border-color: $color1;
+              color: $color1;
+            }
+          }
         }
       }
     }

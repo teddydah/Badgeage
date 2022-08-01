@@ -45,11 +45,6 @@ $(document).ready(() => {
         $("#ilot-item").removeClass("none");
     });
 
-    /* -- Afficher une fenêtre de confirmation avant suppression -- */
-    $(".delete-badgeage form").on('submit', () => {
-        return confirm('Êtes-vous sûr de vouloir supprimer ce badgeage ?');
-    });
-
     /* -- DataTables -- */
     $('#datatables').DataTable({
         language: {

@@ -29,6 +29,7 @@ nav {
   }
 
   .home,
+  .nav-admin,
   .login,
   .settings,
   .logout {
@@ -40,6 +41,12 @@ nav {
   .home {
     &::before {
       @include font-awesome(bold, "\f015");
+    }
+  }
+
+  .nav-admin {
+    &::before {
+      @include font-awesome(bold, "\e1b0");
     }
   }
 

@@ -17,7 +17,8 @@
   }
 }
 
-.login {
+.login,
+.ilots {
   .form {
     padding: 0.25em;
     text-align: left;
@@ -28,6 +29,41 @@
 
     input {
       margin-bottom: 0.5em;
+    }
+  }
+}
+
+.ilots {
+  div {
+    &#ilot {
+      &:last-child {
+        div {
+          margin-bottom: 0 !important;
+        }
+      }
+    }
+  }
+
+  select {
+    font-size: 1.6rem;
+    border: 2px solid $color1;
+    margin-bottom: 0.5em;
+  }
+
+  button {
+    font-size: 1.6rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: 2px solid $color2;
+    border-radius: 0.5em;
+    width: 100%;
+    margin-top: 0.5em;
+    padding: 1em;
+
+    &:hover {
+      background-color: $color2;
+      border-color: $color1;
+      color: $color1;
     }
   }
 }

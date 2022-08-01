@@ -31,7 +31,9 @@
                 </tr>
                 <tr>
                     <td class="text-center" colspan="2">
-                        <button id="btn" type="submit">Supprimer</button>
+                        <button id="btn" type="submit"
+                                onsubmit="confirm('Êtes-vous sûr de vouloir supprimer ce badgeage ?')">Supprimer
+                        </button>
                     </td>
                 </tr>
                 </tbody>
@@ -44,7 +46,8 @@
                 <a class="prev item-btn-1 bouton" id="btn_retour" href="{{ path }}"
                    role="button"
                    title="Page précédente"><span>Précédent</span></a>
-                <a class="home item-btn-2 bouton" href="{{ path('main_home') }}" title="Page d'accueil"><span>Accueil</span></a>
+                <a class="home item-btn-2 bouton" href="{{ path('main_home') }}"
+                   title="Page d'accueil"><span>Accueil</span></a>
             </div>
             <div class="item-2">
                 <a class="print item-btn-3 bouton" href="{{ path('impression_view', { 'nomURL' : ilot.nomURL }) }}"

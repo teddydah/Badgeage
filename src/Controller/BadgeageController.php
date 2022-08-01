@@ -311,8 +311,7 @@ class BadgeageController extends AbstractController
         $badgeage->setOrdreFab($ordreFab);
         $badgeage->setIlot($ilot);
         $badgeage->setDateBadgeage(new \DateTime());
-        // TODO
-        $badgeage->setRecid(1);
+        $badgeage->setRecid('1');
 
         return $badgeage;
     }

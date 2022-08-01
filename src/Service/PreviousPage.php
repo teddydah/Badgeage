@@ -10,31 +10,36 @@ class PreviousPage
         define("HOME", "http://" . $_SERVER['HTTP_HOST'] . "/badgeage/public/");
 
         // URL de la page d'accueil admin
-        define("ADMIN", "http://localhost/badgeage/public/admin");
+        define("ADMIN", "http://localhost/badgeage/public/admin/");
 
+        // TODO : récupérer les nomURL automatiquement
         // nomURL => îlots
         define('NOM_URL', [
             'Adhesif',
+            'AnnuleATraiter',
             'Debit',
+            'Echantillon',
             'FacesPerm',
             'FacesTempo',
             'FraisagePerm',
             'FraisageTempo',
-            'Magasin',
-            'MiseEnFab',
-            'MobilierUrbain',
-            'Peinture',
-            'LaqSst',
-            'LaqEtiqHome',
-            'LaqEtiqOF',
-            'LaqEtiqRAL',
             'LaqAcc',
             'LaqPan',
             'LaqSup',
+            'LaqSst',
+            'Peinture',
+            'Laquage',
+            'LaqEtiqRAL',
+            'LaqEtiqOF',
+            'LaqEtiqHome',
+            'Magasin',
+            'MiseEnFab',
+            'MobilierUrbain',
+            'OFATraiter',
             'Permanente',
+            'Pliage',
             'PrepaPerm',
-            'Serrurerie',
-            'Temporaire'
+            'SAVATraiter'
         ]);
 
 
@@ -70,7 +75,11 @@ class PreviousPage
             $optionsHistoriqueCommande = HOME . "options/" . $nomURL . "/HistoriqueCommande";
 
             // Admin
-            $adminSettings = ADMIN . "/settings";
+            $adminSettings = ADMIN . "settings";
+            $adminIlots = ADMIN . "ilots/index";
+            $ilotRead = ADMIN . "ilot/" . $nomURL;
+            $ilotUpdate = ADMIN . "ilot/" . $nomURL . "/edit";
+            $ilotsAdd = ADMIN . "ilots/add";
 
             if ($url == $badgeageView || $url == $impressionMiseEnFab) {
                 $uri = HOME;
@@ -98,8 +107,13 @@ class PreviousPage
                 $url == $badgeageDetail ||
                 str_contains($url, $optionsHistoriqueCommande)) {
                 $uri = $optionsMenu;
-            } else if ($url == $adminSettings) {
+            } else if ($url == $adminSettings || $url == $adminIlots) {
                 $uri = ADMIN;
+            } else if (
+                $url == $ilotRead ||
+                $url == $ilotUpdate ||
+                $url == $ilotsAdd) {
+                $uri = $adminIlots;
             }
         }
         return $uri;

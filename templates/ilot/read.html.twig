@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Admin{% endblock %}
+
+{% block titre %}
+    <h1>Ilot {{ ilot.nomIRL }}</h1>
+{% endblock %}
+
+{% block body %}
+    <section class="admin admin-ilots">
+        {% include('_flash_messages.html.twig') %}
+        <table class="table table-striped table-light text-center">
+            <thead>
+            <tr>
+                <th>Nom IRL</th>
+                <th>Nom URL</th>
+                <th>Nom AX</th>
+                <th>Initiales</th>
+                <th>Imprimante</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{{ ilot.nomIRL }}</td>
+                <td>{{ ilot.nomURL }}</td>
+                <td>{{ ilot.nomAX }}</td>
+                <td>{{ ilot.initiales }}</td>
+                <td>{{ ilot.printer.nom }}</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="boutons">
+            <div class="item-1">
+                <a class="prev item-btn-1 bouton" id="btn_retour" href="{{ path }}"
+                   role="button"
+                   title="Page précédente"><span>Précédent</span></a>
+                <a class="nav-admin item-btn-2 bouton" href="{{ path('admin_index') }}"
+                   title="Page admin"><span>Admin</span></a>
+            </div>
+        </div>
+    </section>
+{% endblock %}
