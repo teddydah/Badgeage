@@ -36,9 +36,15 @@
   }
 }
 
-.delete-badgeage {
+.delete-badgeage,
+.read-ilot {
   table {
     tr {
+      th,
+      td {
+        width: 50%;
+      }
+
       th {
         text-align: right;
       }
@@ -89,7 +95,14 @@
 }
 
 .admin {
+  &.index-ilots,
   &.ilots {
+    table {
+      margin-top: 0.625em;
+    }
+  }
+
+  &.index-ilots {
     table {
       tr {
         .see,

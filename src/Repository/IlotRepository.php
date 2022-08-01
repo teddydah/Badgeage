@@ -41,6 +41,19 @@ class IlotRepository extends ServiceEntityRepository
     }
 
     /**
+     * Récupérer les nomURL des îlots
+     *
+     * @return float|int|mixed|string
+     */
+    public function findByNomURL()
+    {
+        $queryBuilder = $this->createQueryBuilder('i');
+        $queryBuilder->select('i.nomURL');
+        $query = $queryBuilder->getQuery();
+        return $query->getResult();
+    }
+
+    /**
      * Récupérer les îlots pour les affciher sur la page principale, à l'exception des "sous-îlots" de l'îlot Peinture
      *
      * @return float|int|mixed|string

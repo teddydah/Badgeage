@@ -7,24 +7,28 @@
 {% endblock %}
 
 {% block body %}
-    <section class="admin admin-ilots">
+    <section class="admin ilots read-ilot">
         {% include('_flash_messages.html.twig') %}
         <table class="table table-striped table-light text-center">
-            <thead>
-            <tr>
-                <th>Nom IRL</th>
-                <th>Nom URL</th>
-                <th>Nom AX</th>
-                <th>Initiales</th>
-                <th>Imprimante</th>
-            </tr>
-            </thead>
             <tbody>
             <tr>
+                <th>Nom IRL :</th>
                 <td>{{ ilot.nomIRL }}</td>
+            </tr>
+            <tr>
+                <th>Nom URL :</th>
                 <td>{{ ilot.nomURL }}</td>
+            </tr>
+            <tr>
+                <th>Nom AX :</th>
                 <td>{{ ilot.nomAX }}</td>
+            </tr>
+            <tr>
+                <th>Initiales :</th>
                 <td>{{ ilot.initiales }}</td>
+            </tr>
+            <tr>
+                <th>Imprimante :</th>
                 <td>{{ ilot.printer.nom }}</td>
             </tr>
             </tbody>

@@ -2,9 +2,12 @@
 
 namespace App\Service;
 
+use App\Entity\Ilot;
+use App\Repository\IlotRepository;
+
 class PreviousPage
 {
-    public function pagePrecedente(): string
+    public function pagePrecedente(IlotRepository $ilotRepository): string
     {
         // URL de la page d'accueil
         define("HOME", "http://" . $_SERVER['HTTP_HOST'] . "/badgeage/public/");
@@ -14,34 +17,39 @@ class PreviousPage
 
         // TODO : récupérer les nomURL automatiquement
         // nomURL => îlots
-        define('NOM_URL', [
-            'Adhesif',
-            'AnnuleATraiter',
-            'Debit',
-            'Echantillon',
-            'FacesPerm',
-            'FacesTempo',
-            'FraisagePerm',
-            'FraisageTempo',
-            'LaqAcc',
-            'LaqPan',
-            'LaqSup',
-            'LaqSst',
-            'Peinture',
-            'Laquage',
-            'LaqEtiqRAL',
-            'LaqEtiqOF',
-            'LaqEtiqHome',
-            'Magasin',
-            'MiseEnFab',
-            'MobilierUrbain',
-            'OFATraiter',
-            'Permanente',
-            'Pliage',
-            'PrepaPerm',
-            'SAVATraiter'
-        ]);
+//        define('NOM_URL', [
+//            'Adhesif',
+//            'AnnuleATraiter',
+//            'Debit',
+//            'Echantillon',
+//            'FacesPerm',
+//            'FacesTempo',
+//            'FraisagePerm',
+//            'FraisageTempo',
+//            'LaqAcc',
+//            'LaqPan',
+//            'LaqSup',
+//            'LaqSst',
+//            'Peinture',
+//            'Laquage',
+//            'LaqEtiqRAL',
+//            'LaqEtiqOF',
+//            'LaqEtiqHome',
+//            'Magasin',
+//            'MiseEnFab',
+//            'MobilierUrbain',
+//            'OFATraiter',
+//            'Permanente',
+//            'Pliage',
+//            'PrepaPerm',
+//            'SAVATraiter'
+//        ]);
 
+        // TODO
+        $ilotsExistant = $ilotRepository->findByNomURL();
+        var_dump(json_encode($ilotsExistant));
+
+        define('NOM_URL', [$ilots]);
 
         // URL page courante
         $url = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
@@ -115,6 +123,8 @@ class PreviousPage
                 $url == $ilotsAdd) {
                 $uri = $adminIlots;
             }
+            var_dump($ilotRead);
+            var_dump($url);
         }
         return $uri;
     }

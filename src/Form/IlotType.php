@@ -18,25 +18,25 @@ class IlotType extends AbstractType
             ->add('nomIRL', null, [
                 'label' => 'Nom IRL',
                 'attr' => [
-                    'placeholder' => 'Ex : Adhésif'
+                    'placeholder' => 'Ex : Mise en Fabrication'
                 ]
             ])
             ->add('nomURL', null, [
                 'label' => 'Nom URL',
                 'attr' => [
-                    'placeholder' => 'Ex : Adhesif'
+                    'placeholder' => 'Ex : MiseEnFab'
                 ]
             ])
             ->add('nomAX', null, [
                 'label' => 'Nom AX',
                 'attr' => [
                     'min' => 1,
-                    'placeholder' => 'Ex : 100'
+                    'placeholder' => 'Ex : 40'
                 ]
             ])
             ->add('initiales', null, [
                 'attr' => [
-                    'placeholder' => 'Ex : ADH'
+                    'placeholder' => 'Ex : MEF'
                 ]
             ])
             ->add('printer', EntityType::class, [

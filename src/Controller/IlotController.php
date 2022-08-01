@@ -25,14 +25,14 @@ class IlotController extends AbstractController
     {
         return $this->render('ilot/index.html.twig', [
             'ilots' => $ilotRepository->findAll(),
-            'path' => $previousPage->pagePrecedente()
+            'path' => $previousPage->pagePrecedente($ilotRepository)
         ]);
     }
 
     /**
      * @Route("/ilot/{nomURL}", name="read", methods={"GET"})
      */
-    public function read(PreviousPage $previousPage, Ilot $ilot = null): Response
+    public function read(PreviousPage $previousPage, IlotRepository $ilotRepository, Ilot $ilot = null): Response
     {
         // ParamConverter => si $ilot = null, alors notre contrôleur est exécuté
         if (null === $ilot) {
@@ -41,7 +41,7 @@ class IlotController extends AbstractController
 
         return $this->render('ilot/read.html.twig', [
             'ilot' => $ilot,
-            'path' => $previousPage->pagePrecedente()
+            'path' => $previousPage->pagePrecedente($ilotRepository)
         ]);
     }
 
