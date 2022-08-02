@@ -81,7 +81,7 @@ class ImpressionController extends AbstractController
             }
         }
 
-        return $this->render('printer/print.html.twig', [
+        return $this->render('impression/print.html.twig', [
             'ilot' => $ilot,
             'badgeage' => $badgeageExistant,
             'form' => $form->createView(),
