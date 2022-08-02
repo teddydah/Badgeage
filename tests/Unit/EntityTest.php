@@ -4,6 +4,7 @@ namespace App\Tests\Unit;
 
 use App\Entity\Printer;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Validator\ConstraintViolation;
 
 class EntityTest extends KernelTestCase
 {
@@ -18,8 +19,16 @@ class EntityTest extends KernelTestCase
     public function assertHasErrors(Printer $printer, int $number = 0)
     {
         self::bootKernel();
-        $error = self::$container->get('validator')->validate($printer);
-        $this->assertCount($number, $error);
+        $errors = self::$container->get('validator')->validate($printer);
+        $messages = [];
+
+        /**
+         * @var ConstraintViolation $error
+         */
+        foreach ($errors as $error) {
+            $messages[] = $error->getPropertyPath() . ' => ' . $error->getMessage();
+        }
+        $this->assertCount($number, $errors, implode(', ', $messages));
     }
 
     public function testValidEntity()
