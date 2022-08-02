@@ -10,6 +10,7 @@ class EntityTest extends KernelTestCase
 {
     public function getEntity(): Printer
     {
+        // Test de l'entité Printer
         return (new Printer())
             ->setNom('printer')
             ->setIp('192.168.35.000')
