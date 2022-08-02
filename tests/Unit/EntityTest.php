@@ -12,7 +12,7 @@ class EntityTest extends KernelTestCase
     {
         return (new Printer())
             ->setNom('printer')
-            ->setIp('192.000.00.000')
+            ->setIp('192.168.35.000')
             ->setPort(9100);
     }
 
