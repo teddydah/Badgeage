@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Erreur 404{% endblock %}
+
+{% block body %}
+    <section class="error">
+        <div class="text-center">
+            <img src="{{ asset('img/404.png') }}" alt="Panneau danger">
+            <h2>Erreur 404</h2>
+            <span>Oups ! Page introuvable</span>
+        </div>
+        <div class="boutons">
+            <div class="item-1">
+                <a class="home item-btn-5 bouton" href="{{ path('main_home') }}"
+                   title="Page d'accueil"><span>Accueil</span></a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

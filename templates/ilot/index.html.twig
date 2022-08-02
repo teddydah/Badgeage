@@ -9,13 +9,15 @@
 {% block body %}
     <section class="admin index-ilots">
         {% include('_flash_messages.html.twig') %}
-        <table class="table table-striped table-light text-center">
+        <table class="table table-striped table-light text-center {{ is_granted("ROLE_ADMIN") ? '' : 'isGranted' }}">
             <thead>
             <tr>
                 <th>Ilot</th>
                 <th class="see">Voir</th>
-                <th class="edit">Modif.</th>
-                <th colspan="delete">Supp.</th>
+                {% if is_granted("ROLE_ADMIN") %}
+                    <th class="edit">Modif.</th>
+                    <th colspan="delete">Supp.</th>
+                {% endif %}
             </tr>
             </thead>
             <tbody>
@@ -28,34 +30,47 @@
                             <i class="fa-solid fa-eye"></i>
                         </a>
                     </td>
-                    <td class="edit">
-                        <a class="btn btn-success" href="{{ path('ilot_edit', { 'nomURL' : ilot.nomURL }) }}" title="Modifier îlot {{ ilot.nomIRL }}">
-                            <i class="fa-solid fa-pen"></i>
-                        </a>
-                    </td>
-                    <td class="delete">
-                        <a class="btn-delete btn btn-danger" href="{{ path('ilot_delete', { 'id' : ilot.id }) }}"
-                           title="Supprimer îlot {{ ilot.nomIRL }}"
-                           onclick="confirm('Êtes-vous sûr de vouloir supprimer l\'îlot {{ ilot.nomIRL }} ?')">
-                            <i class="fa-solid fa-trash-can"></i>
-                        </a>
-                    </td>
+                    {% if is_granted("ROLE_ADMIN") %}
+                        <td class="edit">
+                            <a class="btn btn-success" href="{{ path('ilot_edit', { 'nomURL' : ilot.nomURL }) }}"
+                               title="Modifier îlot {{ ilot.nomIRL }}">
+                                <i class="fa-solid fa-pen"></i>
+                            </a>
+                        </td>
+                        <td class="delete">
+                            <a class="btn-delete btn btn-danger" href="{{ path('ilot_delete', { 'id' : ilot.id }) }}"
+                               title="Supprimer îlot {{ ilot.nomIRL }}"
+                               onclick="return confirm('Êtes-vous sûr de vouloir supprimer l\'îlot {{ ilot.nomIRL }} ?')">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </a>
+                        </td>
+                    {% endif %}
                 </tr>
             {% endfor %}
             </tbody>
         </table>
         <div class="boutons">
-            <div class="item-1">
-                <a class="ilot-add item-btn-5 bouton" href="{{ path('ilot_add') }}"
-                   title="Ajouter un îlot"><span>Ajouter un ilot</span></a>
-            </div>
-            <div class="item-2">
-                <a class="prev item-btn-1 bouton" id="btn_retour" href="{{ path }}"
-                   role="button"
-                   title="Page précédente"><span>Précédent</span></a>
-                <a class="nav-admin item-btn-2 bouton" href="{{ path('admin_index') }}"
-                   title="Page admin"><span>Admin</span></a>
-            </div>
+            {% if is_granted("ROLE_ADMIN") %}
+                <div class="item-1">
+                    <a class="ilot-add item-btn-5 bouton" href="{{ path('ilot_add') }}"
+                       title="Ajouter un îlot"><span>Ajouter un ilot</span></a>
+                </div>
+                <div class="item-2">
+                    <a class="prev item-btn-1 bouton" id="btn_retour" href="{{ path }}"
+                       role="button"
+                       title="Page précédente"><span>Précédent</span></a>
+                    <a class="nav-admin item-btn-2 bouton" href="{{ path('admin_index') }}"
+                       title="Page admin"><span>Admin</span></a>
+                </div>
+            {% else %}
+                <div class="item-1">
+                    <a class="prev item-btn-1 bouton" id="btn_retour" href="{{ path }}"
+                       role="button"
+                       title="Page précédente"><span>Précédent</span></a>
+                    <a class="nav-admin item-btn-2 bouton" href="{{ path('admin_index') }}"
+                       title="Page admin"><span>Admin</span></a>
+                </div>
+            {% endif %}
         </div>
     </section>
 {% endblock %}

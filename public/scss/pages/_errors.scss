@@ -1,0 +1,50 @@
+.error {
+  div {
+    &.text-center {
+      background-color: $color2;
+      // border: 2px solid $color1;
+      border-radius: 0.5em;
+      text-align: center;
+      text-transform: uppercase;
+      font-weight: bold;
+      font-size: 1.6rem;
+      width: 100%;
+      margin: 0.5em 0;
+      padding: 1em 0.5em;
+
+      @media screen and (min-width: $xs) {
+        font-size: 2.1rem;
+      }
+
+      @media screen and (min-width: $sm) {
+        font-size: 2.65rem;
+      }
+
+      h2 {
+        font-weight: bold;
+        font-size: 3rem;
+
+        @media screen and (min-width: $xs) {
+          font-size: 4rem;
+        }
+
+        @media screen and (min-width: $sm) {
+          font-size: 5rem;
+        }
+      }
+
+      img {
+        width: 5em;
+        margin-bottom: 1em;
+
+        @media screen and (min-width: $xs) {
+          width: 7em;
+        }
+
+        @media screen and (min-width: $sm) {
+          width: 10em;
+        }
+      }
+    }
+  }
+}

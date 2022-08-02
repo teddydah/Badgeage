@@ -15,24 +15,30 @@
             <div class="offcanvas-body">
                 <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                     <li class="nav-item">
+                        <hr>
                         <a class="home nav-link {% if route_name == "main_home" %}active{% endif %}" aria-current="page"
                            href="{{ path('main_home') }}"
                            title="Page d'accueil">Accueil</a>
+                        <hr>
                     </li>
                     <li class="nav-item">
                         {% if app.user %}
                             <a class="nav-admin nav-link {% if route_name == "admin_index" %}active{% endif %}"
                                href="{{ path('admin_index') }}"
                                title="Page admin">Admin</a>
+                            <hr>
                             <a class="settings nav-link {% if route_name == "admin_settings" %}active{% endif %}"
                                href="{{ path('admin_settings') }}"
                                title="Page paramètres">Paramètres</a>
+                            <hr>
                             <a class="logout nav-link" href="{{ path('app_logout') }}"
                                title="Se déconnecter de l'espace admin">Déconnexion</a>
+                            <hr>
                         {% else %}
                             <a class="login nav-link {% if route_name == "app_login" %}active{% endif %}"
                                href="{{ path('app_login') }}"
                                title="Se connecter à l'espace admin">Se connecter</a>
+                            <hr>
                         {% endif %}
                     </li>
                 </ul>

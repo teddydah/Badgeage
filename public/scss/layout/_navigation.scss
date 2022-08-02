@@ -28,6 +28,22 @@ nav {
     text-transform: uppercase;
   }
 
+  ul {
+    &.navbar-nav {
+      padding: 0 !important;
+    }
+
+    li {
+      a {
+        padding: 0.5em 0 !important;
+      }
+
+      hr {
+        margin: 0;
+      }
+    }
+  }
+
   .home,
   .nav-admin,
   .login,

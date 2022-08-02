@@ -146,8 +146,10 @@
 .index-ilots {
   .boutons {
     .item-1 {
-      span {
-        display: block;
+      .ilot-add {
+        span {
+          display: block;
+        }
       }
     }
   }

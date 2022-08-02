@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Erreur{% endblock %}
+
+{% block body %}
+    <section class="error">
+        <div class="text-center">
+            <img src="{{ asset('img/error.png') }}" alt="Panneau stop">
+            <h2>Erreur</h2>
+            <span>Oups !</span>
+        </div>
+        <div class="boutons">
+            <div class="item-1">
+                <a class="home item-btn-5 bouton" href="{{ path('main_home') }}"
+                   title="Page d'accueil"><span>Accueil</span></a>
+            </div>
+        </div>
+    </section>
+{% endblock %}
