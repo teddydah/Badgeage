@@ -15,52 +15,18 @@ class PreviousPage
         // URL de la page d'accueil admin
         define("ADMIN", "http://localhost/badgeage/public/admin/");
 
-        // TODO : récupérer les nomURL automatiquement
-        // nomURL => îlots
-//        define('NOM_URL', [
-//            'Adhesif',
-//            'AnnuleATraiter',
-//            'Debit',
-//            'Echantillon',
-//            'FacesPerm',
-//            'FacesTempo',
-//            'FraisagePerm',
-//            'FraisageTempo',
-//            'LaqAcc',
-//            'LaqPan',
-//            'LaqSup',
-//            'LaqSst',
-//            'Peinture',
-//            'Laquage',
-//            'LaqEtiqRAL',
-//            'LaqEtiqOF',
-//            'LaqEtiqHome',
-//            'Magasin',
-//            'MiseEnFab',
-//            'MobilierUrbain',
-//            'OFATraiter',
-//            'Permanente',
-//            'Pliage',
-//            'PrepaPerm',
-//            'SAVATraiter'
-//        ]);
-
-        // TODO
-        $ilotsExistant = $ilotRepository->findByNomURL();
-        var_dump(json_encode($ilotsExistant));
-
-        define('NOM_URL', [$ilots]);
-
         // URL page courante
         $url = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
         $uri = $url;
 
-        foreach (NOM_URL as $nomURL) {
+        $ilots = $ilotRepository->findByNomURL();
+
+        foreach ($ilots as $nomURL) {
             // Badgeage
-            $badgeageView = HOME . "badgeage/" . $nomURL . "/view";
-            $badgeageDetail = HOME . "badgeage/" . $nomURL . "/detail";
-            $badgeageDelete = HOME . "badgeage/" . $nomURL . "/delete";
+            $badgeageView = HOME . "badgeage/" . current($nomURL) . "/view";
+            $badgeageDetail = HOME . "badgeage/" . current($nomURL) . "/detail";
+            $badgeageDelete = HOME . "badgeage/" . current($nomURL) . "/delete";
 
             // Peinture
             $peintureView = HOME . "badgeage/Peinture/view";
@@ -74,19 +40,19 @@ class PreviousPage
             $laqEtiqRAL = HOME . "impression/LaqEtiqRAL/view";
 
             // Impression
-            $impression = HOME . "impression/" . $nomURL . "/view";
+            $impression = HOME . "impression/" . current($nomURL) . "/view";
             $impressionMiseEnFab = HOME . "impression/MiseEnFab/view";
 
             // Options
-            $optionsMenu = HOME . "options/" . $nomURL . "/menu";
-            $optionsHistoriqueIlot = HOME . "options/" . $nomURL . "/HistoriqueIlot";
-            $optionsHistoriqueCommande = HOME . "options/" . $nomURL . "/HistoriqueCommande";
+            $optionsMenu = HOME . "options/" . current($nomURL) . "/menu";
+            $optionsHistoriqueIlot = HOME . "options/" . current($nomURL) . "/HistoriqueIlot";
+            $optionsHistoriqueCommande = HOME . "options/" . current($nomURL) . "/HistoriqueCommande";
 
             // Admin
             $adminSettings = ADMIN . "settings";
             $adminIlots = ADMIN . "ilots/index";
-            $ilotRead = ADMIN . "ilot/" . $nomURL;
-            $ilotUpdate = ADMIN . "ilot/" . $nomURL . "/edit";
+            $ilotRead = ADMIN . "ilot/" . current($nomURL);
+            $ilotUpdate = ADMIN . "ilot/" . current($nomURL) . "/edit";
             $ilotsAdd = ADMIN . "ilots/add";
 
             if ($url == $badgeageView || $url == $impressionMiseEnFab) {
@@ -123,8 +89,6 @@ class PreviousPage
                 $url == $ilotsAdd) {
                 $uri = $adminIlots;
             }
-            var_dump($ilotRead);
-            var_dump($url);
         }
         return $uri;
     }

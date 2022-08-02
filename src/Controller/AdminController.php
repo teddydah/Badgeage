@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\IlotRepository;
 use App\Service\PreviousPage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,10 +24,10 @@ class AdminController extends AbstractController
     /**
      * @Route("/settings", name="settings", methods={"GET"})
      */
-    public function settings(PreviousPage $previousPage): Response
+    public function settings(PreviousPage $previousPage, IlotRepository $ilotRepository): Response
     {
         return $this->render('admin/settings.html.twig', [
-            'path' => $previousPage->pagePrecedente()
+            'path' => $previousPage->pagePrecedente($ilotRepository)
         ]);
     }
 }

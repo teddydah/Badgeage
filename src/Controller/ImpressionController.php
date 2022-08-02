@@ -2,11 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\Badgeage;
 use App\Entity\Ilot;
 use App\Entity\OrdreFab;
 use App\Form\OrdreFabType;
 use App\Repository\BadgeageRepository;
+use App\Repository\IlotRepository;
 use App\Repository\OrdreFabRepository;
 use App\Service\PreviousPage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,6 +25,7 @@ class ImpressionController extends AbstractController
     public function print(
         OrdreFabRepository $ordreFabRepository,
         BadgeageRepository $badgeageRepository,
+        IlotRepository     $ilotRepository,
         Request            $request,
         PreviousPage       $previousPage,
         Ilot               $ilot = null,
@@ -84,7 +85,7 @@ class ImpressionController extends AbstractController
             'ilot' => $ilot,
             'badgeage' => $badgeageExistant,
             'form' => $form->createView(),
-            'path' => $previousPage->pagePrecedente(),
+            'path' => $previousPage->pagePrecedente($ilotRepository),
             'isActive' => $isActive,
             'imprimante' => $imprimante
         ]);

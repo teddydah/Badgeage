@@ -48,7 +48,12 @@ class IlotController extends AbstractController
     /**
      * @Route("/ilot/{nomURL}/edit", name="edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, EntityManagerInterface $em, PreviousPage $previousPage, Ilot $ilot = null): Response
+    public function edit(
+        Request                $request,
+        EntityManagerInterface $em,
+        PreviousPage           $previousPage,
+        IlotRepository         $ilotRepository,
+        Ilot                   $ilot = null): Response
     {
         if (null === $ilot) {
             throw $this->createNotFoundException('Ilot non trouvé.');
@@ -74,14 +79,18 @@ class IlotController extends AbstractController
         return $this->render('ilot/edit.html.twig', [
             'ilot' => $ilot,
             'form' => $form->createView(),
-            'path' => $previousPage->pagePrecedente()
+            'path' => $previousPage->pagePrecedente($ilotRepository)
         ]);
     }
 
     /**
      * @Route("/ilots/add", name="add", methods={"GET", "POST"})
      */
-    public function add(Request $request, EntityManagerInterface $em, PreviousPage $previousPage): Response
+    public function add(
+        Request                $request,
+        EntityManagerInterface $em,
+        PreviousPage           $previousPage,
+        IlotRepository         $ilotRepository): Response
     {
         $ilot = new Ilot();
         $form = $this->createForm(IlotType::class, $ilot);
@@ -104,7 +113,7 @@ class IlotController extends AbstractController
 
         return $this->render('ilot/add.html.twig', [
             'form' => $form->createView(),
-            'path' => $previousPage->pagePrecedente()
+            'path' => $previousPage->pagePrecedente($ilotRepository)
         ]);
     }
 

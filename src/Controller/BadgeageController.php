@@ -74,7 +74,7 @@ class BadgeageController extends AbstractController
             'laqEtiqHome' => $ilotRepository->findOneBy(['nomURL' => 'laqEtiqHome']),
             'sousIlotsLaquage' => $ilotRepository->findBy(['nomURL' => $sousIlotsLaquageURL]),
             'form' => $form->createView(),
-            'path' => $previousPage->pagePrecedente()
+            'path' => $previousPage->pagePrecedente($ilotRepository)
         ]);
     }
 
@@ -111,7 +111,7 @@ class BadgeageController extends AbstractController
                 ['nomURL' => 'ASC']
             ),
             'form' => $form->createView(),
-            'path' => $previousPage->pagePrecedente()
+            'path' => $previousPage->pagePrecedente($ilotRepository)
         ]);
     }
 
@@ -202,6 +202,7 @@ class BadgeageController extends AbstractController
     public function detail(
         OrdreFabRepository $ordreFabRepository,
         BadgeageRepository $badgeageRepository,
+        IlotRepository     $ilotRepository,
         Request            $request,
         PreviousPage       $previousPage,
         Ilot               $ilot = null,
@@ -255,14 +256,20 @@ class BadgeageController extends AbstractController
             'badgeage' => $badgeage,
             'numOF' => $form->get('numero')->getData(),
             'form' => $form->createView(),
-            'path' => $previousPage->pagePrecedente()
+            'path' => $previousPage->pagePrecedente($ilotRepository)
         ]);
     }
 
     /**
      * @Route("/{nomURL}/delete/{id<\d+>}", name="delete", methods={"GET", "POST"})
      */
-    public function delete(Request $request, EntityManagerInterface $em, PreviousPage $previousPage, Badgeage $badgeage = null): Response
+    public function delete(
+        Request                $request,
+        EntityManagerInterface $em,
+        PreviousPage           $previousPage,
+        IlotRepository         $ilotRepository,
+        Badgeage               $badgeage = null
+    ): Response
     {
         if (null === $badgeage) {
             throw $this->createNotFoundException('Badgeage non trouvé.');
@@ -300,7 +307,7 @@ class BadgeageController extends AbstractController
             'badgeage' => $badgeage,
             'numOF' => $form->get('numero')->getData(),
             'form' => $form->createView(),
-            'path' => $previousPage->pagePrecedente()
+            'path' => $previousPage->pagePrecedente($ilotRepository)
         ]);
     }
 

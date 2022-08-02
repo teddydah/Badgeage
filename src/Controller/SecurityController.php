@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\IlotRepository;
 use App\Service\PreviousPage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +14,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/login", name="app_login")
      */
-    public function login(AuthenticationUtils $authenticationUtils, PreviousPage $previousPage): Response
+    public function login(AuthenticationUtils $authenticationUtils, PreviousPage $previousPage, IlotRepository $ilotRepository): Response
     {
         if ($this->getUser()) {
             return $this->redirectToRoute('admin_index');
@@ -27,7 +28,7 @@ class SecurityController extends AbstractController
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
-            'path' => $previousPage->pagePrecedente()
+            'path' => $previousPage->pagePrecedente($ilotRepository)
         ]);
     }
 
