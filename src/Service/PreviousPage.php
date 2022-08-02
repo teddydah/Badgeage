@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use App\Entity\Ilot;
 use App\Repository\IlotRepository;
 
 class PreviousPage
