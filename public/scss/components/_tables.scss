@@ -37,7 +37,8 @@
 }
 
 .delete-badgeage,
-.read-ilot {
+.read-ilot,
+.read-printer {
   table {
     tr {
       th,
@@ -96,13 +97,16 @@
 
 .admin {
   &.index-ilots,
-  &.ilots {
+  &.index-printers,
+  &.ilots,
+  &.printers {
     table {
       margin-top: 0.625em;
     }
   }
 
-  &.index-ilots {
+  &.index-ilots,
+  &.index-printers {
     table {
       tr {
         .see,

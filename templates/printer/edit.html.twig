@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Admin{% endblock %}
+
+{% block titre %}
+    <h1>Modifier imprimante {{ printer.nom }}</h1>
+{% endblock %}
+
+{% block body %}
+    <section class="admin printers">
+        <div class="form">
+            {% include('_form.html.twig') %}
+        </div>
+        <div class="boutons">
+            <div class="item-1">
+                <a class="prev item-btn-1 bouton" id="btn_retour" href="{{ path }}"
+                   role="button"
+                   title="Page précédente"><span>Précédent</span></a>
+                <a class="nav-admin item-btn-2 bouton" href="{{ path('admin_index') }}"
+                   title="Page admin"><span>Admin</span></a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

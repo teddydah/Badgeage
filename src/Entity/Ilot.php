@@ -48,16 +48,16 @@ class Ilot
     private $initiales;
 
     /**
+     * @ORM\OneToMany(targetEntity=Badgeage::class, mappedBy="ilot")
+     */
+    private $badgeages;
+
+    /**
      * @ORM\ManyToOne(targetEntity=Printer::class, inversedBy="ilots")
      * @ORM\JoinColumn(nullable=false)
      * @Assert\NotBlank()
      */
     private $printer;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Badgeage::class, mappedBy="ilot")
-     */
-    private $badgeages;
 
     public function __construct()
     {
@@ -117,18 +117,6 @@ class Ilot
         return $this;
     }
 
-    public function getPrinter(): ?Printer
-    {
-        return $this->printer;
-    }
-
-    public function setPrinter(?Printer $printer): self
-    {
-        $this->printer = $printer;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Badgeage>
      */
@@ -155,6 +143,18 @@ class Ilot
                 $badgeage->setIlot(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPrinter(): ?Printer
+    {
+        return $this->printer;
+    }
+
+    public function setPrinter(?Printer $printer): self
+    {
+        $this->printer = $printer;
 
         return $this;
     }

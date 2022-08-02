@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Admin{% endblock %}
+
+{% block titre %}
+    <h1>Imprimante {{ printer.nom }}</h1>
+{% endblock %}
+
+{% block body %}
+    <section class="admin printers read-printer">
+        {% include('_flash_messages.html.twig') %}
+        <table class="table table-striped table-light text-center">
+            <tbody>
+            <tr>
+                <th>Nom :</th>
+                <td>{{ printer.nom }}</td>
+            </tr>
+            <tr>
+                <th>Port :</th>
+                <td>{{ printer.port }}</td>
+            </tr>
+            <tr>
+                <th>IP :</th>
+                <td>{{ printer.ip }}</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="boutons">
+            <div class="item-1">
+                <a class="prev item-btn-1 bouton" id="btn_retour" href="{{ path }}"
+                   role="button"
+                   title="Page précédente"><span>Précédent</span></a>
+                <a class="nav-admin item-btn-2 bouton" href="{{ path('admin_index') }}"
+                   title="Page admin"><span>Admin</span></a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

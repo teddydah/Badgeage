@@ -49,10 +49,17 @@ class PreviousPage
 
             // Admin
             $adminSettings = ADMIN . "settings";
+
+            // Admin - ilots
             $adminIlots = ADMIN . "ilots/index";
             $ilotRead = ADMIN . "ilot/" . current($nomURL);
             $ilotUpdate = ADMIN . "ilot/" . current($nomURL) . "/edit";
             $ilotsAdd = ADMIN . "ilots/add";
+
+            // Admin - printers
+            $adminPrinters = ADMIN . "printers/index";
+            $printersAdd = ADMIN . "printers/add";
+            $adminPrinter = ADMIN . "printer/";
 
             if ($url == $badgeageView || $url == $impressionMiseEnFab) {
                 $uri = HOME;
@@ -80,13 +87,18 @@ class PreviousPage
                 $url == $badgeageDetail ||
                 str_contains($url, $optionsHistoriqueCommande)) {
                 $uri = $optionsMenu;
-            } else if ($url == $adminSettings || $url == $adminIlots) {
+            } else if (
+                $url == $adminSettings ||
+                $url == $adminIlots ||
+                $url == $adminPrinters) {
                 $uri = ADMIN;
             } else if (
                 $url == $ilotRead ||
                 $url == $ilotUpdate ||
                 $url == $ilotsAdd) {
                 $uri = $adminIlots;
+            } else if (str_contains($url, $adminPrinter) || $url == $printersAdd) {
+                $uri = $adminPrinters;
             }
         }
         return $uri;

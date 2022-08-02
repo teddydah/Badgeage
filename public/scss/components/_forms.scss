@@ -18,7 +18,8 @@
 }
 
 .login,
-.ilots {
+.ilots,
+.printers {
   .form {
     padding: 0.25em;
     text-align: left;
@@ -33,9 +34,11 @@
   }
 }
 
-.ilots {
+.ilots,
+.printers {
   div {
-    &#ilot {
+    &#ilot,
+    &#printer {
       &:last-child {
         div {
           margin-bottom: 0 !important;

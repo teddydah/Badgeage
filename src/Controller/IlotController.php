@@ -118,7 +118,7 @@ class IlotController extends AbstractController
     }
 
     /**
-     * @Route("ilot/{id<\d+>}/delete", name="delete", methods={"GET"})
+     * @Route("/ilot/{id<\d+>}/delete", name="delete", methods={"GET"})
      */
     public function delete(EntityManagerInterface $em, Ilot $ilot = null): Response
     {
