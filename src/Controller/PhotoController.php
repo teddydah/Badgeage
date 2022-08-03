@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Badgeage;
 use App\Entity\Ilot;
 use App\Entity\OrdreFab;
 use App\Form\OrdreFabType;
@@ -10,9 +9,8 @@ use App\Repository\BadgeageRepository;
 use App\Repository\IlotRepository;
 use App\Repository\OrdreFabRepository;
 use App\Service\FileUploader;
+use App\Service\MessageGenerator;
 use App\Service\PreviousPage;
-use Cassandra\Time;
-use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -21,7 +19,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use function Sodium\add;
 
 /**
  * @Route("/photo/{nomURL}", name="photo_")
@@ -37,6 +34,7 @@ class PhotoController extends AbstractController
         OrdreFabRepository $ordreFabRepository,
         BadgeageRepository $badgeageRepository,
         IlotRepository     $ilotRepository,
+        MessageGenerator   $messageGenerator,
         Ilot               $ilot = null): Response
     {
         // ParamConverter => si $ilot est null, alors le contrôleur est exécuté
@@ -72,7 +70,7 @@ class PhotoController extends AbstractController
                     'numero' => $badgeageExistant->getOrdreFab()->getNumero()
                 ], 302);
             } else {
-                $this->addFlash('danger', $ilot->getNomIRL() . ' : l\'OF ' . $numOF . ' n\'existe pas.');
+                $this->addFlash('danger', $messageGenerator->getMessageBadgeage($numOF, $ilot));
             }
         }
 
@@ -87,12 +85,15 @@ class PhotoController extends AbstractController
      * @Route("/{numero}/select", name="select", methods={"GET", "POST"})
      */
     public function selectPhoto(
-        Request        $request,
-        PreviousPage   $previousPage,
-        IlotRepository $ilotRepository,
-        FileUploader   $fileUploader,
-        Ilot           $ilot = null,
-        OrdreFab       $ordreFab = null): Response
+        Request            $request,
+        PreviousPage       $previousPage,
+        IlotRepository     $ilotRepository,
+        OrdreFabRepository $ordreFabRepository,
+        BadgeageRepository $badgeageRepository,
+        FileUploader       $fileUploader,
+        MessageGenerator   $messageGenerator,
+        Ilot               $ilot = null,
+        OrdreFab           $ordreFab = null): Response
     {
         if (null === $ordreFab) {
             throw $this->createNotFoundException('OF non trouvé.');
@@ -120,16 +121,29 @@ class PhotoController extends AbstractController
             ->getForm();
         $form->handleRequest($request);
 
+        // Récupération du numéro d'OF qui est dans l'URL
+        $numOF = $request->get('numero');
+
+        $ordreFabExistant = $ordreFabRepository->findOneBy(["numero" => $numOF]);
+        $badgeageExistant = $badgeageRepository->findOneBy([
+            'ilot' => $ilot,
+            'ordreFab' => $ordreFabExistant
+        ]);
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $photo = $form->get('photo')->getData();
+            if (isset($badgeageExistant)) {
+                $photo = $form->get('photo')->getData();
 
-            if ($photo) {
-                $pictureFilename = $fileUploader->upload($photo, $ordreFab, $ilot);
+                if ($photo) {
+                    $pictureFilename = $fileUploader->upload($photo, $ordreFab, $ilot);
 
-                $this->addFlash('picture', $pictureFilename);
-                $this->addFlash('success', 'La table SLF_PhotoUpload a été mise à jour.');
+                    $this->addFlash('picture', $pictureFilename);
+                    $this->addFlash('success', 'La table SLF_PhotoUpload a été mise à jour.');
 
-                return $this->redirectToRoute('photo_index', ['nomURL' => $ilot->getNomURL()], 302);
+                    return $this->redirectToRoute('photo_index', ['nomURL' => $ilot->getNomURL()], 302);
+                }
+            } else {
+                $this->addFlash('danger', $messageGenerator->getMessageBadgeage($numOF, $ilot));
             }
         }
 

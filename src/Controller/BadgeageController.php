@@ -9,6 +9,7 @@ use App\Form\OrdreFabType;
 use App\Repository\BadgeageRepository;
 use App\Repository\IlotRepository;
 use App\Repository\OrdreFabRepository;
+use App\Service\MessageGenerator;
 use App\Service\PreviousPage;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -205,6 +206,7 @@ class BadgeageController extends AbstractController
         IlotRepository     $ilotRepository,
         Request            $request,
         PreviousPage       $previousPage,
+        MessageGenerator   $messageGenerator,
         Ilot               $ilot = null,
         Badgeage           $badgeage = null): Response
     {
@@ -247,7 +249,7 @@ class BadgeageController extends AbstractController
                     'id' => $badgeageExistant->getId()
                 ], 302);
             } else {
-                $this->addFlash('danger', 'Le badgeage ' . $numOF . ' pour l\'îlot ' . $ilot->getNomIRL() . ' n\'existe pas.');
+                $this->addFlash('danger', $messageGenerator->getMessageBadgeage($numOF, $ilot));
             }
         }
 
