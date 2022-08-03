@@ -55,11 +55,14 @@
 }
 
 .alert-msg,
-.msg {
+.alert-picture,
+.msg,
+.picture {
   display: flex;
 }
 
-.alert-msg {
+.alert-msg,
+.alert-picture {
   background-color: $color-success-bg;
   border-color: $color-success-border;
   color: $color-success;
@@ -69,7 +72,8 @@
     margin-right: 0.5em;
   }
 
-  .msg {
+  .msg,
+  .picture {
     flex-direction: column;
   }
 }

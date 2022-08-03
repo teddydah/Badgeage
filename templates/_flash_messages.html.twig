@@ -11,6 +11,11 @@
                     <span>OF : <strong>{{ message.ordreFab.numero }}</strong></span>
                     <span>Ilot : <strong>{{ message.ilot.nomIRL }}</strong></span>
                 </div>
+            {% elseif label is same as('picture') %}
+                <div class="picture">
+                    <span>La photo a été enregistrée sur le serveur avec succès.</span>
+                    <span>{{ message }}</span>
+                </div>
             {% else %}
                 {{ message }}
             {% endif %}

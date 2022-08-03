@@ -2,19 +2,24 @@
 
 namespace App\Controller;
 
+use App\Entity\Badgeage;
 use App\Entity\Ilot;
 use App\Entity\OrdreFab;
 use App\Form\OrdreFabType;
 use App\Repository\BadgeageRepository;
 use App\Repository\IlotRepository;
 use App\Repository\OrdreFabRepository;
+use App\Service\FileUploader;
 use App\Service\PreviousPage;
+use Cassandra\Time;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use function Sodium\add;
 
@@ -85,13 +90,28 @@ class PhotoController extends AbstractController
         Request        $request,
         PreviousPage   $previousPage,
         IlotRepository $ilotRepository,
-        Ilot           $ilot = null): Response
+        FileUploader   $fileUploader,
+        Ilot           $ilot = null,
+        OrdreFab       $ordreFab = null): Response
     {
+        if (null === $ordreFab) {
+            throw $this->createNotFoundException('OF non trouvé.');
+        }
+
         $form = $this->createFormBuilder()
             ->add('photo', FileType::class, [
                 'label' => '2. Sélectionner une photo',
                 'constraints' => [
-                    new NotBlank()
+                    new NotBlank(['message' => 'Vous devez sélectionner une photo.']),
+                    new File([
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                            'image/gif',
+                            'image/webp'
+                        ],
+                        'mimeTypesMessage' => 'Veuillez sélectionner une photo avec un format valide : jpg/jpeg, png, gif ou webp.'
+                    ])
                 ]
             ])
             ->add('suivant', SubmitType::class, [
@@ -101,9 +121,16 @@ class PhotoController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->addFlash('success', 'Test');
-        } else {
-            $this->addFlash('danger', 'Vous devez sélectionner une photo.');
+            $photo = $form->get('photo')->getData();
+
+            if ($photo) {
+                $pictureFilename = $fileUploader->upload($photo, $ordreFab, $ilot);
+
+                $this->addFlash('picture', $pictureFilename);
+                $this->addFlash('success', 'La table SLF_PhotoUpload a été mise à jour.');
+
+                return $this->redirectToRoute('photo_index', ['nomURL' => $ilot->getNomURL()], 302);
+            }
         }
 
         return $this->render('photo/index.html.twig', [
