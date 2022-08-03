@@ -44,6 +44,7 @@ class PreviousPage
 
             // Photo
             $photo = HOME . "photo/" . current($nomURL);
+            $photoSelect = HOME . "photo/" . current($nomURL);
 
             // Options
             $optionsMenu = HOME . "options/" . current($nomURL) . "/menu";
@@ -102,8 +103,14 @@ class PreviousPage
                 $url == $ilotUpdate ||
                 $url == $ilotsAdd) {
                 $uri = $adminIlots;
-            } else if (str_contains($url, $adminPrinter) || $url == $printersAdd) {
+            } else if (
+                str_contains($url, $adminPrinter) ||
+                $url == $printersAdd) {
                 $uri = $adminPrinters;
+            } else if (
+                str_contains($url, $photoSelect) &&
+                str_contains($url, 'select')) {
+                $uri = $photo;
             }
         }
         return $uri;

@@ -11,9 +11,12 @@ use App\Repository\OrdreFabRepository;
 use App\Service\PreviousPage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use function Sodium\add;
 
 /**
  * @Route("/photo/{nomURL}", name="photo_")
@@ -59,7 +62,10 @@ class PhotoController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if (isset($badgeageExistant)) {
-                return $this->redirectToRoute('photo_select', ['nomURL' => $ilot->getNomURL()], 302);
+                return $this->redirectToRoute('photo_select', [
+                    'nomURL' => $ilot->getNomURL(),
+                    'numero' => $badgeageExistant->getOrdreFab()->getNumero()
+                ], 302);
             } else {
                 $this->addFlash('danger', $ilot->getNomIRL() . ' : l\'OF ' . $numOF . ' n\'existe pas.');
             }
@@ -73,19 +79,32 @@ class PhotoController extends AbstractController
     }
 
     /**
-     * @Route("/select", name="select", methods={"GET", "POST"})
+     * @Route("/{numero}/select", name="select", methods={"GET", "POST"})
      */
-    public function selectPhoto(PreviousPage $previousPage, IlotRepository $ilotRepository, Ilot $ilot = null): Response
+    public function selectPhoto(
+        Request        $request,
+        PreviousPage   $previousPage,
+        IlotRepository $ilotRepository,
+        Ilot           $ilot = null): Response
     {
         $form = $this->createFormBuilder()
             ->add('photo', FileType::class, [
-                'label' => '2. Choisir une photo'
+                'label' => '2. Sélectionner une photo',
+                'constraints' => [
+                    new NotBlank()
+                ]
+            ])
+            ->add('suivant', SubmitType::class, [
+                'label' => 'Suivant'
             ])
             ->getForm();
+        $form->handleRequest($request);
 
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            return $this->redirectToRoute('photo_file', ['nomURL' => $ilot->getNomURL()], 302);
-//        }
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->addFlash('success', 'Test');
+        } else {
+            $this->addFlash('danger', 'Vous devez sélectionner une photo.');
+        }
 
         return $this->render('photo/index.html.twig', [
             'ilot' => $ilot,
