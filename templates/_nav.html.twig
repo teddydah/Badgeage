@@ -27,8 +27,12 @@
                                href="{{ path('admin_index') }}"
                                title="Page admin">Admin</a>
                             <hr>
+                            <a class="profile nav-link {% if route_name == "user_read" %}active{% endif %}"
+                               href="{{ path('user_read', { 'id' : app.user.id }) }}"
+                               title="Page profil">Profil</a>
+                            <hr>
                             <a class="settings nav-link {% if route_name == "admin_settings" %}active{% endif %}"
-                               href="{{ path('admin_settings') }}"
+                               href="#"
                                title="Page paramètres">Paramètres</a>
                             <hr>
                             <a class="logout nav-link" href="{{ path('app_logout') }}"

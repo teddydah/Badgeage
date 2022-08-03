@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Admin{% endblock %}
+
+{% block titre %}
+    <h1>Badgeuse Profil</h1>
+{% endblock %}
+
+{% block body %}
+    <section class="read-profile">
+        <table class="table table-striped table-light text-center">
+            <thead>
+            <tr>
+                <th scope="row">Id</th>
+                <th scope="row">Email</th>
+                <th scope="row">Modifier</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{{ app.user.id }}</td>
+                <td>{{ app.user.email }}</td>
+                <td class="edit">
+                    <a class="btn btn-success" href="#"
+                       title="Modifier profil utilisateur">
+                        <i class="fa-solid fa-pen"></i>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="boutons">
+            <div class="item-1">
+                <a class="prev item-btn-1 bouton" id="btn_retour" href="{{ path }}"
+                   role="button"
+                   title="Page précédente"><span>Précédent</span></a>
+                <a class="home item-btn-2 bouton" href="{{ path('main_home') }}"
+                   title="Page d'accueil"><span>Accueil</span></a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

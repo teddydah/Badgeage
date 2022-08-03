@@ -47,6 +47,7 @@ nav {
   .home,
   .nav-admin,
   .login,
+  .profile,
   .settings,
   .logout {
     &::before {
@@ -69,6 +70,12 @@ nav {
   .login {
     &::before {
       @include font-awesome(bold, "\f2f6");
+    }
+  }
+
+  .profile {
+    &::before {
+      @include font-awesome(bold, "\f007");
     }
   }
 
