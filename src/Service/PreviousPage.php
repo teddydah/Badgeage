@@ -35,12 +35,12 @@ class PreviousPage
             $laqSupView = HOME . "badgeage/LaqSup/view";
             $laqEtiqHome = HOME . "badgeage/Laquage/LaqEtiqHome";
 
-            $laqEtiqOF = HOME . "impression/LaqEtiqOF/view";
-            $laqEtiqRAL = HOME . "impression/LaqEtiqRAL/view";
+            $laqEtiqOF = HOME . "impression/LaqEtiqOF";
+            $laqEtiqRAL = HOME . "impression/LaqEtiqRAL";
 
             // Impression
-            $impression = HOME . "impression/" . current($nomURL) . "/view";
-            $impressionMiseEnFab = HOME . "impression/MiseEnFab/view";
+            $impression = HOME . "impression/" . current($nomURL);
+            $impressionMiseEnFab = HOME . "impression/MiseEnFab";
 
             // Options
             $optionsMenu = HOME . "options/" . current($nomURL) . "/menu";

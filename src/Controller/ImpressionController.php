@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ImpressionController extends AbstractController
 {
     /**
-     * @Route("/view", name="view", methods={"GET", "POST"})
+     * @Route(name="print", methods={"GET", "POST"})
      */
     public function print(
         OrdreFabRepository $ordreFabRepository,

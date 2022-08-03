@@ -41,7 +41,7 @@ class BadgeageController extends AbstractController
 
         // Redirection vers "impression/nomURL/view" si le nomURL est "MiseEnFab", "LaqEtiqOF" ou "LaqEtiqRAL"
         if ($ilot->getNomURL() == "MiseEnFab" || $ilot->getNomURL() == "LaqEtiqOF" || $ilot->getNomURL() == "LaqEtiqRAL") {
-            return $this->redirectToRoute('impression_view', ['nomURL' => $ilot->getNomURL()], 301);
+            return $this->redirectToRoute('impression_print', ['nomURL' => $ilot->getNomURL()], 301);
         }
 
         // Redirection vers "badgeage/Laquage/LaqEtiqHome" si le nomURL est "LaqEtiqHome"
