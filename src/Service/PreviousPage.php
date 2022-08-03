@@ -42,6 +42,9 @@ class PreviousPage
             $impression = HOME . "impression/" . current($nomURL);
             $impressionMiseEnFab = HOME . "impression/MiseEnFab";
 
+            // Photo
+            $photo = HOME . "photo/" . current($nomURL);
+
             // Options
             $optionsMenu = HOME . "options/" . current($nomURL) . "/menu";
             $optionsHistoriqueIlot = HOME . "options/" . current($nomURL) . "/HistoriqueIlot";
@@ -73,7 +76,9 @@ class PreviousPage
             } else if ($url == $laqEtiqOF || $url == $laqEtiqRAL) {
                 $uri = $laqEtiqHome;
             } else if (
-                $url == $impression || $url == $optionsMenu) {
+                $url == $impression ||
+                $url == $photo ||
+                $url == $optionsMenu) {
                 $uri = $badgeageView;
                 // Si l'URL de la page courante (exemple : "http://localhost/badgeage/public/badgeage/Adhesif/delete/id")
                 // contient "badgeage/$nomURL"/delete (astuce par rapport à l'id)

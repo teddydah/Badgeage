@@ -46,7 +46,8 @@
                     <a class="print item-btn-3 bouton"
                        href="{{ path('impression_print', { 'nomURL' : ilot.nomURL }) }}"
                        title="Page impression"><span>Impression</span></a>
-                    <a class="photo item-btn-4 bouton" href="#" title="Page photo"><span>Photo</span></a>
+                    <a class="photo item-btn-4 bouton" href="{{ path('photo_index', { 'nomURL' : ilot.nomURL }) }}"
+                       title="Page photo"><span>Photo</span></a>
                 </div>
                 <div class="item-3">
                     <a class="options item-btn-5 bouton"

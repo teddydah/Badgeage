@@ -42,7 +42,7 @@
                            title="Page d'accueil"><span>Accueil</span></a>
                     </div>
                     <div class="item-3">
-                        <a class="photo item-btn-3 bouton" href="#" title="Page photo"><span>Photo</span></a>
+                        <a class="photo item-btn-3 bouton" href="{{ path('photo_index', { 'nomURL' : ilot.nomURL }) }}" title="Page photo"><span>Photo</span></a>
                         <a class="options item-btn-4 bouton"
                            href="{{ path('options_menu', { 'nomURL' : ilot.nomURL }) }}"
                            title="Page options"><span>Options</span></a>
