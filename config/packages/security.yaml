@@ -37,6 +37,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/admin/(ilot|iltos|printer|printers)/(add$|edit$|delete$), roles: ROLE_ADMIN }
+
         - { path: ^/admin, roles: ROLE_USER }
 
     role_hierarchy:

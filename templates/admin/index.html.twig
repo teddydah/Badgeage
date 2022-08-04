@@ -16,6 +16,11 @@
             <li>
                 <a href="{{ path('printer_index') }}" title="Gestion imprimantes">Imprimantes</a>
             </li>
+            <li>
+                {% if is_granted("ROLE_ADMIN") %}
+                    <a href="{{ path('user_index') }}" title="Gestion utilisateurs">Utilisateurs</a>
+                {% endif %}
+            </li>
         </ul>
         <div class="boutons">
             <div class="item-1">

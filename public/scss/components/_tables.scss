@@ -98,6 +98,7 @@
 .admin {
   &.index-ilots,
   &.index-printers,
+  &.index-profiles,
   &.ilots,
   &.printers,
   &.profile {
@@ -107,7 +108,8 @@
   }
 
   &.index-ilots,
-  &.index-printers {
+  &.index-printers,
+  &.index-profiles {
     table {
       tr {
         .see,
@@ -140,14 +142,21 @@
 
   &.read-profile {
     table {
-      td {
-        .btn {
-          font-size: 1.6rem;
+      tr {
+        th,
+        td {
+          width: 50%;
+        }
 
-          &:hover {
-            background-color: $color2;
-            border-color: $color1;
-            color: $color1;
+        td {
+          .btn {
+            font-size: 1.6rem;
+
+            &:hover {
+              background-color: $color2;
+              border-color: $color1;
+              color: $color1;
+            }
           }
         }
       }

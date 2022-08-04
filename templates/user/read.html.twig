@@ -3,7 +3,11 @@
 {% block title %}{{ parent() }} | Admin{% endblock %}
 
 {% block titre %}
-    <h1>Mon profil</h1>
+    {% if user.userIdentifier is same as(app.user.userIdentifier) %}
+        <h1>Mon profil</h1>
+    {% else %}
+        <h1>Profil utilisateur #{{ user.id }}</h1>
+    {% endif %}
 {% endblock %}
 
 {% block body %}
@@ -13,20 +17,13 @@
             <thead>
             <tr>
                 <th scope="row">Id</th>
-                <th scope="row">Email</th>
-                <th scope="row">Modifier</th>
+                <th scope="row">E-mail</th>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <td>{{ app.user.id }}</td>
-                <td>{{ app.user.email }}</td>
-                <td class="edit">
-                    <a class="btn btn-success" href="{{ path('user_edit', { 'id' : app.user.id }) }}"
-                       title="Modifier profil utilisateur">
-                        <i class="fa-solid fa-pen"></i>
-                    </a>
-                </td>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
             </tr>
             </tbody>
         </table>

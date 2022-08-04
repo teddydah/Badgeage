@@ -2,6 +2,7 @@ $(document).ready(() => {
     const opacity = "opacity-25";
     const circleInfo = $("#circle-info");
     const close = $("#close");
+    const userPasswordFirst = $("#user_password_first");
 
     /* -- Afficher le menu -- */
     $(".navbar-toggler").on("click", function (e) {
@@ -48,8 +49,15 @@ $(document).ready(() => {
     /* -- Afficher input de confirmation du mot de passe -- */
     $("#user_password_second").hide();
 
-    $("#user_password_first").on("input", () => {
+    userPasswordFirst.on("input", () => {
         $("#user_password_second").show();
+    });
+
+    /* -- Afficher messsage d'aide lors de la saisie d'un nouveau mot de passe -- */
+    $("#user_password_first_help").hide();
+
+    userPasswordFirst.on("input", () => {
+        $("#user_password_first_help").show();
     });
 
     /* -- DataTables -- */

@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -28,7 +29,9 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email')
+            ->add('email', EmailType::class, [
+                'label' => 'E-mail'
+            ])
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
                 $form = $event->getForm();
                 $form->add('password', RepeatedType::class, [
@@ -37,12 +40,20 @@ class UserType extends AbstractType
                     'mapped' => false,
                     'first_options' => [
                         'label' => 'Mot de passe',
+                        'help' => 'Votre mot de passe doit contenir au moins 8 caractères.',
+                        'attr' => [
+                            'placeholder' => 'Nouveau mot de passe'
+                        ],
                         'constraints' => [
                             new Regex(
                                 '/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&-\/])[A-Za-z\d@$!%*#?&-\/]{8,}$/',
                                 'Votre mot de passe peut contenir les caractères spéciaux suivants : @$!%*#?&-/'
                             ),
-                            new NotCompromisedPassword(),
+                            new NotCompromisedPassword(
+                                [
+                                    'message' => 'Ce mot de passe a été divulgué lors d\'une fuite de données. Veuillez choisir un autre mot de passe.'
+                                ]
+                            ),
                         ],
                     ],
                     'second_options' => [
@@ -59,7 +70,6 @@ class UserType extends AbstractType
                 ->add('roles', ChoiceType::class, [
                     'label' => 'Rôle',
                     'multiple' => true,
-                    'expanded' => true,
                     'choices' => [
                         'Utilisateur' => 'ROLE_USER',
                         'Administrateur' => 'ROLE_ADMIN'

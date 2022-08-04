@@ -3,7 +3,11 @@
 {% block title %}{{ parent() }} | Admin{% endblock %}
 
 {% block titre %}
-    <h1>Modifier mon profil</h1>
+    {% if user.userIdentifier is same as(app.user.userIdentifier) %}
+        <h1>Modifier mon profil</h1>
+    {% else %}
+        <h1>Modifier profil #{{ user.id }}</h1>
+    {% endif %}
 {% endblock %}
 
 {% block body %}

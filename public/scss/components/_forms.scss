@@ -25,6 +25,11 @@
   input {
     @include input;
   }
+
+  .invalid-feedback {
+    text-align: justify;
+    font-size: 1.4rem;
+  }
 }
 
 .photo,
@@ -72,7 +77,8 @@
 }
 
 .ilots,
-.printers {
+.printers,
+.profile {
   div {
     &#ilot,
     &#printer {
@@ -103,12 +109,25 @@
 }
 
 .profile {
-  #user {
-    div {
-      input {
-        &#user_password_second {
-          display: none;
-        }
+  select {
+    height: 5em;
+  }
+}
+
+#user {
+  div {
+    #user_password_first_help {
+      text-align: justify;
+      font-size: 1.4rem;
+
+      &.mb-0 {
+        margin-bottom: 0.5em !important;
+      }
+    }
+
+    input {
+      &#user_password_second {
+        display: none;
       }
     }
   }

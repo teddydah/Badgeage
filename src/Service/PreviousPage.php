@@ -66,7 +66,9 @@ class PreviousPage
             $adminPrinter = ADMIN . "printer/";
 
             // Admin - profile
-            $adminProfile = ADMIN . "user";
+            $adminProfiles = ADMIN . "users/index";
+            $profilesAdd = ADMIN . "users/add";
+            $adminProfile = ADMIN . "user/";
 
             if ($url == $badgeageView || $url == $impressionMiseEnFab) {
                 $uri = HOME;
@@ -100,7 +102,7 @@ class PreviousPage
                 $url == $adminSettings ||
                 $url == $adminIlots ||
                 $url == $adminPrinters ||
-                str_contains($url, $adminProfile)) {
+                $url == $adminProfiles) {
                 $uri = ADMIN;
             } else if (
                 $url == $ilotRead ||
@@ -111,6 +113,10 @@ class PreviousPage
                 str_contains($url, $adminPrinter) ||
                 $url == $printersAdd) {
                 $uri = $adminPrinters;
+            } else if (
+                str_contains($url, $adminProfile) ||
+                $url == $profilesAdd) {
+                $uri = $adminProfiles;
             } else if (
                 str_contains($url, $photoSelect) &&
                 str_contains($url, 'select')) {

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\IlotRepository;
+use App\Repository\UserRepository;
 use App\Service\PreviousPage;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,12 +20,29 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UserController extends AbstractController
 {
+//    /**
+//     * @Route("/users/index", name="index", methods={"GET"})
+//     */
+//    public function index(UserRepository $userRepository, IlotRepository $ilotRepository, PreviousPage $previousPage): Response
+//    {
+//        return $this->render('user/index.html.twig', [
+//            'users' => $userRepository->findAll(),
+//            'path' => $previousPage->pagePrecedente($ilotRepository)
+//        ]);
+//    }
+
     /**
      * @Route("/user/{id<\d+>}", name="read", methods={"GET"})
      */
-    public function read(PreviousPage $previousPage, IlotRepository $ilotRepository): Response
+    public function read(PreviousPage $previousPage, IlotRepository $ilotRepository, User $user = null): Response
     {
+        // ParamConverter => si $user = null, alors notre contrôleur est exécuté
+        if (null === $user) {
+            throw $this->createNotFoundException('Utilisateur non trouvé.');
+        }
+
         return $this->render('user/read.html.twig', [
+            'user' => $user,
             'path' => $previousPage->pagePrecedente($ilotRepository)
         ]);
     }
@@ -67,6 +85,7 @@ class UserController extends AbstractController
         }
 
         return $this->render('user/edit.html.twig', [
+            'user' => $user,
             'form' => $form->createView(),
             'path' => $previousPage->pagePrecedente($ilotRepository)
         ]);
