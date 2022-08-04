@@ -65,6 +65,9 @@ class PreviousPage
             $printersAdd = ADMIN . "printers/add";
             $adminPrinter = ADMIN . "printer/";
 
+            // Admin - profile
+            $adminProfile = ADMIN . "user";
+
             if ($url == $badgeageView || $url == $impressionMiseEnFab) {
                 $uri = HOME;
             } else if (
@@ -96,7 +99,8 @@ class PreviousPage
             } else if (
                 $url == $adminSettings ||
                 $url == $adminIlots ||
-                $url == $adminPrinters) {
+                $url == $adminPrinters ||
+                str_contains($url, $adminProfile)) {
                 $uri = ADMIN;
             } else if (
                 $url == $ilotRead ||

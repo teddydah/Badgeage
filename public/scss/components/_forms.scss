@@ -30,7 +30,8 @@
 .photo,
 .login,
 .ilots,
-.printers {
+.printers,
+.profile {
   .form {
     padding: 0.25em;
 
@@ -59,7 +60,8 @@
 
 .login,
 .ilots,
-.printers {
+.printers,
+.profile {
   .form {
     text-align: left;
 
@@ -95,6 +97,18 @@
       &::before {
         @include font-awesome(bold, "\f090");
         margin-right: 0.5em;
+      }
+    }
+  }
+}
+
+.profile {
+  #user {
+    div {
+      input {
+        &#user_password_second {
+          display: none;
+        }
       }
     }
   }

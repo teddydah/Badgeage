@@ -99,7 +99,8 @@
   &.index-ilots,
   &.index-printers,
   &.ilots,
-  &.printers {
+  &.printers,
+  &.profile {
     table {
       margin-top: 0.625em;
     }
@@ -133,7 +134,22 @@
         td {
           width: 50%;
         }
+      }
+    }
+  }
 
+  &.read-profile {
+    table {
+      td {
+        .btn {
+          font-size: 1.6rem;
+
+          &:hover {
+            background-color: $color2;
+            border-color: $color1;
+            color: $color1;
+          }
+        }
       }
     }
   }

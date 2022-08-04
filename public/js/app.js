@@ -45,6 +45,13 @@ $(document).ready(() => {
         $("#ilot-item").removeClass("none");
     });
 
+    /* -- Afficher input de confirmation du mot de passe -- */
+    $("#user_password_second").hide();
+
+    $("#user_password_first").on("input", () => {
+        $("#user_password_second").show();
+    });
+
     /* -- DataTables -- */
     $('#datatables').DataTable({
         language: {
