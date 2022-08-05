@@ -141,15 +141,12 @@
       }
     }
   }
-}
 
-.index-ilots {
-  .boutons {
-    .item-1 {
-      .ilot-add {
-        span {
-          display: block;
-        }
+  .item-1 {
+    .ilot-add,
+    .user-add {
+      span {
+        display: block;
       }
     }
   }

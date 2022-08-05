@@ -140,7 +140,7 @@ class UserController extends AbstractController
         $form->add('user', SubmitType::class, [
             'label' => 'Ajouter',
             'attr' => [
-                'class' => 'btn-primary'
+                'class' => 'user-add btn-primary'
             ]
         ]);
         $form->handleRequest($request);

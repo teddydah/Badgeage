@@ -7,7 +7,7 @@ use Symfony\Component\Security\Core\Security;
 
 class PreviousPage
 {
-    private $security;
+    private Security $security;
 
     public function __construct(Security $security)
     {
@@ -20,7 +20,7 @@ class PreviousPage
         define("HOME", "http://" . $_SERVER['HTTP_HOST'] . "/badgeage/public/");
 
         // URL de la page d'accueil admin
-        define("ADMIN", "http://localhost/badgeage/public/admin/");
+        define("ADMIN", HOME . "admin/");
 
         // URL page courante
         $url = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
