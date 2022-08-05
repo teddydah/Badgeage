@@ -139,12 +139,17 @@
       &.ilot-add {
         background-color: $color-primary;
       }
+
+      &.user-edit {
+        background-color: $color-btn-success;
+      }
     }
   }
 
   .item-1 {
     .ilot-add,
-    .user-add {
+    .user-add,
+    .user-edit {
       span {
         display: block;
       }

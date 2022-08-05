@@ -14,28 +14,29 @@
     <section class="admin profile read-profile">
         {% include('_flash_messages.html.twig') %}
         <table class="table table-striped table-light text-center">
-            <thead>
-            <tr>
-                <th scope="row">Id</th>
-                <th scope="row">E-mail</th>
-                <th scope="row" class="edit">Modif.</th>
-            </tr>
-            </thead>
             <tbody>
             <tr>
+                <th scope="row">Id :</th>
                 <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <th scope="row">E-mail :</th>
                 <td>{{ user.email }}</td>
-                <td class="edit">
-                    <a class="btn btn-success" href="{{ path('user_edit', { 'id' : user.id }) }}"
-                       title="Modifier utilisateur {{ user.userIdentifier }}">
-                        <i class="fa-solid fa-pen"></i>
-                    </a>
-                </td>
+            </tr>
+            <tr>
+                <th scope="row">Rôle :</th>
+                {% for role in user.roles %}
+                    <td>{{ role }}</td>
+                {% endfor %}
             </tr>
             </tbody>
         </table>
         <div class="boutons">
             <div class="item-1">
+                <a class="user-edit item-btn-5 bouton" href="{{ path('user_edit', { 'id' : user.id }) }}"
+                   title="Modifier utilisateur {{ user.userIdentifier }}"><span>Mettre à jour</span></a>
+            </div>
+            <div class="item-2">
                 <a class="prev item-btn-1 bouton" id="btn_retour" href="{{ path }}"
                    role="button"
                    title="Page précédente"><span>Précédent</span></a>
