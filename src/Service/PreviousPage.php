@@ -3,9 +3,17 @@
 namespace App\Service;
 
 use App\Repository\IlotRepository;
+use Symfony\Component\Security\Core\Security;
 
 class PreviousPage
 {
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
     public function pagePrecedente(IlotRepository $ilotRepository): string
     {
         // URL de la page d'accueil
@@ -102,7 +110,8 @@ class PreviousPage
                 $url == $adminSettings ||
                 $url == $adminIlots ||
                 $url == $adminPrinters ||
-                $url == $adminProfiles) {
+                $url == $adminProfiles ||
+                (!$this->security->isGranted('ROLE_ADMIN') && str_contains($url, $adminProfile))) {
                 $uri = ADMIN;
             } else if (
                 $url == $ilotRead ||
@@ -113,13 +122,9 @@ class PreviousPage
                 str_contains($url, $adminPrinter) ||
                 $url == $printersAdd) {
                 $uri = $adminPrinters;
-            } else if (
-                str_contains($url, $adminProfile) ||
-                $url == $profilesAdd) {
+            } else if (str_contains($url, $adminProfile) || $url == $profilesAdd) {
                 $uri = $adminProfiles;
-            } else if (
-                str_contains($url, $photoSelect) &&
-                str_contains($url, 'select')) {
+            } else if (str_contains($url, $photoSelect) && str_contains($url, 'select')) {
                 $uri = $photo;
             }
         }

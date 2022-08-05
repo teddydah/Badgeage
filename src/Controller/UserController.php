@@ -20,25 +20,45 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UserController extends AbstractController
 {
-//    /**
-//     * @Route("/users/index", name="index", methods={"GET"})
-//     */
-//    public function index(UserRepository $userRepository, IlotRepository $ilotRepository, PreviousPage $previousPage): Response
-//    {
-//        return $this->render('user/index.html.twig', [
-//            'users' => $userRepository->findAll(),
-//            'path' => $previousPage->pagePrecedente($ilotRepository)
-//        ]);
-//    }
+    /**
+     * @Route("/users/index", name="index", methods={"GET"})
+     */
+    public function index(UserRepository $userRepository, IlotRepository $ilotRepository, PreviousPage $previousPage): Response
+    {
+        $connectedUser = $this->getUser()->getUserIdentifier();
+        $userExistant = $userRepository->findOneBy(['email' => $connectedUser]);
+
+        if ($this->getUser()->getRoles() !== ['ROLE_ADMIN']) {
+            return $this->redirectToRoute('user_read', ['id' => $userExistant->getId()], 301);
+        }
+
+        return $this->render('user/index.html.twig', [
+            'users' => $userRepository->findAll(),
+            'path' => $previousPage->pagePrecedente($ilotRepository)
+        ]);
+    }
 
     /**
      * @Route("/user/{id<\d+>}", name="read", methods={"GET"})
      */
-    public function read(PreviousPage $previousPage, IlotRepository $ilotRepository, User $user = null): Response
+    public function read(
+        UserRepository $userRepository,
+        PreviousPage   $previousPage,
+        IlotRepository $ilotRepository,
+        User           $user = null): Response
     {
         // ParamConverter => si $user = null, alors notre contrôleur est exécuté
         if (null === $user) {
             throw $this->createNotFoundException('Utilisateur non trouvé.');
+        }
+
+        $connectedUser = $this->getUser()->getUserIdentifier();
+        $userExistant = $userRepository->findOneBy(['email' => $connectedUser]);
+
+        if ($this->getUser()->getUserIdentifier() !== $user->getUserIdentifier() && $this->getUser()->getRoles() !== ['ROLE_ADMIN']) {
+            $this->addFlash('danger', 'Vous ne pouvez pas voir le profil d\'un autre utilisateur.');
+
+            return $this->redirectToRoute('user_read', ['id' => $userExistant->getId()], 301);
         }
 
         return $this->render('user/read.html.twig', [
@@ -56,10 +76,20 @@ class UserController extends AbstractController
         UserPasswordHasherInterface $userPasswordHasher,
         PreviousPage                $previousPage,
         IlotRepository              $ilotRepository,
+        UserRepository              $userRepository,
         User                        $user = null): Response
     {
         if (null === $user) {
             throw $this->createNotFoundException('Utilisateur non trouvé.');
+        }
+
+        $connectedUser = $this->getUser()->getUserIdentifier();
+        $userExistant = $userRepository->findOneBy(['email' => $connectedUser]);
+
+        if ($this->getUser()->getUserIdentifier() !== $user->getUserIdentifier() && $this->getUser()->getRoles() !== ['ROLE_ADMIN']) {
+            $this->addFlash('danger', 'Vous ne pouvez pas modifier le profil d\'un autre utilisateur.');
+
+            return $this->redirectToRoute('user_read', ['id' => $userExistant->getId()], 301);
         }
 
         $form = $this->createForm(UserType::class, $user);
@@ -79,7 +109,11 @@ class UserController extends AbstractController
 
             $em->flush();
 
-            $this->addFlash('success', $user->getUserIdentifier() . ' : votre profil utilisateur a bien été mis à jour.');
+            if ($this->getUser()->getUserIdentifier() !== $user->getUserIdentifier()) {
+                $this->addFlash('success', 'Le profil utilisateur de ' . $user->getUserIdentifier() . ' a bien été mis à jour.');
+            } else {
+                $this->addFlash('success', 'Votre profil utilisateur a bien été mis à jour.');
+            }
 
             return $this->redirectToRoute('user_read', ['id' => $user->getId()], 302);
         }
@@ -89,5 +123,64 @@ class UserController extends AbstractController
             'form' => $form->createView(),
             'path' => $previousPage->pagePrecedente($ilotRepository)
         ]);
+    }
+
+    /**
+     * @Route("/users/add", name="add", methods={"GET", "POST"})
+     */
+    public function add(
+        Request                     $request,
+        EntityManagerInterface      $em,
+        UserPasswordHasherInterface $userPasswordHasher,
+        PreviousPage                $previousPage,
+        IlotRepository              $ilotRepository): Response
+    {
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
+        $form->add('user', SubmitType::class, [
+            'label' => 'Ajouter',
+            'attr' => [
+                'class' => 'btn-primary'
+            ]
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $hashedPassword = $userPasswordHasher->hashPassword($user, $form->get('password')->getData());
+            $user->setPassword($hashedPassword);
+
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash('success', 'L\'utilisateur ' . $user->getUserIdentifier() . ' a bien été ajouté.');
+
+            return $this->redirectToRoute('user_read', ['id' => $user->getId()], 302);
+        }
+
+        return $this->render('user/add.html.twig', [
+            'form' => $form->createView(),
+            'path' => $previousPage->pagePrecedente($ilotRepository)
+        ]);
+    }
+
+    /**
+     * @Route("/user/{id<\d+>}/delete", name="delete", methods={"GET"})
+     */
+    public function delete(EntityManagerInterface $em, User $user = null): Response
+    {
+        if (null === $user) {
+            throw $this->createNotFoundException('Utilisateur non trouvé.');
+        }
+
+        if ($this->getUser()->getUserIdentifier() !== $user->getUserIdentifier()) {
+            $em->remove($user);
+            $em->flush();
+
+            $this->addFlash('success', 'L\'utilisateur ' . $user->getUserIdentifier() . ' a bien été supprimé.');
+        } else {
+            $this->addFlash('danger', 'Vous ne pouvez pas supprimer votre profil utilisateur.');
+        }
+
+        return $this->redirectToRoute('user_index');
     }
 }

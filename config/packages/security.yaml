@@ -36,8 +36,9 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/admin/(ilot|iltos|printer|printers)/(add$|edit$|delete$), roles: ROLE_ADMIN }
-
+        - { path: ^/admin/(ilot|ilots|printer|printers)/(add$|edit$), roles: ROLE_ADMIN }
+        - { path: ^/admin/(user|users)/(add$|delete$), roles: ROLE_ADMIN }
+        - { path: delete$, roles: ROLE_ADMIN }
         - { path: ^/admin, roles: ROLE_USER }
 
     role_hierarchy:

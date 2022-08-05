@@ -29,6 +29,7 @@
   .invalid-feedback {
     text-align: justify;
     font-size: 1.4rem;
+    margin-bottom: 0.5em;
   }
 }
 
@@ -109,8 +110,10 @@
 }
 
 .profile {
-  select {
-    height: 5em;
+  .form {
+    select {
+      height: 5em;
+    }
   }
 }
 

@@ -14,6 +14,8 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Constraints\Count;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
 use Symfony\Component\Validator\Constraints\Regex;
 
@@ -30,7 +32,10 @@ class UserType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
-                'label' => 'E-mail'
+                'label' => 'E-mail',
+                'attr' => [
+                    'placeholder' => 'Adresse mail'
+                ],
             ])
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
                 $form = $event->getForm();
@@ -45,6 +50,7 @@ class UserType extends AbstractType
                             'placeholder' => 'Nouveau mot de passe'
                         ],
                         'constraints' => [
+                            new Length(null, '8'),
                             new Regex(
                                 '/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&-\/])[A-Za-z\d@$!%*#?&-\/]{8,}$/',
                                 'Votre mot de passe peut contenir les caractères spéciaux suivants : @$!%*#?&-/'
@@ -60,7 +66,7 @@ class UserType extends AbstractType
                         'label' => false,
                         'attr' => [
                             'placeholder' => 'Veuillez saisir à nouveau votre mot de passe'
-                        ],
+                        ]
                     ]
                 ]);
             });

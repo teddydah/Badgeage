@@ -18,12 +18,19 @@
             <tr>
                 <th scope="row">Id</th>
                 <th scope="row">E-mail</th>
+                <th scope="row" class="edit">Modif.</th>
             </tr>
             </thead>
             <tbody>
             <tr>
                 <td>{{ user.id }}</td>
                 <td>{{ user.email }}</td>
+                <td class="edit">
+                    <a class="btn btn-success" href="{{ path('user_edit', { 'id' : user.id }) }}"
+                       title="Modifier utilisateur {{ user.userIdentifier }}">
+                        <i class="fa-solid fa-pen"></i>
+                    </a>
+                </td>
             </tr>
             </tbody>
         </table>
