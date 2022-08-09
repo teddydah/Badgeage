@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class IlotController extends AbstractController
 {
     /**
-     * @Route("/ilots/index", name="index", methods={"GET", "POST"})
+     * @Route("/ilots/index", name="index", methods={"GET"})
      */
     public function index(IlotRepository $ilotRepository, PreviousPage $previousPage): Response
     {

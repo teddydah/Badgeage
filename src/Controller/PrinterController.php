@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PrinterController extends AbstractController
 {
     /**
-     * @Route("/printers/index", name="index", methods={"GET", "POST"})
+     * @Route("/printers/index", name="index", methods={"GET"})
      */
     public function index(PrinterRepository $printerRepository, IlotRepository $ilotRepository, PreviousPage $previousPage): Response
     {
