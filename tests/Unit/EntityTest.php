@@ -10,7 +10,6 @@ class EntityTest extends KernelTestCase
 {
     public function getEntity(): Printer
     {
-        // Test de l'entité Printer
         return (new Printer())
             ->setNom('Printer')
             ->setIp('192.168.35.000')
@@ -30,25 +29,37 @@ class EntityTest extends KernelTestCase
         $this->assertCount($number, $errors, implode(', ', $messages));
     }
 
-    // Teste la validité de l'entité Printer
+    /**
+     * @return void
+     * Teste la validité de l'entité Printer
+     */
     public function testValidEntity()
     {
         $this->assertHasErrors($this->getEntity());
     }
 
-    // Teste le remplissage de la propriété "nom" => vide ?
+    /**
+     * @return void
+     * Teste le remplissage de la propriété "nom" => vide ?
+     */
     public function testInvalidBlankNom()
     {
         $this->assertHasErrors($this->getEntity()->setNom(''), 1);
     }
 
-    // Teste le remplissage de la propriété "ip" => vide ?
+    /**
+     * @return void
+     * Teste le remplissage de la propriété "ip" => vide ?
+     */
     public function testInvalidBlankIp()
     {
         $this->assertHasErrors($this->getEntity()->setIp(''), 1);
     }
 
-    // Teste l'unicité de la propriété "nom" => déjà utilisé ?
+    /**
+     * @return void
+     *  Teste l'unicité de la propriété "nom" => déjà utilisé ?
+     */
     public function testInvalidUsedNom()
     {
         $this->assertHasErrors($this->getEntity()->setNom('Chef Atelier'), 1);
