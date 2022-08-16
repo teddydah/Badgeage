@@ -2,17 +2,17 @@
 
 namespace App\EventListener;
 
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Http\Event\LogoutEvent;
 
 class LogoutListener
 {
     private FlashBagInterface $flashBag;
 
-    public function __construct(SessionInterface $session)
+    public function __construct(RequestStack $requestStack)
     {
-        $this->flashBag = $session->getFlashBag();
+        $this->flashBag = $requestStack->getSession()->getFlashBag();
     }
 
     public function onSymfonyComponentSecurityHttpEventLogoutEvent(LogoutEvent $event): void
