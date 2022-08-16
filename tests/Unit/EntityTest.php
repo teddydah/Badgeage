@@ -30,25 +30,25 @@ class EntityTest extends KernelTestCase
         $this->assertCount($number, $errors, implode(', ', $messages));
     }
 
-    // Test la validité de l'entité Printer
+    // Teste la validité de l'entité Printer
     public function testValidEntity()
     {
         $this->assertHasErrors($this->getEntity());
     }
 
-    // Test le remplissage de la propriété "nom" => vide ?
+    // Teste le remplissage de la propriété "nom" => vide ?
     public function testInvalidBlankNom()
     {
         $this->assertHasErrors($this->getEntity()->setNom(''), 1);
     }
 
-    // Test le remplissage de la propriété "ip" => vide ?
+    // Teste le remplissage de la propriété "ip" => vide ?
     public function testInvalidBlankIp()
     {
         $this->assertHasErrors($this->getEntity()->setIp(''), 1);
     }
 
-    // Test l'unicité de la propriété "nom" => déjà utilisé ?
+    // Teste l'unicité de la propriété "nom" => déjà utilisé ?
     public function testInvalidUsedNom()
     {
         $this->assertHasErrors($this->getEntity()->setNom('Chef Atelier'), 1);
