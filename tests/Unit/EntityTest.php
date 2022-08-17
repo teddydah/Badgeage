@@ -40,7 +40,7 @@ class EntityTest extends KernelTestCase
 
     /**
      * @return void
-     * Teste le remplissage de la propriété "nom" => vide ?
+     * Teste le remplissage de la propriété "nom"
      */
     public function testInvalidBlankNom()
     {
@@ -49,16 +49,16 @@ class EntityTest extends KernelTestCase
 
     /**
      * @return void
-     * Teste le remplissage de la propriété "ip" => vide ?
+     * Teste la longueur de la propriété "ip"
      */
-    public function testInvalidBlankIp()
+    public function testInvalidLengthIp()
     {
-        $this->assertHasErrors($this->getEntity()->setIp(''), 1);
+        $this->assertHasErrors($this->getEntity()->setIp('192.168.35.000.000.000'), 1);
     }
 
     /**
      * @return void
-     *  Teste l'unicité de la propriété "nom" => déjà utilisé ?
+     *  Teste l'unicité de la propriété "nom"
      */
     public function testInvalidUsedNom()
     {

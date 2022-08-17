@@ -31,6 +31,7 @@ class Printer
     /**
      * @ORM\Column(type="string", length=20)
      * @Assert\NotBlank()
+     * @Assert\Length(max=20)
      */
     private $ip;
 
