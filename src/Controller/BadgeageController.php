@@ -207,8 +207,8 @@ class BadgeageController extends AbstractController
         Request            $request,
         PreviousPage       $previousPage,
         MessageGenerator   $messageGenerator,
-        Ilot               $ilot = null,
-        Badgeage           $badgeage = null): Response
+        Badgeage           $badgeage,
+        Ilot               $ilot = null): Response
     {
         if (null === $ilot) {
             throw $this->createNotFoundException('Ilot non trouvé.');
